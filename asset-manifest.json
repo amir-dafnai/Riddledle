@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Riddledle/static/css/main.88a8bd47.css",
-    "main.js": "/Riddledle/static/js/main.0bd01d63.js",
+    "main.js": "/Riddledle/static/js/main.307deaf2.js",
     "static/js/453.ed3810f9.chunk.js": "/Riddledle/static/js/453.ed3810f9.chunk.js",
     "index.html": "/Riddledle/index.html",
     "main.88a8bd47.css.map": "/Riddledle/static/css/main.88a8bd47.css.map",
-    "main.0bd01d63.js.map": "/Riddledle/static/js/main.0bd01d63.js.map",
+    "main.307deaf2.js.map": "/Riddledle/static/js/main.307deaf2.js.map",
     "453.ed3810f9.chunk.js.map": "/Riddledle/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.88a8bd47.css",
-    "static/js/main.0bd01d63.js"
+    "static/js/main.307deaf2.js"
   ]
 }
