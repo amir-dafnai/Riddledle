@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
 import { getColors } from "./appUtils";
-import { getNextSquareHebew, getNextSquareEnglish, getPrevSquareEnglish, getPrevSquareHebrew } from "./appUtils";
+import {
+  getNextSquareHebew,
+  getNextSquareEnglish,
+  getPrevSquareEnglish,
+  getPrevSquareHebrew,
+} from "./appUtils";
 import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
 
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
 
-const LANG = 'ENG'
-const getRiddle =  LANG === 'HEB' ? getRandomHebrewRiddle : getRandomEnglishRiddle
-const getNextSquare = LANG === 'HEB' ? getNextSquareHebew : getNextSquareEnglish
-const getPrevSquare = LANG === 'HEB' ? getPrevSquareHebrew : getPrevSquareEnglish
+const LANG = "ENG";
+const getRiddle =
+  LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
+const getNextSquare =
+  LANG === "HEB" ? getNextSquareHebew : getNextSquareEnglish;
+const getPrevSquare =
+  LANG === "HEB" ? getPrevSquareHebrew : getPrevSquareEnglish;
 
-
-function getGameLostH1Text(solution, lang){
-  
-  if(lang === 'ENG')
-    return `Too bad... The solution was ${solution.join('')}`
-  else{
-    const solText = [...solution].reverse().join('')
-    return `לא נורא... הפתרון הנכון הוא ${solText} `
+function getGameLostH1Text(solution, lang) {
+  if (lang === "ENG") return `Too bad... The solution was ${solution.join("")}`;
+  else {
+    const solText = [...solution].reverse().join("");
+    return `לא נורא... הפתרון הנכון הוא ${solText} `;
   }
-    
 }
-
 
 function Square({ value, style }) {
   return (
@@ -77,11 +80,11 @@ function Riddle({
   return riddles;
 }
 
-function NextRiddleButton({handleClick}) {
-  return <button onClick={handleClick}>Next Riddle</button>
+function NextRiddleButton({ handleClick }) {
+  return <button onClick={handleClick}>Next Riddle</button>;
 }
 
-function GameWon({handleClick}) {
+function GameWon({ handleClick }) {
   return (
     <>
       <h1>You Got It!</h1>
@@ -90,26 +93,32 @@ function GameWon({handleClick}) {
   );
 }
 function GameLost({ solution, handleClick }) {
-  console.log('SOLUTION' , solution)
-  return(
-  <>
-    
-    <h1>{getGameLostH1Text(solution, LANG)}</h1>
-    <NextRiddleButton handleClick={handleClick} />
-  </>
-  )
+  console.log("SOLUTION", solution);
+  return (
+    <>
+      <h1>{getGameLostH1Text(solution, LANG)}</h1>
+      <NextRiddleButton handleClick={handleClick} />
+    </>
+  );
 }
 
-
-
 function Game({ riddle, setRiddle, progress }) {
-  const solution = riddle.solution
+  const solution = riddle.solution;
   const numberOfGuesses = 3;
-  console.log(progress)
-  const [answers, setAnswers] = useState(progress.answers? progress.answers :  getEmptyAnswers(solution, numberOfGuesses)
+  console.log(progress);
+  const [answers, setAnswers] = useState(
+    progress.answers
+      ? progress.answers
+      : getEmptyAnswers(solution, numberOfGuesses)
   );
-  const [allStyles, setAllStyles] = useState(progress.allStyles?  progress.allStyles : getDefaultStyles(solution, numberOfGuesses));
-  const [guesses, setGuesses] = useState(progress.guesses? progress.guesses : []);
+  const [allStyles, setAllStyles] = useState(
+    progress.allStyles
+      ? progress.allStyles
+      : getDefaultStyles(solution, numberOfGuesses)
+  );
+  const [guesses, setGuesses] = useState(
+    progress.guesses ? progress.guesses : []
+  );
   const currGuess = guesses.length;
   const currAnswer = answers[currGuess];
   const gameStatus = arraysAreEqual(solution, answers[currGuess - 1])
@@ -120,19 +129,24 @@ function Game({ riddle, setRiddle, progress }) {
 
   useEffect(() => {
     // Save to localStorage whenever progress changes
-    localStorage.setItem('progress', JSON.stringify({riddle : riddle , answers : answers , allStyles : allStyles, guesses : guesses}));
-  }, [answers,allStyles , guesses,riddle]);
-
-
-
+    localStorage.setItem(
+      "progress",
+      JSON.stringify({
+        riddle: riddle,
+        answers: answers,
+        allStyles: allStyles,
+        guesses: guesses,
+      })
+    );
+  }, [answers, allStyles, guesses, riddle]);
 
   function reset() {
-    const newRiddle = getRiddle()
+    const newRiddle = getRiddle();
     setAnswers(getEmptyAnswers(newRiddle.solution, numberOfGuesses));
     setAllStyles(getDefaultStyles(newRiddle.solution, numberOfGuesses));
     setGuesses([]);
     setRiddle(newRiddle);
-    localStorage.setItem('progress' , JSON.stringify({}))
+    localStorage.setItem("progress", JSON.stringify({}));
   }
 
   function onEnterClicked(solution, currAnswer) {
@@ -146,9 +160,6 @@ function Game({ riddle, setRiddle, progress }) {
     let newGuesses = guesses.slice();
     newGuesses.push(currAnswer);
     setGuesses(newGuesses);
-
-
-
   }
 
   function setNewAnswer(currSquare, key) {
@@ -161,15 +172,20 @@ function Game({ riddle, setRiddle, progress }) {
   function handleKeyDown(event) {
     if (event.key === "Backspace")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
-    else if(LANG === 'ENG' &&
+    else if (
+      LANG === "ENG" &&
       "abcdefghijklmnopqrstuvwxyz".indexOf(event.key.toLowerCase()) !== -1
     )
       setNewAnswer(getNextSquare(currAnswer), event.key.toUpperCase());
-    else if(LANG === 'HEB' &&
+    else if (
+      LANG === "HEB" &&
       "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(event.key) !== -1
     )
       setNewAnswer(getNextSquare(currAnswer), event.key);
-    else if (event.key === "Enter" && currAnswer.every(element => element !== ''))
+    else if (
+      event.key === "Enter" &&
+      currAnswer.every((element) => element !== "")
+    )
       onEnterClicked(solution, currAnswer);
   }
   return (
@@ -184,17 +200,27 @@ function Game({ riddle, setRiddle, progress }) {
           currGuess={currGuess}
         />
 
-        {gameStatus === 'win' && <GameWon handleClick={reset}/>}
-        {gameStatus === 'lose' && <GameLost solution={solution}  handleClick={reset}/>}
-        
+        {gameStatus === "win" && <GameWon handleClick={reset} />}
+        {gameStatus === "lose" && (
+          <GameLost solution={solution} handleClick={reset} />
+        )}
       </div>
     </>
   );
 }
 
-export default function App() {
-  console.log('HELLO!!!')
+const App = () =>  {
+  console.log("HELLO!!!");
   const [riddle, setRiddle] = useState(getRiddle());
-  const progress = JSON.parse(localStorage.getItem('progress') || '{}')
-  return <Game riddle={progress.riddle? progress.riddle : riddle} setRiddle={setRiddle} progress = {progress} />;
-}
+  const progress = JSON.parse(localStorage.getItem("progress") || "{}");
+  return (
+    <Game
+      riddle={progress.riddle ? progress.riddle : riddle}
+      setRiddle={setRiddle}
+      progress={progress}
+    />
+  );
+};
+export default App;
+
+
