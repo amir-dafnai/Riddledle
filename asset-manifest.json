@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/riddledle/static/css/main.88a8bd47.css",
+    "main.js": "/riddledle/static/js/main.c78474d7.js",
+    "static/js/453.ed3810f9.chunk.js": "/riddledle/static/js/453.ed3810f9.chunk.js",
+    "index.html": "/riddledle/index.html",
+    "main.88a8bd47.css.map": "/riddledle/static/css/main.88a8bd47.css.map",
+    "main.c78474d7.js.map": "/riddledle/static/js/main.c78474d7.js.map",
+    "453.ed3810f9.chunk.js.map": "/riddledle/static/js/453.ed3810f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.88a8bd47.css",
+    "static/js/main.c78474d7.js"
+  ]
+}
