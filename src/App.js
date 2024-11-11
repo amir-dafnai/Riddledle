@@ -193,6 +193,7 @@ function Game({ riddle, setRiddle, progress }) {
 }
 
 export default function App() {
+  console.log('HELLO!!!')
   const [riddle, setRiddle] = useState(getRiddle());
   const progress = JSON.parse(localStorage.getItem('progress') || '{}')
   return <Game riddle={progress.riddle? progress.riddle : riddle} setRiddle={setRiddle} progress = {progress} />;
