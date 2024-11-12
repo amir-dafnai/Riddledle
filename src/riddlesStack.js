@@ -6,7 +6,7 @@ const englishRiddles = [
   ["Guess the problem", "low power"],
 ];
 
-const hebrewRiddles = [["שריפה משני תווים", "מדורה"], ["בלה בלה", "בלה בלה"]];
+const hebrewRiddles = [["שריפה משני תווים", "מדורה"], ["בלה בלה", "בלה בלה"] , ["מאבק אלים זה אלפית מהשמש", "מלחמה" ]];
 
 export function getRandomEnglishRiddle() {
   const randomIndex = Math.floor(Math.random() * englishRiddles.length);

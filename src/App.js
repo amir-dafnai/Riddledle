@@ -10,7 +10,7 @@ import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
 
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
 
-const LANG = "ENG";
+const LANG = "HEB";
 const getRiddle =
   LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
 const getNextSquare =
@@ -129,15 +129,20 @@ function Game({ riddle, setRiddle, progress }) {
 
   useEffect(() => {
     // Save to localStorage whenever progress changes
-    localStorage.setItem(
-      "progress",
-      JSON.stringify({
-        riddle: riddle,
-        answers: answers,
-        allStyles: allStyles,
-        guesses: guesses,
-      })
-    );
+    console.log(LANG , progress.lang , progress.lang === LANG)
+    if (progress.lang && progress.lang !== LANG)
+      localStorage.setItem("progress", JSON.stringify({}));
+    else
+      localStorage.setItem(
+        "progress",
+        JSON.stringify({
+          riddle: riddle,
+          answers: answers,
+          allStyles: allStyles,
+          guesses: guesses,
+          lang: LANG,
+        })
+      );
   }, [answers, allStyles, guesses, riddle]);
 
   function reset() {
@@ -209,10 +214,10 @@ function Game({ riddle, setRiddle, progress }) {
   );
 }
 
-const App = () =>  {
-  console.log("HELLO!!!");
+const App = () => {
   const [riddle, setRiddle] = useState(getRiddle());
   const progress = JSON.parse(localStorage.getItem("progress") || "{}");
+
   return (
     <Game
       riddle={progress.riddle ? progress.riddle : riddle}
@@ -222,5 +227,3 @@ const App = () =>  {
   );
 };
 export default App;
-
-
