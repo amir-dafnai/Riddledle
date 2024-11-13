@@ -10,7 +10,7 @@ import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
 
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
 
-const LANG = "HEB";
+const LANG = "ENG";
 const getRiddle =
   LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
 const getNextSquare =
