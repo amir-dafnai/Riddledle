@@ -17,6 +17,5 @@ export function getRandomHebrewRiddle() {
   const randomIndex = Math.floor(Math.random() * hebrewRiddles.length);
   let [definition, solution] = hebrewRiddles[randomIndex];
   solution = solution.split("").reverse();
-  console.log("solution is", solution);
   return { definition: definition, solution: solution };
 }

@@ -93,7 +93,6 @@ function GameWon({ handleClick }) {
   );
 }
 function GameLost({ solution, handleClick }) {
-  console.log("SOLUTION", solution);
   return (
     <>
       <h1>{getGameLostH1Text(solution, LANG)}</h1>
@@ -105,7 +104,7 @@ function GameLost({ solution, handleClick }) {
 function Game({ riddle, setRiddle, progress }) {
   const solution = riddle.solution;
   const numberOfGuesses = 3;
-  console.log(progress);
+  
   const [answers, setAnswers] = useState(
     progress.answers
       ? progress.answers
@@ -129,7 +128,6 @@ function Game({ riddle, setRiddle, progress }) {
 
   useEffect(() => {
     // Save to localStorage whenever progress changes
-    console.log(LANG , progress.lang , progress.lang === LANG)
     if (progress.lang && progress.lang !== LANG)
       localStorage.setItem("progress", JSON.stringify({}));
     else
@@ -143,7 +141,7 @@ function Game({ riddle, setRiddle, progress }) {
           lang: LANG,
         })
       );
-  }, [answers, allStyles, guesses, riddle]);
+  }, [answers, allStyles, guesses, riddle, progress.lang]);
 
   function reset() {
     const newRiddle = getRiddle();

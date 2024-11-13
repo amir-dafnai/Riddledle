@@ -3,15 +3,13 @@ body {
   background-color: #f1f1f1;
   display: flex;
   justify-content: center;
-  /* Remove align-items: center and height */
   margin: 0;
-  padding: 20px; /* Optional padding for better spacing */
+  padding: 20px;
 }
 
 .square {
   background: #fff;
   border: 1px solid #999;
-  float: left;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
@@ -24,7 +22,6 @@ body {
 }
 
 .invisibleSquare {
-  float: left;
   font-weight: bold;
   line-height: 34px;
   height: 34px;
@@ -42,13 +39,53 @@ body {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow words to wrap to the next line */
+  justify-content: center; /* Center align words */
 }
 
 .riddle-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Horizontally center content */
-  gap: 20px; /* Space between elements */
-  max-width: 600px; /* Optional max width for better appearance */
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
   width: 100%;
+  padding: 0 20px; /* Optional for better spacing */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .square {
+    width: 30px; /* Smaller squares on smaller screens */
+    height: 30px;
+    font-size: 18px; /* Smaller text */
+  }
+
+  .riddle-container {
+    gap: 15px; /* Smaller gap on smaller screens */
+  }
+
+  .word-container {
+    gap: 5px; /* Smaller gap for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .square {
+    width: 25px; /* Even smaller squares for very small screens */
+    height: 25px;
+    font-size: 14px;
+  }
+
+  .riddle-container {
+    gap: 10px; /* Tighter gap */
+  }
+
+  .word-container {
+    gap: 2px; /* Tighter word gaps for mobile */
+  }
+
+  body {
+    padding: 10px; /* Less padding for mobile */
+  }
 }
