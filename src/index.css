@@ -89,3 +89,22 @@ body {
     padding: 10px; /* Less padding for mobile */
   }
 }
+
+/* Position the keyboard at the bottom of the screen */
+.virtual-keyboard {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it stays on top of other content */
+  background-color: white; /* Optional background color */
+  border-top: 1px solid #ccc; /* Optional: Border to separate the keyboard */
+  padding: 10px; /* Optional: Add some padding */
+}
+
+/* Optionally, style the input box */
+.virtual-keyboard input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}

@@ -9,8 +9,11 @@ import {
 import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
 
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
+import {MyKeyBoard} from "./KeyBoard"
 
-const LANG = "ENG";
+
+
+const LANG = "HEB";
 const getRiddle =
   LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
 const getNextSquare =
@@ -77,7 +80,12 @@ function Riddle({
       </div>
     );
   }
-  return riddles;
+  return <>{riddles}
+   <MyKeyBoard
+        handleKeyDown={handleKeyDown}
+        lang={LANG}
+      />
+  </>;
 }
 
 function NextRiddleButton({ handleClick }) {
@@ -104,7 +112,7 @@ function GameLost({ solution, handleClick }) {
 function Game({ riddle, setRiddle, progress }) {
   const solution = riddle.solution;
   const numberOfGuesses = 3;
-  
+
   const [answers, setAnswers] = useState(
     progress.answers
       ? progress.answers
@@ -173,20 +181,24 @@ function Game({ riddle, setRiddle, progress }) {
   }
 
   function handleKeyDown(event) {
-    if (event.key === "Backspace")
+    if (gameStatus !=='playing') return 
+    
+    const value = event.key  || event 
+    console.log(value)
+    if (value === "Backspace" || value === "{backspace}" )
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
     else if (
       LANG === "ENG" &&
-      "abcdefghijklmnopqrstuvwxyz".indexOf(event.key.toLowerCase()) !== -1
+      "abcdefghijklmnopqrstuvwxyz".indexOf(value.toLowerCase()) !== -1
     )
-      setNewAnswer(getNextSquare(currAnswer), event.key.toUpperCase());
+      setNewAnswer(getNextSquare(currAnswer), value.toUpperCase());
     else if (
       LANG === "HEB" &&
-      "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(event.key) !== -1
+      "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(value) !== -1
     )
-      setNewAnswer(getNextSquare(currAnswer), event.key);
+      setNewAnswer(getNextSquare(currAnswer), value);
     else if (
-      event.key === "Enter" &&
+      (value === "Enter" || value === "{enter}") &&
       currAnswer.every((element) => element !== "")
     )
       onEnterClicked(solution, currAnswer);
@@ -215,7 +227,7 @@ function Game({ riddle, setRiddle, progress }) {
 const App = () => {
   const [riddle, setRiddle] = useState(getRiddle());
   const progress = JSON.parse(localStorage.getItem("progress") || "{}");
-
+  console.log(riddle)
   return (
     <Game
       riddle={progress.riddle ? progress.riddle : riddle}
