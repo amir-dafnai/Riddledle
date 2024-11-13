@@ -13,7 +13,7 @@ import {MyKeyBoard} from "./KeyBoard"
 
 
 
-const LANG = "HEB";
+const LANG = "ENG";
 const getRiddle =
   LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
 const getNextSquare =
