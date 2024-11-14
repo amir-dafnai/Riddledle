@@ -1,64 +1,12 @@
 import { useEffect, useState } from "react";
 import { getColors } from "./appUtils";
-import {
-  getNextSquareHebew,
-  getNextSquareEnglish,
-  getPrevSquareEnglish,
-  getPrevSquareHebrew,
-} from "./appUtils";
 import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
 
-import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
-import {MyKeyBoard} from "./KeyBoard"
-
-
-
-const LANG = "ENG";
-const getRiddle =
-  LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
-const getNextSquare =
-  LANG === "HEB" ? getNextSquareHebew : getNextSquareEnglish;
-const getPrevSquare =
-  LANG === "HEB" ? getPrevSquareHebrew : getPrevSquareEnglish;
-
-function getGameLostH1Text(solution, lang) {
-  if (lang === "ENG") return `Too bad... The solution was ${solution.join("")}`;
-  else {
-    const solText = [...solution].reverse().join("");
-    return `לא נורא... הפתרון הנכון הוא ${solText} `;
-  }
-}
-
-function Square({ value, style}) {
-  const color = style && style.backgroundColor
-  return (
-    <div className={`square ${color} pop`}>
-      {value}
-    </div>
-  );
-}
-
-function InvisibleSquare() {
-  return <div className="invisibleSquare"> </div>;
-}
-
-function Squares({ currAnswer, styles, handleKeyDown }) {
-  useEffect(() => {
-    if (handleKeyDown == null) return;
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  });
-  const squares = [];
-  for (let i = 0; i < currAnswer.length; i++) {
-    if (currAnswer[i] !== " ") {
-      squares.push(
-        <Square key={i} value={currAnswer[i]} style={styles[i]}>
-        </Square>
-      );
-    } else squares.push(<InvisibleSquare key={i}> </InvisibleSquare>);
-  }
-  return squares;
-}
+import { MyKeyBoard } from "./KeyBoard";
+import { GameLost } from "./GameLost";
+import { Squares } from "./Squares";
+import { LANG, getRiddle, getPrevSquare, getNextSquare ,isValidLetter} from "./LANG";
+import { GameWon } from "./GameWon";
 
 function Riddle({
   numberOfGuesses,
@@ -80,33 +28,16 @@ function Riddle({
       </div>
     );
   }
-  return <>{riddles}
-   <MyKeyBoard
-        handleKeyDown={handleKeyDown}
-        lang={LANG}
-      />
-  </>;
+  return (
+    <>
+      {riddles}
+      <MyKeyBoard handleKeyDown={handleKeyDown} />
+    </>
+  );
 }
 
-function NextRiddleButton({ handleClick }) {
+export function NextRiddleButton({ handleClick }) {
   return <button onClick={handleClick}>Next Riddle</button>;
-}
-
-function GameWon({ handleClick }) {
-  return (
-    <>
-      <h1>You Got It!</h1>
-      <NextRiddleButton handleClick={handleClick} />
-    </>
-  );
-}
-function GameLost({ solution, handleClick }) {
-  return (
-    <>
-      <h1>{getGameLostH1Text(solution, LANG)}</h1>
-      <NextRiddleButton handleClick={handleClick} />
-    </>
-  );
 }
 
 function Game({ riddle, setRiddle, progress }) {
@@ -181,22 +112,14 @@ function Game({ riddle, setRiddle, progress }) {
   }
 
   function handleKeyDown(event) {
-    if (gameStatus !=='playing') return 
-    
-    const value = event.key  || event 
-    console.log(value)
-    if (value === "Backspace" || value === "{backspace}" )
+    if (gameStatus !== "playing") return;
+
+    const value = event.key || event;
+    console.log(value);
+    if (value === "Backspace" || value === "{backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
-    else if (
-      LANG === "ENG" &&
-      "abcdefghijklmnopqrstuvwxyz".indexOf(value.toLowerCase()) !== -1
-    )
+    else if (isValidLetter(value))
       setNewAnswer(getNextSquare(currAnswer), value.toUpperCase());
-    else if (
-      LANG === "HEB" &&
-      "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(value) !== -1
-    )
-      setNewAnswer(getNextSquare(currAnswer), value);
     else if (
       (value === "Enter" || value === "{enter}") &&
       currAnswer.every((element) => element !== "")
@@ -227,7 +150,7 @@ function Game({ riddle, setRiddle, progress }) {
 const App = () => {
   const [riddle, setRiddle] = useState(getRiddle());
   const progress = JSON.parse(localStorage.getItem("progress") || "{}");
-  console.log(riddle)
+  console.log(riddle);
   return (
     <Game
       riddle={progress.riddle ? progress.riddle : riddle}

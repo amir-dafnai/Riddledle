@@ -1,5 +1,6 @@
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
+import {LANG} from "./LANG"
 
 const englishLayout = {
     default: [
@@ -18,10 +19,10 @@ const englishLayout = {
    ]
   };
 
+  const layout = LANG === "ENG" ? englishLayout : hebrewLayout;
 
-export function MyKeyBoard({handleKeyDown , lang}){
-    console.log(lang)
-    const layout = lang === "ENG" ? englishLayout : hebrewLayout;
+
+export function MyKeyBoard({handleKeyDown}){
     return <Keyboard
             onKeyPress={handleKeyDown} // Attach handler
             layout={layout}
