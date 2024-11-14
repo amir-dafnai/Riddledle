@@ -1,110 +1,149 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  background-color: #121213;
+  color: #d7dadc;
   display: flex;
   justify-content: center;
   margin: 0;
   padding: 20px;
 }
 
+/* Square Styling */
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  background-color: #3a3a3c;
+  border: 2px solid #565758;
   font-size: 24px;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  color: #ffffff;
   text-align: center;
-  width: 34px;
+  margin: 3px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Correct answer styling */
+.square.green {
+  background-color: #6aaa64; /* Green */
+  border-color: #6aaa64;
+}
+
+.square.orange {
+  background-color: #c9b458; /* Yellow */
+  border-color: #c9b458;
+}
+
+.square.gray {
+  background-color: #3a3a3c; /* Gray */
+  border-color: #3a3a3c;
 }
 
 .invisibleSquare {
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
+  height: 40px;
+  width: 40px;
+  margin: 3px;
   background: transparent;
   border: none;
-  font-size: 0;
 }
 
+/* Container for guesses (like rows in Wordle) */
 .word-container {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap; /* Allow words to wrap to the next line */
-  justify-content: center; /* Center align words */
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .riddle-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   max-width: 600px;
   width: 100%;
-  padding: 0 20px; /* Optional for better spacing */
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-  .square {
-    width: 30px; /* Smaller squares on smaller screens */
-    height: 30px;
-    font-size: 18px; /* Smaller text */
-  }
-
-  .riddle-container {
-    gap: 15px; /* Smaller gap on smaller screens */
-  }
-
-  .word-container {
-    gap: 5px; /* Smaller gap for mobile */
-  }
-}
-
-@media (max-width: 480px) {
-  .square {
-    width: 25px; /* Even smaller squares for very small screens */
-    height: 25px;
-    font-size: 14px;
-  }
-
-  .riddle-container {
-    gap: 10px; /* Tighter gap */
-  }
-
-  .word-container {
-    gap: 2px; /* Tighter word gaps for mobile */
-  }
-
-  body {
-    padding: 10px; /* Less padding for mobile */
-  }
-}
-
-/* Position the keyboard at the bottom of the screen */
+/* Keyboard at the bottom of the screen */
 .virtual-keyboard {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* Ensure it stays on top of other content */
-  background-color: white; /* Optional background color */
-  border-top: 1px solid #ccc; /* Optional: Border to separate the keyboard */
-  padding: 10px; /* Optional: Add some padding */
+  z-index: 1000;
+  background-color: #1a1a1b;
+  border-top: 2px solid #565758;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
 }
 
-/* Optionally, style the input box */
-.virtual-keyboard input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
+.virtual-keyboard button {
+  background-color: #3a3a3c;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
+
+.virtual-keyboard button:hover {
+  background-color: #565758;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .square {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+
+  .riddle-container {
+    gap: 10px;
+  }
+
+  .word-container {
+    gap: 3px;
+  }
+
+  .virtual-keyboard button {
+    padding: 8px 10px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .square {
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+  }
+
+  .riddle-container {
+    gap: 5px;
+  }
+
+  .word-container {
+    gap: 2px;
+  }
+
+  .virtual-keyboard {
+    padding: 8px;
+  }
+
+}
+
+
+

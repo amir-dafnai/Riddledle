@@ -29,9 +29,10 @@ function getGameLostH1Text(solution, lang) {
   }
 }
 
-function Square({ value, style }) {
+function Square({ value, style}) {
+  const color = style && style.backgroundColor
   return (
-    <div className="square" style={style}>
+    <div className={`square ${color} pop`}>
       {value}
     </div>
   );
@@ -52,7 +53,6 @@ function Squares({ currAnswer, styles, handleKeyDown }) {
     if (currAnswer[i] !== " ") {
       squares.push(
         <Square key={i} value={currAnswer[i]} style={styles[i]}>
-          {" "}
         </Square>
       );
     } else squares.push(<InvisibleSquare key={i}> </InvisibleSquare>);
