@@ -15,9 +15,9 @@ function Riddle({
   handleKeyDown,
   currGuess,
 }) {
-  const riddles = [];
+  const riddleSquares = [];
   for (let i = 0; i < numberOfGuesses; i++) {
-    riddles.push(
+    riddleSquares.push(
       <div key={i} className="word-container">
         <Squares
           key={i}
@@ -30,7 +30,7 @@ function Riddle({
   }
   return (
     <>
-      {riddles}
+      {riddleSquares}
       <MyKeyBoard handleKeyDown={handleKeyDown} />
     </>
   );
