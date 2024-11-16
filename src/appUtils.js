@@ -1,5 +1,3 @@
-
-
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
   let solutionChars = solution.slice();
@@ -30,15 +28,12 @@ export function getNextSquareEnglish(currAnswer) {
   }
   return null;
 }
-export function getNextSquareHebew(currAnswer){
-  for (let i = currAnswer.length-1; i >= 0; i--) {
+export function getNextSquareHebew(currAnswer) {
+  for (let i = currAnswer.length - 1; i >= 0; i--) {
     if (currAnswer[i] === "") return i;
   }
   return null;
 }
-
-
-
 
 export function getPrevSquareEnglish(currAnswer, solution) {
   let nextSquare = getNextSquareEnglish(currAnswer, solution);
@@ -48,16 +43,14 @@ export function getPrevSquareEnglish(currAnswer, solution) {
   return nextSquare;
 }
 
-export function getPrevSquareHebrew(currAnswer, solution){
+export function getPrevSquareHebrew(currAnswer, solution) {
   let nextSquare = getNextSquareHebew(currAnswer, solution);
-  console.log('nextSquare', nextSquare)
   if (nextSquare == null) return 0;
-  if (nextSquare === currAnswer.length-1) return currAnswer.length-1
+  if (nextSquare === currAnswer.length - 1) return currAnswer.length - 1;
   nextSquare++;
-  if (solution[nextSquare] === " ") return nextSquare +1;
+  if (solution[nextSquare] === " ") return nextSquare + 1;
   return nextSquare;
 }
-
 
 export function getEmptyAnswers(solution, numberOfGuesses) {
   let answers = [];
@@ -86,3 +79,8 @@ export function arraysAreEqual(arr1, arr2) {
     arr1.every((element, index) => element === arr2[index])
   );
 }
+
+export const setProgress = (progress) =>
+  localStorage.setItem("progress", JSON.stringify(progress));
+export const getProgress = () =>
+  JSON.parse(localStorage.getItem("progress") || "{}");

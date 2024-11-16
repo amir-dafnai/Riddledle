@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
-import { getColors } from "./appUtils";
-import { getEmptyAnswers, getDefaultStyles, arraysAreEqual } from "./appUtils";
+import {
+  getEmptyAnswers,
+  getDefaultStyles,
+  arraysAreEqual,
+  setProgress,
+  getColors,
+  getProgress
+} from "./appUtils";
 
 import { MyKeyBoard } from "./KeyBoard";
 import { GameLost } from "./GameLost";
 import { Squares } from "./Squares";
-import { LANG, getRiddle, getPrevSquare, getNextSquare ,isValidLetter} from "./LANG";
+import {
+  LANG,
+  getRiddle,
+  getPrevSquare,
+  getNextSquare,
+  isValidLetter,
+} from "./LANG";
 import { GameWon } from "./GameWon";
 
 function Riddle({
@@ -40,7 +52,8 @@ export function NextRiddleButton({ handleClick }) {
   return <button onClick={handleClick}>Next Riddle</button>;
 }
 
-function Game({ riddle, setRiddle, progress }) {
+function Game({ riddle, reset }) {
+  const progress = getProgress()
   const solution = riddle.solution;
   const numberOfGuesses = 3;
 
@@ -66,30 +79,13 @@ function Game({ riddle, setRiddle, progress }) {
     : "playing";
 
   useEffect(() => {
-    // Save to localStorage whenever progress changes
-    if (progress.lang && progress.lang !== LANG)
-      localStorage.setItem("progress", JSON.stringify({}));
-    else
-      localStorage.setItem(
-        "progress",
-        JSON.stringify({
-          riddle: riddle,
-          answers: answers,
-          allStyles: allStyles,
-          guesses: guesses,
-          lang: LANG,
-        })
-      );
-  }, [answers, allStyles, guesses, riddle, progress.lang]);
-
-  function reset() {
-    const newRiddle = getRiddle();
-    setAnswers(getEmptyAnswers(newRiddle.solution, numberOfGuesses));
-    setAllStyles(getDefaultStyles(newRiddle.solution, numberOfGuesses));
-    setGuesses([]);
-    setRiddle(newRiddle);
-    localStorage.setItem("progress", JSON.stringify({}));
-  }
+    setProgress({
+      riddle: riddle,
+      answers: answers,
+      allStyles: allStyles,
+      guesses: guesses,
+    });
+  }, [answers, allStyles, guesses, riddle]);
 
   function onEnterClicked(solution, currAnswer) {
     let newStyles = allStyles[currGuess].slice();
@@ -99,9 +95,7 @@ function Game({ riddle, setRiddle, progress }) {
     let newAllStyles = allStyles.slice();
     newAllStyles[currGuess] = newStyles;
     setAllStyles(newAllStyles);
-    let newGuesses = guesses.slice();
-    newGuesses.push(currAnswer);
-    setGuesses(newGuesses);
+    setGuesses((oldGuesses) => [...oldGuesses, currAnswer]);
   }
 
   function setNewAnswer(currSquare, key) {
@@ -115,7 +109,6 @@ function Game({ riddle, setRiddle, progress }) {
     if (gameStatus !== "playing") return;
 
     const value = event.key || event;
-    console.log(value);
     if (value === "Backspace" || value === "{backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
     else if (isValidLetter(value))
@@ -147,16 +140,46 @@ function Game({ riddle, setRiddle, progress }) {
   );
 }
 
-const App = () => {
-  const [riddle, setRiddle] = useState(getRiddle());
+const useRiddle = () => {
+  const [riddle, setRiddle] = useState({});
   const progress = JSON.parse(localStorage.getItem("progress") || "{}");
-  console.log(riddle);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:5000/api/get_riddle");
+      const data = await response.json();
+      const serverRiddle = data.riddle;
+      if (riddle.id !== serverRiddle.id) setRiddle(serverRiddle);
+
+      if (progress.riddle && progress.riddle.id !== serverRiddle.id) {
+        localStorage.setItem("progress", JSON.stringify({}));
+      }
+    };
+
+    fetchData();
+  }, [riddle, progress.riddle]); // Empty dependency array ensures this runs only once on mount
+
+  const riddleToUse = riddle.id
+    ? riddle
+    : progress.riddle
+    ? progress.riddle
+    : null;
+  return [riddleToUse, setRiddle];
+};
+
+
+
+const App = () => {
+  const [riddle, setRiddle] = useRiddle();
   return (
-    <Game
-      riddle={progress.riddle ? progress.riddle : riddle}
-      setRiddle={setRiddle}
-      progress={progress}
-    />
+    riddle && (
+      <Game
+        riddle={riddle}
+        reset={() => {
+          setRiddle({});
+          setProgress({});
+        }}
+      />
+    )
   );
 };
 export default App;
