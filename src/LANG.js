@@ -6,15 +6,15 @@ import {
 } from "./appUtils";
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
 
-export const LANG = "ENG";
+export const LANG = "eng";
 export const getRiddle =
-  LANG === "HEB" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
+  LANG === "heb" ? getRandomHebrewRiddle : getRandomEnglishRiddle;
 export const getNextSquare =
-  LANG === "HEB" ? getNextSquareHebew : getNextSquareEnglish;
+  LANG === "heb" ? getNextSquareHebew : getNextSquareEnglish;
 export const getPrevSquare =
-  LANG === "HEB" ? getPrevSquareHebrew : getPrevSquareEnglish;
+  LANG === "heb" ? getPrevSquareHebrew : getPrevSquareEnglish;
 
 export const isValidLetter = (value) =>{
-  if(LANG === "HEB") return "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(value) !== -1
+  if(LANG === "heb") return "אבגדהוזחטיכלמנסעפצקרשתךםןףץ".indexOf(value) !== -1
   else return "abcdefghijklmnopqrstuvwxyz".indexOf(value.toLowerCase()) !== -1
 }

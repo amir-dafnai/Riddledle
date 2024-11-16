@@ -1,3 +1,4 @@
+import { LANG } from "./LANG";
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
   let solutionChars = solution.slice();
@@ -82,5 +83,8 @@ export function arraysAreEqual(arr1, arr2) {
 
 export const setProgress = (progress) =>
   localStorage.setItem("progress", JSON.stringify(progress));
-export const getProgress = () =>
-  JSON.parse(localStorage.getItem("progress") || "{}");
+export const getProgress = () => {
+  return JSON.parse(localStorage.getItem("progress") || "{}");
+};
+
+export const textDirection = LANG === "heb" ? "rtl" : "ltr";

@@ -5,7 +5,8 @@ import {
   arraysAreEqual,
   setProgress,
   getColors,
-  getProgress
+  getProgress,
+  textDirection,
 } from "./appUtils";
 
 import { MyKeyBoard } from "./KeyBoard";
@@ -122,7 +123,7 @@ function Game({ riddle, reset }) {
   return (
     <>
       <div className="riddle-container">
-        <h1>{riddle.definition}</h1>
+        <h1 className={textDirection}>{riddle.definition}</h1>
         <Riddle
           numberOfGuesses={numberOfGuesses}
           answers={answers}
@@ -140,42 +141,37 @@ function Game({ riddle, reset }) {
   );
 }
 
-const useRiddle = () => {
-  const [riddle, setRiddle] = useState({});
-  const progress = JSON.parse(localStorage.getItem("progress") || "{}");
+const useRiddle = (lang) => {
+  const [riddle, setRiddle] = useState(getProgress().riddle || {});
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:5000/api/get_riddle");
+      const response = await fetch(
+        `http://localhost:5000/api/get_riddle?lang=${LANG}&new=${
+          riddle === null
+        }`
+      );
       const data = await response.json();
-      const serverRiddle = data.riddle;
-      if (riddle.id !== serverRiddle.id) setRiddle(serverRiddle);
+      if (riddle &&  riddle.id === data.riddle.id && data.riddle.lang === lang) return
+      setProgress({});
+      setRiddle(data.riddle);
 
-      if (progress.riddle && progress.riddle.id !== serverRiddle.id) {
-        localStorage.setItem("progress", JSON.stringify({}));
-      }
     };
-
     fetchData();
-  }, [riddle, progress.riddle]); // Empty dependency array ensures this runs only once on mount
+  }, [riddle,lang]); // Empty dependency array ensures this runs only once on mount
 
-  const riddleToUse = riddle.id
-    ? riddle
-    : progress.riddle
-    ? progress.riddle
-    : null;
-  return [riddleToUse, setRiddle];
+  return [riddle, setRiddle];
 };
 
-
-
 const App = () => {
-  const [riddle, setRiddle] = useRiddle();
+  const [riddle, setRiddle] = useRiddle(LANG);
+
   return (
-    riddle && (
+    riddle &&
+    riddle.id && (
       <Game
         riddle={riddle}
         reset={() => {
-          setRiddle({});
+          setRiddle(null);
           setProgress({});
         }}
       />
