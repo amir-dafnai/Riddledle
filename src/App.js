@@ -164,10 +164,9 @@ const useRiddle = (lang) => {
 
 const App = () => {
   const [riddle, setRiddle] = useRiddle(LANG);
-
+  if (riddle && riddle.lang !==LANG) setRiddle(null)
   return (
-    riddle &&
-    riddle.id && (
+    riddle && riddle.lang ===LANG && (
       <Game
         riddle={riddle}
         reset={() => {

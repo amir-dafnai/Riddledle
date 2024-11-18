@@ -156,3 +156,17 @@ body {
   direction: ltr;
   text-align: left;
 }
+
+.hg-button {
+  background-color: white !important; /* Change to desired color */
+  color: black !important; /* Change text color */
+  border: 1px solid black !important;
+  font-size: 20px !important;
+  font-weight: bold;}
+
+
+  .my-keyboard .hg-button {
+    background-color: white !important;
+    color: black !important;
+  }
+  
