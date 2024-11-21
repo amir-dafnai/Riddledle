@@ -1,6 +1,6 @@
 import { getEmptyAnswer } from "./appUtils";
 import { MyKeyBoard } from "./KeyBoard";
-import { Squares } from "./Squares";
+import { RowOfSquares } from "./Squares";
 
 export function Riddle({
   currAnswer,
@@ -20,7 +20,7 @@ export function Riddle({
         : getEmptyAnswer(solution);
     riddleSquares.push(
       <div key={i} className="word-container">
-        <Squares
+        <RowOfSquares
           key={i}
           currGuess={currGuess}
           nSquares={solution.length}
