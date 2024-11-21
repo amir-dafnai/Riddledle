@@ -7,7 +7,7 @@ import {
 import { getRandomEnglishRiddle, getRandomHebrewRiddle } from "./riddlesStack";
 
 export const LANG = "heb";
-const isHeb = LANG === "heb"
+export const isHeb = LANG === "heb"
 export const getRiddle =
 isHeb? getRandomHebrewRiddle : getRandomEnglishRiddle;
 export const getNextSquare =

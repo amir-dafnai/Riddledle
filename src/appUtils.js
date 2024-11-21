@@ -53,24 +53,39 @@ export function getPrevSquareHebrew(currAnswer, solution) {
   return nextSquare;
 }
 
-export function getEmptyAnswers(solution, numberOfGuesses) {
-  let answers = [];
-  for (let i = 0; i < numberOfGuesses; i++) {
-    let answer = [];
-    for (let j = 0; j < solution.length; j++) {
-      if (solution[j] === " ") answer.push(" ");
-      else answer.push("");
-    }
-    answers.push(answer);
+export function getEmptyAnswer(solution) {
+  let answer = [];
+  for (let j = 0; j < solution.length; j++) {
+    if (solution[j] === " ") answer.push(" ");
+    else answer.push("");
   }
-  return answers;
+  return answer;
 }
+
+export function calcStyles(guesses, solution, nGuesses) {
+  const allStyles = getDefaultStyles(solution.length, nGuesses);
+  for (let i = 0; i < guesses.length; i++) {
+    const currStyle = allStyles[i];
+    const colors = getColors(solution, guesses[i]);
+    for (let j = 0; j < solution.length; j++)
+      currStyle[j] = { backgroundColor: colors[j] };
+  }
+  return allStyles;
+}
+
 export function getDefaultStyles(nSquares, nGuesses) {
-  const singleGuessStyles = Array(nSquares).fill({
-    backgroundColor: "white",
-  });
-  const ans = Array(nGuesses).fill(singleGuessStyles);
-  return ans;
+  const styles = [];
+  for (let i = 0; i < nGuesses; i++) {
+    const rowStyles = [];
+    for (let j = 0; j < nSquares; j++) {
+      rowStyles.push({
+        backgroundColor: "white",
+      });
+    }
+    styles.push(rowStyles)
+  }
+
+  return styles;
 }
 export function arraysAreEqual(arr1, arr2) {
   return (
@@ -81,8 +96,9 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-export const setProgress = (progress) =>
+export const setProgress = (progress) => {
   localStorage.setItem("progress", JSON.stringify(progress));
+};
 export const getProgress = () => {
   return JSON.parse(localStorage.getItem("progress") || "{}");
 };

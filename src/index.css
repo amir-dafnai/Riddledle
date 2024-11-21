@@ -44,6 +44,10 @@ body {
   border-color: #3a3a3c;
 }
 
+.virtual-keyboard .key-gray {
+  background-color: red !important;
+}
+
 .invisibleSquare {
   height: 40px;
   width: 40px;

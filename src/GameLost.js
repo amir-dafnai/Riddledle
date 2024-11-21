@@ -1,8 +1,6 @@
-import { NextRiddleButton } from "./App";
+import { NextRiddleButton } from "./NextRiddleButton";
 import { getGameLostH1Text } from "./LANG";
-import {textDirection} from "./appUtils"
-
-
+import { textDirection } from "./appUtils";
 
 export function GameLost({ solution, handleClick }) {
   return (

@@ -1,4 +1,4 @@
-import { NextRiddleButton } from "./App";
+import { NextRiddleButton } from "./NextRiddleButton";
 
 export function GameWon({ handleClick }) {
   return (
