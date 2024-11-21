@@ -31,6 +31,7 @@ const App = () => {
     riddle &&
     riddle.lang === LANG && (
       <Game
+        key = {riddle.id}
         riddle={riddle}
         reset={() => {
           setRiddle(null);
