@@ -4,14 +4,19 @@ import { setProgress, getProgress } from "./appUtils";
 import { LANG } from "./LANG";
 import { Game } from "./Game";
 
+const get_url = ()=>{
+  //return http://localhost:5000
+  return process.env.REACT_APP_URL
+}
+
 const useRiddle = (lang) => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
   useEffect(() => {
+    console.log('fetching')
+    const url = get_url(); 
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:5000/api/get_riddle?lang=${LANG}&new=${
-          riddle === null
-        }`
+        `${url}/api/get_riddle?lang=${LANG}&new=${riddle === null}`
       );
       const data = await response.json();
       if (riddle && riddle.id === data.riddle.id && riddle.lang === lang)
@@ -31,7 +36,7 @@ const App = () => {
     riddle &&
     riddle.lang === LANG && (
       <Game
-        key = {riddle.id}
+        key={riddle.id}
         riddle={riddle}
         reset={() => {
           setRiddle(null);

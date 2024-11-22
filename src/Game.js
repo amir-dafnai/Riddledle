@@ -5,7 +5,6 @@ import {
   setProgress,
   getProgress,
   textDirection,
-  calcStyles,
 } from "./appUtils";
 import { GameLost } from "./GameLost";
 import { getPrevSquare, getNextSquare, isValidLetter } from "./LANG";
@@ -21,7 +20,6 @@ export function Game({ riddle, reset }) {
   const [guesses, setGuesses] = useState(
     progress.guesses ? progress.guesses : []
   );
-  const allStyles = calcStyles(guesses, solution, numberOfGuesses);
   const currGuess = guesses.length;
   const gameStatus = arraysAreEqual(solution, guesses[guesses.length - 1])
     ? "win"
@@ -66,7 +64,6 @@ export function Game({ riddle, reset }) {
           currAnswer={currAnswer}
           guesses={guesses}
           numberOfGuesses={numberOfGuesses}
-          allStyles={allStyles}
           handleKeyDown={handleKeyDown}
           solution={solution}
         />

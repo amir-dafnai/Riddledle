@@ -1,4 +1,4 @@
-import { getEmptyAnswer } from "./appUtils";
+import { getEmptyAnswer, calcStyles } from "./appUtils";
 import { MyKeyBoard } from "./KeyBoard";
 import { RowOfSquares } from "./Squares";
 
@@ -6,10 +6,10 @@ export function Riddle({
   currAnswer,
   guesses,
   numberOfGuesses,
-  allStyles,
   handleKeyDown,
   solution,
 }) {
+  const allStyles = calcStyles(guesses, solution, numberOfGuesses);
   const riddleSquares = [];
   for (let i = 0; i < numberOfGuesses; i++) {
     const currGuess =
