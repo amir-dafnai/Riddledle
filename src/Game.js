@@ -45,14 +45,14 @@ export function Game({ riddle, reset }) {
   function handleKeyDown(event) {
     if (gameStatus !== "playing") return;
     const value = event.key || event;
-    if (value === "Backspace" || value === "{backspace}")
+    if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
     
     else if (isValidLetter(value, isLastLetter)){
       setNewAnswer(getNextSquare(currAnswer), isLastLetter? convertLastLetter(value) : value);
     }
     else if (
-      (value === "Enter" || value === "{enter}") &&
+      (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {
       setGuesses((oldGuesses) => [...oldGuesses, currAnswer]);
