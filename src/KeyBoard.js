@@ -12,9 +12,9 @@ const englishLayout = {
 
 const hebrewLayout = {
   default: [
-    "ק ר א ט ו ן ם פ {backspace}",
-    "ש ד ג כ ע י ח ל ך ף {enter}",
-    "ז ס ב ה נ מ צ ת ץ",
+    "ק ר א ט ו פ {bksp}",
+    "ש ד ג כ ע י ח ל {enter}",
+    "ז ס ב ה נ מ צ ת",
   ],
 };
 
@@ -31,6 +31,11 @@ export function MyKeyBoard({ handleKeyDown }) {
             class: "key-gray",
             buttons: "n"
           }]}
+          display={{
+            '{bksp}': '⌫',
+            '{enter}': '↵',
+            '{shift}': 'shift',
+          }}
       />
     </div>
   );

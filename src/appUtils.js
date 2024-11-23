@@ -82,7 +82,7 @@ export function getDefaultStyles(nSquares, nGuesses) {
         backgroundColor: "white",
       });
     }
-    styles.push(rowStyles)
+    styles.push(rowStyles);
   }
 
   return styles;
@@ -104,3 +104,13 @@ export const getProgress = () => {
 };
 
 export const textDirection = LANG === "heb" ? "rtl" : "ltr";
+
+export const getLastLetterIndices = (solution) => {
+  console.log(solution)
+  const lastLetterIndices = [];
+  for (let i = solution.length; i >= 0; i--) {
+    if (i === 0 || solution[i - 1] === " ")
+      lastLetterIndices.push(i);
+  }
+  return lastLetterIndices;
+};
