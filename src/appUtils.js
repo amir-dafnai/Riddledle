@@ -74,7 +74,6 @@ export function calcStyles(guesses, solution, nGuesses) {
 }
 
 export const getKeyboardButtonTheme = (guesses, solution) => {
-  console.log(guesses)
   if (!guesses || guesses.length === 0) return [];
   const charsByColor = { green: [], orange: [], gray: [] };
   for (let i = 0; i < guesses.length; i++) {
@@ -102,7 +101,6 @@ export const getKeyboardButtonTheme = (guesses, solution) => {
       class: key,
       buttons: value.join(" "),
     }));
-  console.log("buttontheme", buttonTheme);
   return buttonTheme;
 };
 
