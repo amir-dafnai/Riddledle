@@ -5,10 +5,15 @@ import {
   setProgress,
   getProgress,
   textDirection,
-  getLastLetterIndices
+  getLastLetterIndices,
 } from "./appUtils";
 import { GameLost } from "./GameLost";
-import { getPrevSquare, getNextSquare, isValidLetter, convertLastLetter } from "./LANG";
+import {
+  getPrevSquare,
+  getNextSquare,
+  isValidLetter,
+  convertToLastLetter,
+} from "./LANG";
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
 
@@ -27,7 +32,9 @@ export function Game({ riddle, reset }) {
     ? "lose"
     : "playing";
 
-  const isLastLetter = getLastLetterIndices(solution).includes(getNextSquare(currAnswer))
+  const isLastLetter = getLastLetterIndices(solution).includes(
+    getNextSquare(currAnswer)
+  );
 
   useEffect(() => {
     setProgress({
@@ -47,11 +54,12 @@ export function Game({ riddle, reset }) {
     const value = event.key || event;
     if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
-    
-    else if (isValidLetter(value, isLastLetter)){
-      setNewAnswer(getNextSquare(currAnswer), isLastLetter? convertLastLetter(value) : value);
-    }
-    else if (
+    else if (isValidLetter(value, isLastLetter)) {
+      setNewAnswer(
+        getNextSquare(currAnswer),
+        isLastLetter ? convertToLastLetter(value) : value
+      );
+    } else if (
       (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {

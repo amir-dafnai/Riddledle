@@ -1,4 +1,4 @@
-import { LANG } from "./LANG";
+import { LANG, convertFromLastLetter } from "./LANG";
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
   let solutionChars = solution.slice();
@@ -81,7 +81,7 @@ export const getKeyboardButtonTheme = (guesses, solution) => {
     const colors = getColors(solution, guesses[i]);
     for (let j = 0; j < colors.length; j++) {
       const color = colors[j];
-      const currChar = guesses[i][j];
+      const currChar = convertFromLastLetter(guesses[i][j]);
       charsByColor[color].push(currChar);
     }
   }

@@ -28,7 +28,7 @@ export const getGameLostH1Text = (solution) => {
   } else return `Too bad... The solution was ${solution.join("")}`;
 };
 
-export const convertLastLetter = (val) => {
+export const convertToLastLetter = (val) => {
   switch (val) {
     case "צ":
       return "ץ";
@@ -41,6 +41,23 @@ export const convertLastLetter = (val) => {
     case "כ":
       return "ך";
     default:
-      return val
+      return val;
+  }
+};
+
+export const convertFromLastLetter = (val) => {
+  switch (val) {
+    case "ץ":
+      return "צ";
+    case "ף":
+      return "פ";
+    case "ם":
+      return "מ";
+    case "ן":
+      return "נ";
+    case "ך":
+      return "כ";
+    default:
+      return val;
   }
 };
