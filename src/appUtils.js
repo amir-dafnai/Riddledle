@@ -73,6 +73,39 @@ export function calcStyles(guesses, solution, nGuesses) {
   return allStyles;
 }
 
+export const getKeyboardButtonTheme = (guesses, solution) => {
+  console.log(guesses)
+  if (!guesses || guesses.length === 0) return [];
+  const charsByColor = { green: [], orange: [], gray: [] };
+  for (let i = 0; i < guesses.length; i++) {
+    const colors = getColors(solution, guesses[i]);
+    for (let j = 0; j < colors.length; j++) {
+      const color = colors[j];
+      const currChar = guesses[i][j];
+      charsByColor[color].push(currChar);
+    }
+  }
+  charsByColor["orange"] = charsByColor["orange"].filter(
+    (char) => !charsByColor["green"].includes(char)
+  );
+  charsByColor["gray"] = charsByColor["gray"].filter(
+    (char) =>
+      !(
+        charsByColor["green"].includes(char) ||
+        charsByColor["orange"].includes(char)
+      )
+  );
+
+  const buttonTheme = Object.entries(charsByColor)
+    .filter(([key, value]) => value.length > 0)
+    .map(([key, value]) => ({
+      class: key,
+      buttons: value.join(" "),
+    }));
+  console.log("buttontheme", buttonTheme);
+  return buttonTheme;
+};
+
 export function getDefaultStyles(nSquares, nGuesses) {
   const styles = [];
   for (let i = 0; i < nGuesses; i++) {
@@ -108,8 +141,7 @@ export const textDirection = LANG === "heb" ? "rtl" : "ltr";
 export const getLastLetterIndices = (solution) => {
   const lastLetterIndices = [];
   for (let i = solution.length; i >= 0; i--) {
-    if (i === 0 || solution[i - 1] === " ")
-      lastLetterIndices.push(i);
+    if (i === 0 || solution[i - 1] === " ") lastLetterIndices.push(i);
   }
   return lastLetterIndices;
 };

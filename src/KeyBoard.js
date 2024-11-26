@@ -20,17 +20,15 @@ const hebrewLayout = {
 
 const layout = isHeb ? hebrewLayout : englishLayout;
 
-export function MyKeyBoard({ handleKeyDown }) {
+
+export function MyKeyBoard({ handleKeyDown , buttonTheme }) {
+
   return (
     <div className="my-keyboard">
       <Keyboard
         onKeyPress={handleKeyDown} 
         layout={layout}
-        buttonTheme={[
-          {
-            class: "key-gray",
-            buttons: "n"
-          }]}
+        buttonTheme={buttonTheme}
           display={{
             '{Backspace}': '⌫',
             '{Enter}': '↵',

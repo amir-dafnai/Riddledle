@@ -44,10 +44,6 @@ body {
   border-color: #3a3a3c;
 }
 
-.virtual-keyboard .key-gray {
-  background-color: red !important;
-}
-
 .invisibleSquare {
   height: 40px;
   width: 40px;
@@ -73,38 +69,9 @@ body {
   width: 100%;
 }
 
-/* Keyboard at the bottom of the screen */
-.virtual-keyboard {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background-color: #1a1a1b;
-  border-top: 2px solid #565758;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 5px;
-}
 
-.virtual-keyboard button {
-  background-color: #3a3a3c;
-  border: none;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 15px;
-  margin: 3px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
 
-.virtual-keyboard button:hover {
-  background-color: #565758;
-}
+
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
@@ -161,16 +128,24 @@ body {
   text-align: left;
 }
 
+.hg-button.orange {
+  background: orange !important;
+  color: black; /* Keep text color distinct */
+}
+
+.hg-button.green {
+  background: green !important;  /* Apply background color */
+  color: black; /* Keep text color distinct */
+}
+
+.hg-button.gray {
+  background: gray !important;  /* Apply background color */
+  color: black; /* Keep text color distinct */
+}
+
 .hg-button {
-  background-color: white !important; /* Change to desired color */
-  color: black !important; /* Change text color */
-  border: 1px solid black !important;
-  font-size: 20px !important;
-  font-weight: bold;}
-
-
-  .my-keyboard .hg-button {
-    background-color: white !important;
-    color: black !important;
-  }
-  
+  color: black; /* Change text color */
+  border: 1px solid black;
+  font-size: 20px;
+  font-weight: bold;
+}

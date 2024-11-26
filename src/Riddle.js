@@ -1,6 +1,7 @@
-import { getEmptyAnswer, calcStyles } from "./appUtils";
+import { getEmptyAnswer, calcStyles, getKeyboardButtonTheme } from "./appUtils";
 import { MyKeyBoard } from "./KeyBoard";
 import { RowOfSquares } from "./Squares";
+
 
 export function Riddle({
   currAnswer,
@@ -33,7 +34,7 @@ export function Riddle({
   return (
     <>
       {riddleSquares}
-      <MyKeyBoard handleKeyDown={handleKeyDown} />
+      <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={getKeyboardButtonTheme(guesses , solution)} />
     </>
   );
 }
