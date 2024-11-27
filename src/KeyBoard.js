@@ -12,8 +12,8 @@ const englishLayout = {
 
 const hebrewLayout = {
   default: [
-    "ק ר א ט ו פ {Backspace}",
-    "ש ד ג כ ע י ח ל {Enter}",
+    "ק ר א ט ו פ ל {Backspace}",
+    "ש ד ג כ ע י ח {Enter}",
     "ז ס ב ה נ מ צ ת",
   ],
 };

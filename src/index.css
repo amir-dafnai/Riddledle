@@ -69,9 +69,47 @@ body {
   width: 100%;
 }
 
+/* Keyboard Positioning */
+.my-keyboard {
+  position: fixed; /* Stick to the bottom of the screen */
+  bottom: 0;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Offset by half its width to center */
+  width: 90%; /* Take up most of the screen width with empty space */
+  max-width: 800px; /* Restrict maximum width */
+  padding: 10px; /* Add padding around the keyboard */
+  box-sizing: border-box; /* Include padding in width calculation */
+  background-color: #121213; /* Match theme background */
+  display: grid; /* Use a grid for perfect button alignment */
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Responsive button sizes */
+  gap: 5px; /* Space between buttons */
+}
 
+.hg-button {
+  height: 50px; /* Fixed button height */
+  font-size: 18px; /* Button text size */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Center text in the button */
+  border: 1px solid black; /* Border around buttons */
+  background-color: gray; /* Default button background color */
+  color: black; /* Button text color */
+  box-sizing: border-box; /* Include padding in button size */
+  transition: all 0.3s ease; /* Smooth resizing */
+}
+.hg-button.orange {
+  background: orange !important;
+  color: black; /* Keep text color distinct */
+}
 
+.hg-button.green {
+  background: green !important; /* Apply background color */
+  color: black; /* Keep text color distinct */
+}
 
+.hg-button.gray {
+  background: gray !important; /* Apply background color */
+  color: black; /* Keep text color distinct */
+}
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
@@ -89,9 +127,12 @@ body {
     gap: 3px;
   }
 
-  .virtual-keyboard button {
-    padding: 8px 10px;
-    font-size: 16px;
+  .hg-button {
+    height: 40px; /* Smaller button height */
+    font-size: 16px; /* Smaller text */
+  }
+  .my-keyboard {
+    width: 95%; /* Adjust keyboard width for smaller devices */
   }
 }
 
@@ -110,13 +151,15 @@ body {
     gap: 2px;
   }
 
-  .virtual-keyboard {
-    padding: 8px;
+  .my-keyboard {
+    padding: 5px;
   }
 
+  .hg-button {
+    height: 35px; /* Even smaller button height */
+    font-size: 14px; /* Smaller text for narrow screens */
+  }
 }
-
-
 
 .rtl {
   direction: rtl;
@@ -126,26 +169,4 @@ body {
 .ltr {
   direction: ltr;
   text-align: left;
-}
-
-.hg-button.orange {
-  background: orange !important;
-  color: black; /* Keep text color distinct */
-}
-
-.hg-button.green {
-  background: green !important;  /* Apply background color */
-  color: black; /* Keep text color distinct */
-}
-
-.hg-button.gray {
-  background: gray !important;  /* Apply background color */
-  color: black; /* Keep text color distinct */
-}
-
-.hg-button {
-  color: black; /* Change text color */
-  border: 1px solid black;
-  font-size: 20px;
-  font-weight: bold;
 }
