@@ -13,14 +13,14 @@ body {
 .square {
   background-color: #3a3a3c;
   border: 2px solid #565758;
-  font-size: 24px;
+  font-size: 36px; /* Increased font size */
   font-weight: bold;
-  line-height: 40px;
-  height: 40px;
-  width: 40px;
+  line-height: 60px; /* Match height */
+  height: 60px; /* Larger squares */
+  width: 60px; /* Larger squares */
   color: #ffffff;
   text-align: center;
-  margin: 3px;
+  margin: 5px; /* Increased spacing */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
@@ -45,9 +45,9 @@ body {
 }
 
 .invisibleSquare {
-  height: 40px;
-  width: 40px;
-  margin: 3px;
+  height: 60px; /* Match larger square size */
+  width: 60px;
+  margin: 5px;
   background: transparent;
   border: none;
 }
@@ -56,7 +56,7 @@ body {
 .word-container {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: 8px; /* Increased gap */
   margin-bottom: 10px;
 }
 
@@ -64,9 +64,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
   max-width: 600px;
   width: 100%;
+  text-align: center; /* Ensures all text is centered */
 }
 
 /* Keyboard Positioning */
@@ -75,48 +76,76 @@ body {
   bottom: 0;
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Offset by half its width to center */
-  width: 90%; /* Take up most of the screen width with empty space */
+  width: 95%; /* Take up most of the screen width */
+  height: 25%; /* Take almost half the screen height */
   max-width: 800px; /* Restrict maximum width */
   padding: 10px; /* Add padding around the keyboard */
   box-sizing: border-box; /* Include padding in width calculation */
   background-color: #121213; /* Match theme background */
   display: grid; /* Use a grid for perfect button alignment */
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Responsive button sizes */
-  gap: 5px; /* Space between buttons */
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* Larger button sizes */
+  gap: 8px; /* Space between buttons */
+   
 }
 
 .hg-button {
-  height: 50px; /* Fixed button height */
-  font-size: 18px; /* Button text size */
+  height: 70px; /* Larger button height */
+  font-size: 20px; /* Increased font size */
   font-weight: bold; /* Bold text */
   text-align: center; /* Center text in the button */
   border: 1px solid black; /* Border around buttons */
   background-color: gray; /* Default button background color */
   color: black; /* Button text color */
   box-sizing: border-box; /* Include padding in button size */
-  transition: all 0.3s ease; /* Smooth resizing */
+  transition: all 0.3s ease; /* Smooth resizing */;
 }
 .hg-button.orange {
   background: orange !important;
-  color: black; /* Keep text color distinct */
+  color: black;
 }
 
 .hg-button.green {
-  background: green !important; /* Apply background color */
-  color: black; /* Keep text color distinct */
+  background: green !important;
+  color: black;
 }
 
 .hg-button.gray {
-  background: gray !important; /* Apply background color */
-  color: black; /* Keep text color distinct */
+  background: gray !important;
+  color: black;
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .square {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+  }
+
+  .riddle-container {
+    gap: 15px;
+  }
+
+  .word-container {
+    gap: 5px;
+  }
+
+  .hg-button {
+    height: 60px;
+    font-size: 18px;
+  }
+
+  .my-keyboard {
+    width: 95%;
+    height: 40%; /* Slightly smaller keyboard for medium devices */
+  }
+}
+
+@media (max-width: 480px) {
+  .square {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
   }
 
   .riddle-container {
@@ -124,40 +153,17 @@ body {
   }
 
   .word-container {
-    gap: 3px;
+    gap: 4px;
   }
 
   .hg-button {
-    height: 40px; /* Smaller button height */
-    font-size: 16px; /* Smaller text */
-  }
-  .my-keyboard {
-    width: 95%; /* Adjust keyboard width for smaller devices */
-  }
-}
-
-@media (max-width: 480px) {
-  .square {
-    width: 25px;
-    height: 25px;
+    height: 50px;
     font-size: 16px;
   }
 
-  .riddle-container {
-    gap: 5px;
-  }
-
-  .word-container {
-    gap: 2px;
-  }
-
   .my-keyboard {
+    height: 35%; /* Adjust keyboard size for small devices */
     padding: 5px;
-  }
-
-  .hg-button {
-    height: 35px; /* Even smaller button height */
-    font-size: 14px; /* Smaller text for narrow screens */
   }
 }
 
