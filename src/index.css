@@ -135,10 +135,6 @@ body {
     font-size: 18px;
   }
 
-  .my-keyboard {
-    width: 95%;
-    height: 40%; /* Slightly smaller keyboard for medium devices */
-  }
 }
 
 @media (max-width: 480px) {
