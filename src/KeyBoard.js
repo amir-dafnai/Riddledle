@@ -31,7 +31,7 @@ export function MyKeyBoard({ handleKeyDown , buttonTheme }) {
         buttonTheme={buttonTheme}
           display={{
             '{Backspace}': '⌫',
-            '{Enter}': '↵',
+            '{Enter}': '⏎',
           }}
       />
     </div>
