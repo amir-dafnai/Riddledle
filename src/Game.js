@@ -6,6 +6,7 @@ import {
   getProgress,
   textDirection,
   getLastLetterIndices,
+  getStringLengths,
 } from "./appUtils";
 import { GameLost } from "./GameLost";
 import {
@@ -70,7 +71,7 @@ export function Game({ riddle, reset }) {
   return (
     <>
       <div className="riddle-container">
-        <h1 className={textDirection}>{riddle.definition}</h1>
+        <h1 className={textDirection}>{riddle.definition} {getStringLengths(riddle.solution)}</h1>
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}

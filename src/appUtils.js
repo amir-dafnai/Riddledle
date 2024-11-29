@@ -143,3 +143,25 @@ export const getLastLetterIndices = (solution) => {
   }
   return lastLetterIndices;
 };
+
+export const getStringLengths = (arr) => {
+  let lengths = [];
+  let currentLength = 0;
+
+  for (let char of arr) {
+    if (char === " ") {
+      if (currentLength > 0) {
+        lengths.push(currentLength);
+        currentLength = 0;
+      }
+    } else {
+      currentLength++;
+    }
+  }
+
+  if (currentLength > 0) {
+    lengths.push(currentLength);
+  }
+
+  return `(${lengths.join(",")})`;
+};
