@@ -99,19 +99,32 @@ body {
   box-sizing: border-box; /* Include padding in button size */
   transition: all 0.3s ease; /* Smooth resizing */;
 }
-.hg-button.orange {
-  background: orange !important;
-  color: black;
+.hg-theme-default .hg-button.hg-standardBtn.orange {
+  background: rgb(181, 159, 59);
 }
 
-.hg-button.green {
-  background: green !important;
-  color: black;
+.hg-theme-default .hg-button.hg-standardBtn.green {
+  background: rgb(83, 141, 78);
 }
 
-.hg-button.gray {
-  background: gray !important;
-  color: black;
+.hg-theme-default .hg-button.hg-standardBtn.gray {
+  background: rgb(58, 58, 60);
+}
+
+.hg-theme-default .hg-button.hg-standardBtn, .hg-theme-default .hg-button.hg-functionBtn {
+  background-color: rgb(129, 131, 132);
+  color: white;
+  border: unset;
+  height: 58px;
+  font-size: 1.5em;
+}
+
+.hg-theme-default.myTheme .hg-row .hg-button-container, .hg-theme-default .hg-row .hg-button:not(:last-child) {
+  margin-right: 8px;
+}
+
+.hg-theme-default.myTheme .hg-row:not(:last-child) {
+  margin-bottom: 8px;
 }
 
 /* Media Queries for Responsiveness */
@@ -171,4 +184,43 @@ body {
 .ltr {
   direction: ltr;
   text-align: left;
+}
+
+
+/* Overlay Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Form Styles */
+.form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adds space between input fields */
+  width: 300px;
+}
+
+/* Buttons at the Bottom */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.simple-keyboard.myTheme {
+  background-color: unset;
+  width:500px;
 }

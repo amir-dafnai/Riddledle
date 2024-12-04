@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { UseRiddleForm, UserRiddleForm } from "./UserRiddleForm";
+
 import {
   getEmptyAnswer,
   arraysAreEqual,
@@ -20,6 +22,8 @@ import { Riddle } from "./Riddle";
 
 export function Game({ riddle, reset }) {
   const progress = getProgress();
+
+  const [showForm , setShowForm , handleSubmit] = UseRiddleForm()
   const solution = riddle.solution;
   const numberOfGuesses = 3;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
@@ -51,7 +55,7 @@ export function Game({ riddle, reset }) {
   }
 
   function handleKeyDown(event) {
-    if (gameStatus !== "playing") return;
+    if (gameStatus !== "playing" || showForm) return;
     const value = event.key || event;
     if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
@@ -71,6 +75,8 @@ export function Game({ riddle, reset }) {
   return (
     <>
       <div className="riddle-container">
+        {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
+        {(showForm && <UserRiddleForm handleSubmit={handleSubmit} setShowForm={setShowForm}/>)}
         <h1 className={textDirection}>{riddle.definition} {getStringLengths(riddle.solution)}</h1>
         <Riddle
           currAnswer={currAnswer}
@@ -79,7 +85,7 @@ export function Game({ riddle, reset }) {
           handleKeyDown={handleKeyDown}
           solution={solution}
         />
-
+        
         {gameStatus === "win" && <GameWon handleClick={reset} />}
         {gameStatus === "lose" && (
           <GameLost solution={solution} handleClick={reset} />
