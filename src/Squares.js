@@ -1,8 +1,15 @@
 import { useEffect } from "react";
 
-function Square({ value, style }) {
+function Square({ value, style, delay }) {
   const color = style && style.backgroundColor;
-  return <div className={`square ${color} pop`}>{value}</div>;
+  return (
+    <div
+      className={`square ${color} pop`}
+      style={{ animationDelay: `${400 * delay}ms` }}
+    >
+      {value}
+    </div>
+  );
 }
 function InvisibleSquare() {
   return <div className="invisibleSquare"> </div>;
@@ -19,7 +26,12 @@ export function RowOfSquares({ nSquares, currGuess, styles, handleKeyDown }) {
   for (let i = 0; i < nSquares; i++) {
     if (currGuess[i] !== " ") {
       squaresRow.push(
-        <Square key={i} value={currGuess[i]} style={styles[i]}></Square>
+        <Square
+          key={i}
+          value={currGuess[i]}
+          style={styles[i]}
+          delay={nSquares - i}
+        ></Square>
       );
     } else squaresRow.push(<InvisibleSquare key={i}> </InvisibleSquare>);
   }

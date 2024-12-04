@@ -23,9 +23,9 @@ import { Riddle } from "./Riddle";
 export function Game({ riddle, reset }) {
   const progress = getProgress();
 
-  const [showForm , setShowForm , handleSubmit] = UseRiddleForm()
+  const [showForm, setShowForm, handleSubmit] = UseRiddleForm();
   const solution = riddle.solution;
-  const numberOfGuesses = 3;
+  const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
   const [guesses, setGuesses] = useState(
     progress.guesses ? progress.guesses : []
@@ -76,8 +76,15 @@ export function Game({ riddle, reset }) {
     <>
       <div className="riddle-container">
         {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
-        {(showForm && <UserRiddleForm handleSubmit={handleSubmit} setShowForm={setShowForm}/>)}
-        <h1 className={textDirection}>{riddle.definition} {getStringLengths(riddle.solution)}</h1>
+        {showForm && (
+          <UserRiddleForm
+            handleSubmit={handleSubmit}
+            setShowForm={setShowForm}
+          />
+        )}
+        <h1 className={textDirection}>
+          {riddle.definition} {getStringLengths(riddle.solution)}
+        </h1>
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}
@@ -85,7 +92,7 @@ export function Game({ riddle, reset }) {
           handleKeyDown={handleKeyDown}
           solution={solution}
         />
-        
+
         {gameStatus === "win" && <GameWon handleClick={reset} />}
         {gameStatus === "lose" && (
           <GameLost solution={solution} handleClick={reset} />

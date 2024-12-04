@@ -25,29 +25,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  transition: transform 0.6s ease-in-out, background-color 0.6s ease-in-out;
+  transform-origin: center;
 }
+
+
 
 /* Correct answer styling */
 .square.green {
   background-color: #6aaa64; /* Green */
   border-color: #6aaa64;
+  animation: flip 0.9s ease-in-out forwards;
 }
 
 .square.orange {
   background-color: #c9b458; /* Yellow */
   border-color: #c9b458;
+  animation: flip 0.9s ease-in-out forwards;
 }
 
 .square.gray {
   background-color: #3a3a3c; /* Gray */
   border-color: #3a3a3c;
+  animation: flip 0.9s ease-in-out forwards;
 }
 
 .invisibleSquare {
-  height: 60px; /* Match larger square size */
-  width: 60px;
-  margin: 5px;
+  height: 20px; /* Match larger square size */
+  width: 20px;
   background: transparent;
   border: none;
 }
@@ -64,7 +69,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   max-width: 600px;
   width: 100%;
   text-align: center; /* Ensures all text is centered */
@@ -152,13 +157,17 @@ body {
 
 @media (max-width: 480px) {
   .square {
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    min-width: 26px;
+    min-height: 26px;
+    line-height: 26%;
+    margin: 3px;
   }
 
   .riddle-container {
-    gap: 10px;
+    gap: 8px;
   }
 
   .word-container {
@@ -174,16 +183,15 @@ body {
     height: 35%; /* Adjust keyboard size for small devices */
     padding: 5px;
   }
+  
 }
 
 .rtl {
   direction: rtl;
-  text-align: right;
 }
 
 .ltr {
   direction: ltr;
-  text-align: left;
 }
 
 
@@ -223,4 +231,22 @@ body {
 .simple-keyboard.myTheme {
   background-color: unset;
   width:500px;
+  margin-top: 20px;
+
+  @media (max-width: 480px) {
+    width: 370px;
+    margin-top: 30px;
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
+  }
 }
