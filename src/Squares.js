@@ -5,7 +5,7 @@ function Square({ value, style, delay }) {
   return (
     <div
       className={`square ${color} pop`}
-      style={{ animationDelay: `${400 * delay}ms` }}
+      style={{ animationDelay: `${350 * delay}ms` }}
     >
       {value}
     </div>

@@ -74,8 +74,9 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
+    {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
       <div className="riddle-container">
-        {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
+  
         {showForm && (
           <UserRiddleForm
             handleSubmit={handleSubmit}
