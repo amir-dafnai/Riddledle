@@ -11,7 +11,7 @@ const useRiddle = (lang) => {
     const url = get_url();
     const fetchData = async () => {
       const response = await fetch(
-        `${url}/api/get_riddle?lang=${LANG}&new=${riddle === null}`
+        `${url}api/get_riddle?lang=${LANG}&new=${riddle === null}`
       );
       const data = await response.json();
       if (riddle && riddle.id === data.riddle.id && riddle.lang === lang)

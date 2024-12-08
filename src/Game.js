@@ -74,7 +74,7 @@ export function Game({ riddle, reset }) {
   function storeStats(newGuesses, newStatus) {
     const guessesAsStrings = newGuesses.map(ans => [...ans].reverse().join(''));
     const url = get_url();
-    fetch(`${url}/api/insert_stats`, {
+    fetch(`${url}api/insert_stats`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
