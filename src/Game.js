@@ -9,6 +9,7 @@ import {
   textDirection,
   getLastLetterIndices,
   getStringLengths,
+  get_url,
 } from "./appUtils";
 import { GameLost } from "./GameLost";
 import {
@@ -20,6 +21,16 @@ import {
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
 
+const getGameStatus = (solution , guesses , numberOfGuesses) => {
+  const currGuess = guesses.length;
+  const status = arraysAreEqual(solution, guesses[guesses.length - 1])
+  ? "win"
+  : currGuess === numberOfGuesses
+  ? "lose"
+  : "playing";
+  return status
+}
+
 export function Game({ riddle, reset }) {
   const progress = getProgress();
 
@@ -30,13 +41,7 @@ export function Game({ riddle, reset }) {
   const [guesses, setGuesses] = useState(
     progress.guesses ? progress.guesses : []
   );
-  const currGuess = guesses.length;
-  const gameStatus = arraysAreEqual(solution, guesses[guesses.length - 1])
-    ? "win"
-    : currGuess === numberOfGuesses
-    ? "lose"
-    : "playing";
-
+  const gameStatus = getGameStatus(solution , guesses , numberOfGuesses)
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
@@ -54,6 +59,30 @@ export function Game({ riddle, reset }) {
     setCurrAnswer(newAns);
   }
 
+  function onEnterClicked(){
+    const newGuesses = [...guesses, currAnswer]
+    const newStatus = getGameStatus(solution , newGuesses , numberOfGuesses)
+    if(newStatus !=='playing') {
+      storeStats(newGuesses, newStatus);
+    }
+    setGuesses(newGuesses);
+    setCurrAnswer(getEmptyAnswer(solution));
+
+
+  }
+
+  function storeStats(newGuesses, newStatus) {
+    const guessesAsStrings = newGuesses.map(ans => [...ans].reverse().join(''));
+    const url = get_url();
+    fetch(`${url}/api/insert_stats`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 'riddle_id': riddle.id, 'status': newStatus, 'guesses': guessesAsStrings }),
+    });
+  }
+
   function handleKeyDown(event) {
     if (gameStatus !== "playing" || showForm) return;
     const value = event.key || event;
@@ -68,8 +97,7 @@ export function Game({ riddle, reset }) {
       (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {
-      setGuesses((oldGuesses) => [...oldGuesses, currAnswer]);
-      setCurrAnswer(getEmptyAnswer(solution));
+      onEnterClicked()
     }
   }
   return (

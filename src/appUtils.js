@@ -165,3 +165,7 @@ export const getStringLengths = (arr) => {
 
   return `(${lengths.join(",")})`;
 };
+export const get_url = () => {
+  //return 'http://localhost:5000'
+  return process.env.REACT_APP_URL;
+};
