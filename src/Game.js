@@ -4,13 +4,12 @@ import { UseRiddleForm, UserRiddleForm } from "./UserRiddleForm";
 import {
   getEmptyAnswer,
   arraysAreEqual,
-  setProgress,
-  getProgress,
   textDirection,
   getLastLetterIndices,
   getStringLengths,
   get_url,
 } from "./appUtils";
+import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 import { GameLost } from "./GameLost";
 import {
   getPrevSquare,
@@ -21,15 +20,15 @@ import {
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
 
-const getGameStatus = (solution , guesses , numberOfGuesses) => {
+const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
   const status = arraysAreEqual(solution, guesses[guesses.length - 1])
-  ? "win"
-  : currGuess === numberOfGuesses
-  ? "lose"
-  : "playing";
-  return status
-}
+    ? "win"
+    : currGuess === numberOfGuesses
+    ? "lose"
+    : "playing";
+  return status;
+};
 
 export function Game({ riddle, reset }) {
   const progress = getProgress();
@@ -41,7 +40,7 @@ export function Game({ riddle, reset }) {
   const [guesses, setGuesses] = useState(
     progress.guesses ? progress.guesses : []
   );
-  const gameStatus = getGameStatus(solution , guesses , numberOfGuesses)
+  const gameStatus = getGameStatus(solution, guesses, numberOfGuesses);
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
@@ -59,27 +58,36 @@ export function Game({ riddle, reset }) {
     setCurrAnswer(newAns);
   }
 
-  function onEnterClicked(){
-    const newGuesses = [...guesses, currAnswer]
-    const newStatus = getGameStatus(solution , newGuesses , numberOfGuesses)
-    if(newStatus !=='playing') {
+  function onEnterClicked() {
+    const newGuesses = [...guesses, currAnswer];
+    const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
+    if (newStatus !== "playing") {
       storeStats(newGuesses, newStatus);
     }
     setGuesses(newGuesses);
     setCurrAnswer(getEmptyAnswer(solution));
-
-
   }
 
   function storeStats(newGuesses, newStatus) {
-    const guessesAsStrings = newGuesses.map(ans => [...ans].reverse().join(''));
+    const guessesAsStrings = newGuesses.map((ans) =>
+      [...ans].reverse().join("")
+    );
+    console.log('sending ' , getUserData())
+
     const url = get_url();
+    const userData = getUserData()
     fetch(`${url}api/insert_stats`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 'riddle_id': riddle.id, 'status': newStatus, 'guesses': guessesAsStrings }),
+      body: JSON.stringify({
+        riddle_id: riddle.id,
+        status: newStatus,
+        guesses: guessesAsStrings,
+        user_name : userData.name,
+        email : userData.email  
+      }),
     });
   }
 
@@ -97,14 +105,13 @@ export function Game({ riddle, reset }) {
       (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {
-      onEnterClicked()
+      onEnterClicked();
     }
   }
   return (
     <>
-    {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
+      {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
       <div className="riddle-container">
-  
         {showForm && (
           <UserRiddleForm
             handleSubmit={handleSubmit}

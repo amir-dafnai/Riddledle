@@ -271,3 +271,54 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+.google-login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #4285f4; /* Google blue */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.google-login-button:hover {
+  background-color: #357ae8; /* Darker Google blue */
+}
+
+.google-login-button:active {
+  transform: scale(0.98); /* Button click effect */
+}
+
+.google-login-button .google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+
+@media (max-width: 600px) {
+  .google-login-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  .google-login-button .google-icon {
+    width: 16px;
+    height: 16px;
+  }
+}

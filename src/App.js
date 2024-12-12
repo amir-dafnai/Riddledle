@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { setProgress, getProgress, get_url } from "./appUtils";
+import { get_url } from "./appUtils";
+import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { LANG } from "./LANG";
 import { Game } from "./Game";
+import { CustomGoogleLogin } from "./loginPage";
 
 const useRiddle = (lang) => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
   useEffect(() => {
-    console.log("fetching");
     const url = get_url();
     const fetchData = async () => {
       const response = await fetch(
@@ -27,9 +28,18 @@ const useRiddle = (lang) => {
 
 const App = () => {
   const [riddle, setRiddle] = useRiddle(LANG);
-  return (
-    riddle &&
-    riddle.lang === LANG && (
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const storedUser = getUserData();
+    if (storedUser) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  if (!isLoggedIn) return <CustomGoogleLogin setIsLoggedIn={setIsLoggedIn} />;
+  if (riddle)
+    return (
       <Game
         key={riddle.id}
         riddle={riddle}
@@ -38,7 +48,6 @@ const App = () => {
           setProgress({});
         }}
       />
-    )
-  );
+    );
 };
 export default App;

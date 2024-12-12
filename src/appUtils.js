@@ -127,13 +127,6 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-export const setProgress = (progress) => {
-  localStorage.setItem("progress", JSON.stringify(progress));
-};
-export const getProgress = () => {
-  return JSON.parse(localStorage.getItem("progress") || "{}");
-};
-
 export const textDirection = LANG === "heb" ? "rtl" : "ltr";
 
 export const getLastLetterIndices = (solution) => {
