@@ -1,10 +1,13 @@
 import { LANG, convertFromLastLetter } from "./LANG";
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
-  let solutionChars = solution.slice();
+  let solutionChars = solution.map((char) => convertFromLastLetter(char));
+  const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char));
+  console.log("solution", solutionChars);
   for (let i = 0; i < solution.length; i++) {
     if (solution[i] === " ") continue;
-    const currChar = currAnswer[i];
+    const currChar = currAnsChars[i];
+    console.log("currchar", currChar);
     const index = solutionChars.indexOf(currChar);
     if (currChar === solution[i]) {
       colors[i] = "green";
@@ -14,7 +17,7 @@ export function getColors(solution, currAnswer) {
 
   for (let i = 0; i < solution.length; i++) {
     if (solution[i] === " ") continue;
-    const currChar = currAnswer[i];
+    const currChar = currAnsChars[i];
     const index = solutionChars.indexOf(currChar);
     if (index !== -1 && colors[i] === "gray") {
       solutionChars.splice(index, 1);
@@ -159,6 +162,6 @@ export const getStringLengths = (arr) => {
   return `(${lengths.join(",")})`;
 };
 export const getUrl = () => {
-  //return 'http://localhost:5000/'
-  return process.env.REACT_APP_URL;
+  return "http://localhost:5000/";
+  //return process.env.REACT_APP_URL;
 };
