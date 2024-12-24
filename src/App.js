@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { get_url } from "./appUtils";
+import { getUrl } from "./appUtils";
 import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { LANG } from "./LANG";
@@ -9,7 +9,7 @@ import { CustomGoogleLogin } from "./loginPage";
 const useRiddle = (lang) => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
   useEffect(() => {
-    const url = get_url();
+    const url = getUrl();
     const fetchData = async () => {
       const response = await fetch(
         `${url}api/get_riddle?lang=${LANG}&new=${riddle === null}`

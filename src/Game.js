@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UseRiddleForm, UserRiddleForm } from "./UserRiddleForm";
+import { UseForm, SuggestRiddleForm } from "./SuggestRiddle";
 
 import {
   getEmptyAnswer,
@@ -7,7 +7,7 @@ import {
   textDirection,
   getLastLetterIndices,
   getStringLengths,
-  get_url,
+  getUrl,
 } from "./appUtils";
 import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 import { GameLost } from "./GameLost";
@@ -33,7 +33,7 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
 export function Game({ riddle, reset }) {
   const progress = getProgress();
 
-  const [showForm, setShowForm, handleSubmit] = UseRiddleForm();
+  const [showForm, setShowForm, handleSubmit] = UseForm();
   const solution = riddle.solution;
   const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
@@ -72,10 +72,8 @@ export function Game({ riddle, reset }) {
     const guessesAsStrings = newGuesses.map((ans) =>
       [...ans].reverse().join("")
     );
-    console.log('sending ' , getUserData())
-
-    const url = get_url();
-    const userData = getUserData()
+    const url = getUrl();
+    const userData = getUserData();
     fetch(`${url}api/insert_stats`, {
       method: "POST",
       headers: {
@@ -85,8 +83,8 @@ export function Game({ riddle, reset }) {
         riddle_id: riddle.id,
         status: newStatus,
         guesses: guessesAsStrings,
-        user_name : userData.name,
-        email : userData.email  
+        user_name: userData.name,
+        email: userData.email,
       }),
     });
   }
@@ -110,10 +108,10 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
-      {/* <button onClick={()=>setShowForm(true)}>Suggest Your Own</button> */}
+      {/* <button onClick={() => setShowForm(true)}>Suggest Your Own</button> */}
       <div className="riddle-container">
         {showForm && (
-          <UserRiddleForm
+          <SuggestRiddleForm
             handleSubmit={handleSubmit}
             setShowForm={setShowForm}
           />
