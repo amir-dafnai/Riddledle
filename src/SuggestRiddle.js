@@ -13,7 +13,6 @@ export const UseForm = () => {
     const userData = getUserData();
     const user_name = userData.name;
     const email = userData.email;
-    console.log({ definition, solution, user_name, email });
     fetch(`${getUrl()}api/create_new_riddle`, {
       method: "POST",
       headers: {

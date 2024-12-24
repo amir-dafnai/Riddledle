@@ -108,7 +108,7 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
-      {/* <button onClick={() => setShowForm(true)}>Suggest Your Own</button> */}
+      {true? <button onClick={() => setShowForm(true)}>Suggest Your Own</button> : null}
       <div className="riddle-container">
         {showForm && (
           <SuggestRiddleForm
