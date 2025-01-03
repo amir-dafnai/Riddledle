@@ -5,11 +5,9 @@ export function getColors(solution, currAnswer) {
   const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char));
   for (let i = 0; i < solution.length; i++) {
     if (solution[i] === " ") continue;
-    const currChar = currAnsChars[i];
-    const index = solutionChars.indexOf(currChar);
-    if (currChar === solution[i]) {
+    if (currAnsChars[i] === solutionChars[i]) {
       colors[i] = "green";
-      solutionChars.splice(index, 1);
+      solutionChars.splice(i, 1);
     }
   }
 
