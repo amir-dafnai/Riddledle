@@ -4,7 +4,7 @@ import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { LANG } from "./LANG";
 import { Game } from "./Game";
-import { CustomGoogleLogin } from "./loginPage";
+import { CustomGoogleLogin, GoogleLoginOnGuest } from "./loginPage";
 
 const useRiddle = (lang) => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
@@ -28,26 +28,31 @@ const useRiddle = (lang) => {
 
 const App = () => {
   const [riddle, setRiddle] = useRiddle(LANG);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [logInStatus, setLoginStatus] = useState(null);
 
   useEffect(() => {
     const storedUser = getUserData();
     if (storedUser) {
-      setIsLoggedIn(true);
+      const loginStatus = storedUser.email ==='guest' ? 'guest' : 'user'
+      setLoginStatus(loginStatus);
     }
   }, []);
 
-  if (!isLoggedIn) return <CustomGoogleLogin setIsLoggedIn={setIsLoggedIn} />;
+  if (logInStatus === null)
+    return <GoogleLoginOnGuest setLoginStatus={setLoginStatus} />;
   if (riddle)
     return (
-      <Game
-        key={riddle.id}
-        riddle={riddle}
-        reset={() => {
-          setRiddle(null);
-          setProgress({});
-        }}
-      />
+      <>
+        {logInStatus === 'guest' ? <CustomGoogleLogin setLoginStatus={setLoginStatus} /> : null }
+        <Game
+          key={riddle.id}
+          riddle={riddle}
+          reset={() => {
+            setRiddle(null);
+            setProgress({});
+          }}
+        />
+      </>
     );
 };
 export default App;
