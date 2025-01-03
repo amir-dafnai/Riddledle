@@ -1,23 +1,22 @@
 import { LANG, convertFromLastLetter } from "./LANG";
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
-  let solutionChars = solution.map((char) => convertFromLastLetter(char));
-  const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char));
-  for (let i = 0; i < solution.length; i++) {
-    if (solution[i] === " ") continue;
+  const solutionChars = solution.map((char) => convertFromLastLetter(char));
+  const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char)); 
+  for (let i = 0; i < solutionChars.length; i++) {
+    if (solutionChars[i] === " ") continue;
     if (currAnsChars[i] === solutionChars[i]) {
       colors[i] = "green";
-      solutionChars.splice(i, 1);
+      solutionChars[i] = 'X'
     }
   }
 
-  for (let i = 0; i < solution.length; i++) {
-    if (solution[i] === " ") continue;
-    const currChar = currAnsChars[i];
-    const index = solutionChars.indexOf(currChar);
-    if (index !== -1 && colors[i] === "gray") {
-      solutionChars.splice(index, 1);
+  for (let i = 0; i < solutionChars.length; i++) {
+    if (solutionChars[i] === " ") continue;
+    const index = solutionChars.indexOf(currAnsChars[i]);
+    if (index !== -1) {
       colors[i] = "orange";
+      solutionChars[index] = 'X'
     }
   }
   return colors;
