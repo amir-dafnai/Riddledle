@@ -1,13 +1,12 @@
-import { LANG, convertFromLastLetter } from "./LANG";
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
   const solutionChars = solution.map((char) => convertFromLastLetter(char));
-  const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char)); 
+  const currAnsChars = currAnswer.map((char) => convertFromLastLetter(char));
   for (let i = 0; i < solutionChars.length; i++) {
     if (solutionChars[i] === " ") continue;
     if (currAnsChars[i] === solutionChars[i]) {
       colors[i] = "green";
-      solutionChars[i] = 'X'
+      solutionChars[i] = "X";
     }
   }
 
@@ -16,34 +15,21 @@ export function getColors(solution, currAnswer) {
     const index = solutionChars.indexOf(currAnsChars[i]);
     if (index !== -1) {
       colors[i] = "orange";
-      solutionChars[index] = 'X'
+      solutionChars[index] = "X";
     }
   }
   return colors;
 }
-export function getNextSquareEnglish(currAnswer) {
-  for (let i = 0; i < currAnswer.length; i++) {
-    if (currAnswer[i] === "") return i;
-  }
-  return null;
-}
-export function getNextSquareHebew(currAnswer) {
+
+export function getNextSquare(currAnswer) {
   for (let i = currAnswer.length - 1; i >= 0; i--) {
     if (currAnswer[i] === "") return i;
   }
   return null;
 }
 
-export function getPrevSquareEnglish(currAnswer, solution) {
-  let nextSquare = getNextSquareEnglish(currAnswer, solution);
-  if (nextSquare == null) return solution.length - 1;
-  nextSquare--;
-  if (solution[nextSquare] === " ") return nextSquare - 1;
-  return nextSquare;
-}
-
-export function getPrevSquareHebrew(currAnswer, solution) {
-  let nextSquare = getNextSquareHebew(currAnswer, solution);
+export function getPrevSquare(currAnswer, solution) {
+  let nextSquare = getNextSquare(currAnswer, solution);
   if (nextSquare == null) return 0;
   if (nextSquare === currAnswer.length - 1) return currAnswer.length - 1;
   nextSquare++;
@@ -125,7 +111,7 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-export const textDirection = LANG === "heb" ? "rtl" : "ltr";
+export const textDirection = "rtl";
 
 export const getLastLetterIndices = (solution) => {
   const lastLetterIndices = [];
@@ -159,4 +145,44 @@ export const getStringLengths = (arr) => {
 export const getUrl = () => {
   //return "http://localhost:5000/";
   return process.env.REACT_APP_URL;
+};
+export const isValidLetter = (value, isLastLetter) => {
+  return (
+    "אבגדהוזחטיכלמנסעפצקרשת".indexOf(value) !== -1 ||
+    ("םןףךץ".indexOf(value) !== -1 && isLastLetter)
+  );
+};
+
+export const convertToLastLetter = (val) => {
+  switch (val) {
+    case "צ":
+      return "ץ";
+    case "פ":
+      return "ף";
+    case "מ":
+      return "ם";
+    case "נ":
+      return "ן";
+    case "כ":
+      return "ך";
+    default:
+      return val;
+  }
+};
+
+export const convertFromLastLetter = (val) => {
+  switch (val) {
+    case "ץ":
+      return "צ";
+    case "ף":
+      return "פ";
+    case "ם":
+      return "מ";
+    case "ן":
+      return "נ";
+    case "ך":
+      return "כ";
+    default:
+      return val;
+  }
 };

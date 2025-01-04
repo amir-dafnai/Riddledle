@@ -8,15 +8,12 @@ import {
   getLastLetterIndices,
   getStringLengths,
   getUrl,
+  getNextSquare,
+  getPrevSquare,
 } from "./appUtils";
 import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 import { GameLost } from "./GameLost";
-import {
-  getPrevSquare,
-  getNextSquare,
-  isValidLetter,
-  convertToLastLetter,
-} from "./LANG";
+import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
 
@@ -108,7 +105,9 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
-      {false? <button onClick={() => setShowForm(true)}>Suggest Your Own</button> : null}
+      {false ? (
+        <button onClick={() => setShowForm(true)}>Suggest Your Own</button>
+      ) : null}
       <div className="riddle-container">
         {showForm && (
           <SuggestRiddleForm

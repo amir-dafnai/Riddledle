@@ -1,5 +1,4 @@
 import { NextRiddleButton } from "./NextRiddleButton";
-import { getGameLostH1Text } from "./LANG";
 import { textDirection } from "./appUtils";
 
 export function GameLost({ solution, handleClick }) {
@@ -10,3 +9,7 @@ export function GameLost({ solution, handleClick }) {
     </>
   );
 }
+export const getGameLostH1Text = (solution) => {
+  const solText = [...solution].reverse().join("");
+  return `לא נורא... הפתרון הנכון הוא ${solText} `;
+};
