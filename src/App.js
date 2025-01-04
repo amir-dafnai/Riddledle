@@ -4,7 +4,6 @@ import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
 import { CustomGoogleLogin, GoogleLoginOnGuest } from "./loginPage";
-const LANG = "heb";
 
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
@@ -12,10 +11,10 @@ const useRiddle = () => {
     const url = getUrl();
     const fetchData = async () => {
       const response = await fetch(
-        `${url}api/get_riddle?lang=${LANG}&new=${riddle === null}`
+        `${url}api/get_riddle?&new=${riddle === null}`
       );
       const data = await response.json();
-      if (riddle && riddle.id === data.riddle.id && riddle.lang === LANG)
+      if (riddle && riddle.id === data.riddle.id)
         return;
       setProgress({});
       setRiddle(data.riddle);
