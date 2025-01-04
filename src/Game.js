@@ -119,6 +119,7 @@ export function Game({ riddle, reset }) {
         <h1 className={textDirection}>
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
+        {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}
