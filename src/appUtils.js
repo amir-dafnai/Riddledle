@@ -9,9 +9,9 @@ export function getColors(solution, currAnswer) {
       solutionChars[i] = "X";
     }
   }
-
+ 
   for (let i = 0; i < solutionChars.length; i++) {
-    if (solutionChars[i] === " ") continue;
+    if (solutionChars[i] === " " || colors[i] === 'green') continue;
     const index = solutionChars.indexOf(currAnsChars[i]);
     if (index !== -1) {
       colors[i] = "orange";
