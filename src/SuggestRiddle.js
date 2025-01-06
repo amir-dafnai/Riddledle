@@ -30,26 +30,46 @@ export const UseForm = () => {
 export const SuggestRiddleForm = ({ setShowForm, handleSubmit }) => {
   return (
     <>
-      (
       <div className="overlay">
-        <form onSubmit={handleSubmit} className="form-container">
+        <form
+          onSubmit={handleSubmit}
+          className="form-container rtl-form dark-mode"
+        >
+          <h2 className="form-title">הצעת חידה חדשה</h2>
           <label>
-            Definition:
-            <input type="text" name="definition" required />
+            <span className="label-text">הגדרה:</span>
+            <input
+              type="text"
+              name="definition"
+              maxLength="100"
+              placeholder="הקלד את ההגדרה כאן"
+              required
+            />
           </label>
           <label>
-            Solution:
-            <input type="text" name="solution" required />
+            <span className="label-text">פתרון:</span>
+            <input
+              type="text"
+              name="solution"
+              maxLength="100"
+              placeholder="הקלד את הפתרון כאן"
+              required
+            />
           </label>
           <div className="button-container">
-            <button type="button" onClick={() => setShowForm(false)}>
-              Cancel
+            <button
+              type="button"
+              onClick={() => setShowForm(false)}
+              className="cancel-button"
+            >
+              ביטול
             </button>
-            <button type="submit">Submit</button>
+            <button type="submit" className="submit-button">
+              שליחה
+            </button>
           </div>
         </form>
       </div>
-      )
     </>
   );
 };

@@ -16,6 +16,7 @@ import { GameLost } from "./GameLost";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
+import { isUserLoggedIn } from "./loginPage";
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
@@ -105,8 +106,8 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
-      {false ? (
-        <button onClick={() => setShowForm(true)}>Suggest Your Own</button>
+      {isUserLoggedIn() ? (
+        <button className="dark-mode-button" onClick={() => setShowForm(true)}>?יש לך רעיון להגדרה</button>
       ) : null}
       <div className="riddle-container">
         {showForm && (

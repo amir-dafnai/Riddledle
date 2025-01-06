@@ -322,3 +322,123 @@ body {
     height: 16px;
   }
 }
+
+
+
+/* Overlay styling */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Dark transparent overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Form container */
+.form-container {
+  background: #1e1e1e; /* Dark background */
+  border-radius: 10px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Darker shadow */
+  text-align: center;
+  color: #f0f0f0; /* Light text color */
+}
+
+/* RTL styling */
+.rtl-form {
+  direction: rtl;
+}
+
+/* Form title */
+.form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ffffff; /* Bright text for titles */
+}
+
+/* Labels and input fields */
+.label-text {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #e0e0e0;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #444; /* Darker border for inputs */
+  background-color: #2a2a2a; /* Dark background for inputs */
+  color: #ffffff;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  font-size: 14px;
+  color: #bbb; /* Subtle placeholder color */
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #d9534f; /* Dark red for cancel */
+  color: white;
+}
+
+.submit-button {
+  background-color: #5cb85c; /* Dark green for submit */
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+
+
+
+/* Dark mode button styling */
+.dark-mode-button {
+  background-color: #1e1e1e; /* Match the dark mode background */
+  color: #ffffff; /* Light text for contrast */
+  border: 1px solid #444; /* Subtle border */
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-mode-button:hover {
+  background-color: #2a2a2a; /* Slightly lighter on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.dark-mode-button:active {
+  background-color: #333; /* Even lighter on click */
+  transform: translateY(0); /* Reset lift effect */
+}
