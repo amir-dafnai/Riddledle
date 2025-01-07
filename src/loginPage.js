@@ -1,12 +1,6 @@
-import React from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import { getUserData, setUserData } from "./localStorageUtils";
-
-export const isUserLoggedIn = () => {
-  const user =  getUserData()
-  if (user) return user.email !== "guest";
-  return false;
-};
+import { LOGINSTATUS } from "./Consts";
+import { setUserData, setUserStats } from "./localStorageUtils";
+import { fetchStats } from "./Stats";
 
 const fetchUserInfo = async (accessToken) => {
   try {
@@ -28,33 +22,14 @@ const fetchUserInfo = async (accessToken) => {
 
 export const onLoginSuccess = async (setLoginStatus, tokenResponse) => {
   const userInfo = await fetchUserInfo(tokenResponse.access_token);
+  const stats = await fetchStats(userInfo.email);
   setUserData(userInfo);
-  setLoginStatus("user");
+  setLoginStatus(LOGINSTATUS.user);
+  setUserStats(stats);
 };
 
-export const CustomGoogleLogin = ({ setLoginStatus }) => {
-
-  const login = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      await onLoginSuccess(setLoginStatus, tokenResponse);
-    },
-    onError: () => {
-      console.error("Login Failed");
-    },
-  });
-
-  return (
-    <>
-      <button className="google-login-button" onClick={login}>
-        <span>Sign in with Google</span>
-      </button>
-    </>
-  );
-};
-
-export const setGuestUser = (setLoginStatus)=>{
+export const setGuestUser = (setLoginStatus) => {
   const now = Date.now();
-  setUserData({ email: "guest", name: now });
-  setLoginStatus("guest");
-}
-
+  setUserData({ email: LOGINSTATUS.guest, name: now });
+  setLoginStatus(LOGINSTATUS.guest);
+};

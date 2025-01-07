@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  SuggestRiddleForm } from "./SuggestRiddle";
+import { SuggestRiddleForm } from "./SuggestRiddle";
 
 import {
   getEmptyAnswer,
@@ -16,6 +16,8 @@ import { GameLost } from "./GameLost";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
+import { StatisticsModal } from "./Stats";
+import { VIEWS } from "./Consts";
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
@@ -27,7 +29,7 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({ riddle, reset , showForm, setShowForm }) {
+export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   const progress = getProgress();
 
   const solution = riddle.solution;
@@ -86,7 +88,7 @@ export function Game({ riddle, reset , showForm, setShowForm }) {
   }
 
   function handleKeyDown(event) {
-    if (gameStatus !== "playing" || showForm) return;
+    if (gameStatus !== "playing" || viewStatus !== VIEWS.game) return;
     const value = event.key || event;
     if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
@@ -104,15 +106,14 @@ export function Game({ riddle, reset , showForm, setShowForm }) {
   }
   return (
     <>
-      {/* {isUserLoggedIn() ? (
-        <button className="dark-mode-button" onClick={() => setShowForm(true)}>?יש לך רעיון להגדרה</button>
-      ) : null} */}
       <div className="riddle-container">
-        {showForm && (
-          <SuggestRiddleForm
-            setShowForm={setShowForm}
-          />
+        {viewStatus === VIEWS.form && (
+          <SuggestRiddleForm setViewStatus={setViewStatus} />
         )}
+        {viewStatus === VIEWS.stats && (
+          <StatisticsModal setViewStatus={setViewStatus} />
+        )}
+
         <h1 className={textDirection}>
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>

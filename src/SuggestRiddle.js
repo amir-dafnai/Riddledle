@@ -1,7 +1,8 @@
 import { getUserData } from "./localStorageUtils";
 import { getUrl } from "./appUtils";
+import { VIEWS } from "./Consts";
 
-export const SuggestRiddleForm = ({ setShowForm }) => {
+export const SuggestRiddleForm = ({ setViewStatus }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -18,9 +19,8 @@ export const SuggestRiddleForm = ({ setShowForm }) => {
       body: JSON.stringify({ definition, solution, user_name, email }),
     });
 
-    setShowForm(false);
+    setViewStatus(VIEWS.game);
   };
-
 
   return (
     <>
@@ -53,7 +53,7 @@ export const SuggestRiddleForm = ({ setShowForm }) => {
           <div className="button-container">
             <button
               type="button"
-              onClick={() => setShowForm(false)}
+              onClick={() => setViewStatus(VIEWS.game)}
               className="cancel-button"
             >
               ביטול
