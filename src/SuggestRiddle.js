@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { getUserData } from "./localStorageUtils";
 import { getUrl } from "./appUtils";
 
-export const UseForm = () => {
-  const [showForm, setShowForm] = useState(false);
-
+export const SuggestRiddleForm = ({ setShowForm }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -24,10 +21,7 @@ export const UseForm = () => {
     setShowForm(false);
   };
 
-  return [showForm, setShowForm, handleSubmit];
-};
 
-export const SuggestRiddleForm = ({ setShowForm, handleSubmit }) => {
   return (
     <>
       <div className="overlay">

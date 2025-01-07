@@ -3,7 +3,9 @@ import { getUrl } from "./appUtils";
 import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
-import { CustomGoogleLogin, GoogleLoginOnGuest } from "./loginPage";
+import { CustomGoogleLogin, GoogleLoginOrGuest } from "./loginPage";
+import Navbar from "./Navbar";
+import { UseForm } from "./SuggestRiddle";
 
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle || {});
@@ -14,8 +16,7 @@ const useRiddle = () => {
         `${url}api/get_riddle?&new=${riddle === null}`
       );
       const data = await response.json();
-      if (riddle && riddle.id === data.riddle.id)
-        return;
+      if (riddle && riddle.id === data.riddle.id) return;
       setProgress({});
       setRiddle(data.riddle);
     };
@@ -28,6 +29,8 @@ const useRiddle = () => {
 const App = () => {
   const [riddle, setRiddle] = useRiddle();
   const [logInStatus, setLoginStatus] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
 
   useEffect(() => {
     const storedUser = getUserData();
@@ -38,13 +41,11 @@ const App = () => {
   }, []);
 
   if (logInStatus === null)
-    return <GoogleLoginOnGuest setLoginStatus={setLoginStatus} />;
+    return <GoogleLoginOrGuest setLoginStatus={setLoginStatus} />;
   if (riddle)
     return (
       <>
-        {logInStatus === "guest" ? (
-          <CustomGoogleLogin setLoginStatus={setLoginStatus} />
-        ) : null}
+        <Navbar setLoginStatus={setLoginStatus} setShowForm={setShowForm} />
         <Game
           key={riddle.id}
           riddle={riddle}
@@ -52,6 +53,8 @@ const App = () => {
             setRiddle(null);
             setProgress({});
           }}
+          showForm={showForm}
+          setShowForm={setShowForm}
         />
       </>
     );

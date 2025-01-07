@@ -16,7 +16,6 @@ import { GameLost } from "./GameLost";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
-import { isUserLoggedIn } from "./loginPage";
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
@@ -28,10 +27,9 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({ riddle, reset }) {
+export function Game({ riddle, reset , showForm, setShowForm }) {
   const progress = getProgress();
 
-  const [showForm, setShowForm, handleSubmit] = UseForm();
   const solution = riddle.solution;
   const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
@@ -106,13 +104,12 @@ export function Game({ riddle, reset }) {
   }
   return (
     <>
-      {isUserLoggedIn() ? (
+      {/* {isUserLoggedIn() ? (
         <button className="dark-mode-button" onClick={() => setShowForm(true)}>?יש לך רעיון להגדרה</button>
-      ) : null}
+      ) : null} */}
       <div className="riddle-container">
         {showForm && (
           <SuggestRiddleForm
-            handleSubmit={handleSubmit}
             setShowForm={setShowForm}
           />
         )}
