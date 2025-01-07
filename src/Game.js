@@ -70,7 +70,7 @@ export function Game({ riddle, reset , showForm, setShowForm }) {
     );
     const url = getUrl();
     const userData = getUserData();
-    fetch(`${url}api/insert_stats`, {
+    fetch(`${url}insert_stats`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

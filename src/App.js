@@ -11,7 +11,7 @@ const useRiddle = () => {
     const url = getUrl();
     const fetchData = async () => {
       const response = await fetch(
-        `${url}api/get_riddle?&new=${riddle === null}`
+        `${url}get_riddle?&new=${riddle === null}`
       );
       const data = await response.json();
       if (riddle && riddle.id === data.riddle.id) return;

@@ -10,7 +10,7 @@ export const SuggestRiddleForm = ({ setShowForm }) => {
     const userData = getUserData();
     const user_name = userData.name;
     const email = userData.email;
-    fetch(`${getUrl()}api/create_new_riddle`, {
+    fetch(`${getUrl()}create_new_riddle`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
