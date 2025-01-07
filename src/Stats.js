@@ -48,7 +48,7 @@ export const StatisticsModal = ({ setViewStatus }) => {
           className="close-button"
           onClick={() => setViewStatus(VIEWS.game)}
         >
-          Close
+          סגור
         </button>
       </div>
     </div>
