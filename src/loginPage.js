@@ -3,7 +3,9 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { getUserData, setUserData } from "./localStorageUtils";
 
 export const isUserLoggedIn = () => {
-  return getUserData().email !== "guest";
+  const user =  getUserData()
+  if (user) return user.email !== "guest";
+  return false;
 };
 
 const fetchUserInfo = async (accessToken) => {

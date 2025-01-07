@@ -3,12 +3,10 @@ import { getUrl } from "./appUtils";
 import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
-import { CustomGoogleLogin, GoogleLoginOrGuest } from "./loginPage";
 import Navbar from "./Navbar";
-import { UseForm } from "./SuggestRiddle";
 
 const useRiddle = () => {
-  const [riddle, setRiddle] = useState(getProgress().riddle || {});
+  const [riddle, setRiddle] = useState(getProgress().riddle);
   useEffect(() => {
     const url = getUrl();
     const fetchData = async () => {
@@ -21,7 +19,7 @@ const useRiddle = () => {
       setRiddle(data.riddle);
     };
     fetchData();
-  }, [riddle]); // Empty dependency array ensures this runs only once on mount
+  }, [riddle]);
 
   return [riddle, setRiddle];
 };
@@ -31,18 +29,19 @@ const App = () => {
   const [logInStatus, setLoginStatus] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-
   useEffect(() => {
     const storedUser = getUserData();
     if (storedUser) {
       const loginStatus = storedUser.email === "guest" ? "guest" : "user";
       setLoginStatus(loginStatus);
+    } else {
+      setLoginStatus("guest");
     }
   }, []);
 
-  if (logInStatus === null)
-    return <GoogleLoginOrGuest setLoginStatus={setLoginStatus} />;
-  if (riddle)
+  if (logInStatus !== null && riddle) {
+    console.log('1', logInStatus)
+    console.log('2', riddle)
     return (
       <>
         <Navbar setLoginStatus={setLoginStatus} setShowForm={setShowForm} />
@@ -58,5 +57,6 @@ const App = () => {
         />
       </>
     );
+  }
 };
 export default App;
