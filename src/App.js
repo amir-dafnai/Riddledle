@@ -4,6 +4,7 @@ import { setProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
 import Navbar from "./Navbar";
+import { setGuestUser } from "./loginPage";
 
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle);
@@ -35,16 +36,15 @@ const App = () => {
       const loginStatus = storedUser.email === "guest" ? "guest" : "user";
       setLoginStatus(loginStatus);
     } else {
-      setLoginStatus("guest");
+      console.log('calling from app')
+      setGuestUser(setLoginStatus)
     }
   }, []);
 
   if (logInStatus !== null && riddle) {
-    console.log('1', logInStatus)
-    console.log('2', riddle)
     return (
       <>
-        <Navbar setLoginStatus={setLoginStatus} setShowForm={setShowForm} />
+        <Navbar isLoggedIn={logInStatus === 'user'} setLoginStatus={setLoginStatus} setShowForm={setShowForm} />
         <Game
           key={riddle.id}
           riddle={riddle}

@@ -1,14 +1,14 @@
 import React from "react";
 import { FiBarChart2 } from "react-icons/fi"; // Import icons
 import { TfiWrite } from "react-icons/tfi";
-import { IoIosLogIn } from "react-icons/io";
+import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
 
 import "./Navbar.css";
-import { isUserLoggedIn, onLoginSuccess } from "./loginPage";
+import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { useGoogleLogin } from "@react-oauth/google";
 
-const Navbar = ({ setLoginStatus, setShowForm }) => {
+const Navbar = ({ isLoggedIn, setLoginStatus, setShowForm }) => {
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       await onLoginSuccess(setLoginStatus, tokenResponse);
@@ -25,10 +25,7 @@ const Navbar = ({ setLoginStatus, setShowForm }) => {
       </div>
       <ul className="navbar-links">
         <li>
-          <button
-            disabled={!isUserLoggedIn()}
-            onClick={() => setShowForm(true)}
-          >
+          <button disabled={!isLoggedIn} onClick={() => setShowForm(true)}>
             <TfiWrite size={24} /> {/* Play Icon */}
           </button>
         </li>
@@ -42,13 +39,21 @@ const Navbar = ({ setLoginStatus, setShowForm }) => {
             <FaRegQuestionCircle size={24} /> {/* How to play */}
           </button>
         </li>
-        {!isUserLoggedIn() ? (
+        {!isLoggedIn ? (
           <li>
             <button onClick={login}>
               <IoIosLogIn size={24} /> {/* Login Icon */}
             </button>
           </li>
-        ) : null}
+        ) : (
+          <button
+            onClick={() => {
+              setGuestUser(setLoginStatus);
+            }}
+          >
+            <IoIosLogOut size={24} /> {/* LogOut Icon */}
+          </button>
+        )}
       </ul>
     </nav>
   );

@@ -52,18 +52,9 @@ export const CustomGoogleLogin = ({ setLoginStatus }) => {
   );
 };
 
-export const GoogleLoginOrGuest = ({ setLoginStatus }) => {
-  const asGuest = () => {
-    const now = Date.now();
-    setUserData({ email: "guest", name: now });
-    setLoginStatus("guest");
-  };
-  return (
-    <>
-      <CustomGoogleLogin setLoginStatus={setLoginStatus} />
-      <button className="google-login-button" onClick={asGuest}>
-        <span>Continue As Guest</span>
-      </button>
-    </>
-  );
-};
+export const setGuestUser = (setLoginStatus)=>{
+  const now = Date.now();
+  setUserData({ email: "guest", name: now });
+  setLoginStatus("guest");
+}
+
