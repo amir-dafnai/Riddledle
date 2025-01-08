@@ -29,7 +29,7 @@ export const SuggestRiddleForm = ({ setViewStatus }) => {
           onSubmit={handleSubmit}
           className="form-container rtl-form dark-mode"
         >
-          <h2 className="form-title">הצעת חידה חדשה</h2>
+          <h2 className="form-title">  הצעת חידה חדשה <br></br><br></br>שלחו חידה משלכם ואולי היא תכנס למאגר!</h2>
           <label>
             <span className="label-text">הגדרה:</span>
             <input
