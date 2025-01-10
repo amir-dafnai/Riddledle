@@ -20,7 +20,7 @@ const TimerToMidnight = ({onTimeEnds, onClose , text}) => {
   function calculateTimeLeft() {
     const now = new Date();
     const midnight = new Date();
-    midnight.setHours(24, 0, 1, 0);
+    midnight.setHours(24, 1, 0, 0);
     const difference = midnight - now;
 
     const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
