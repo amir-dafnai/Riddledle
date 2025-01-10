@@ -12,12 +12,14 @@ import {
   getPrevSquare,
   getMaxDelay,
 } from "./appUtils";
+import { getKeyboardButtonTheme } from "./KeyBoard";
 import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
 import { StatisticsModal } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
+import { MyKeyBoard } from "./KeyBoard";
 
 const getGameLostText = (solution) => {
   const solText = [...solution].reverse().join("");
@@ -55,17 +57,23 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   );
   const [timerWasClosed, setTimerWasClosed] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(true);
+  const [keyBoardThem, setKeyBoardTheme] = useState(
+    getKeyboardButtonTheme(guesses, solution)
+  );
 
   const shouldShowTimer = () => {
-    return (animationEnded && 
-      [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) && !timerWasClosed
+    return (
+      animationEnded &&
+      [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) &&
+      !timerWasClosed
     );
   };
 
   useEffect(() => {
-    const animationDuration = getMaxDelay(solution) *2 ; // Replace this with your animation's duration in milliseconds
+    const animationDuration = getMaxDelay(solution) * 3; // Replace this with your animation's duration in milliseconds
     const timer = setTimeout(() => {
       setAnimationEnded(true);
+      setKeyBoardTheme(getKeyboardButtonTheme(guesses, solution));
     }, animationDuration);
 
     return () => clearTimeout(timer);
@@ -117,7 +125,12 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   }
 
   function handleKeyDown(event) {
-    if (gameStatus !== "playing" || viewStatus !== VIEWS.game || !animationEnded) return;
+    if (
+      gameStatus !== "playing" ||
+      viewStatus !== VIEWS.game ||
+      !animationEnded
+    )
+      return;
     const value = event.key || event;
     if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
@@ -154,6 +167,8 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
           handleKeyDown={handleKeyDown}
           solution={solution}
         />
+        <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
+
         {shouldShowTimer() ? (
           <TimerToMidnight
             onClose={() => setTimerWasClosed(true)}

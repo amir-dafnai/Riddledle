@@ -11,9 +11,9 @@ export function getColors(solution, currAnswer) {
       solutionChars[i] = "X";
     }
   }
- 
+
   for (let i = 0; i < solutionChars.length; i++) {
-    if (solutionChars[i] === " " || colors[i] === 'green') continue;
+    if (solutionChars[i] === " " || colors[i] === "green") continue;
     const index = solutionChars.indexOf(currAnsChars[i]);
     if (index !== -1) {
       colors[i] = "orange";
@@ -58,37 +58,6 @@ export function calcStyles(guesses, solution, nGuesses) {
   }
   return allStyles;
 }
-
-export const getKeyboardButtonTheme = (guesses, solution) => {
-  if (!guesses || guesses.length === 0) return [];
-  const charsByColor = { green: [], orange: [], gray: [] };
-  for (let i = 0; i < guesses.length; i++) {
-    const colors = getColors(solution, guesses[i]);
-    for (let j = 0; j < colors.length; j++) {
-      const color = colors[j];
-      const currChar = convertFromLastLetter(guesses[i][j]);
-      charsByColor[color].push(currChar);
-    }
-  }
-  charsByColor["orange"] = charsByColor["orange"].filter(
-    (char) => !charsByColor["green"].includes(char)
-  );
-  charsByColor["gray"] = charsByColor["gray"].filter(
-    (char) =>
-      !(
-        charsByColor["green"].includes(char) ||
-        charsByColor["orange"].includes(char)
-      )
-  );
-
-  const buttonTheme = Object.entries(charsByColor)
-    .filter(([key, value]) => value.length > 0)
-    .map(([key, value]) => ({
-      class: key,
-      buttons: value.join(" "),
-    }));
-  return buttonTheme;
-};
 
 export function getDefaultStyles(nSquares, nGuesses) {
   const styles = [];
@@ -189,8 +158,7 @@ export const convertFromLastLetter = (val) => {
   }
 };
 
-
-export const getMaxDelay = (solution)=>{
-  const maxDelay =  (AnimationDelay * solution.length)
-  return maxDelay
-}
+export const getMaxDelay = (solution) => {
+  const maxDelay = AnimationDelay * solution.length;
+  return maxDelay;
+};
