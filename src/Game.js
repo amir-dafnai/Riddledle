@@ -27,7 +27,7 @@ const getGameLostText = (solution) => {
 };
 
 const getTimerText = (gameStatus, solution) => {
-  const winText = "כל הכבוד!";
+  const winText = "!כל הכבוד";
   const lostText = getGameLostText(solution);
   return gameStatus === GAMESTATUS.win ? winText : lostText;
 };
