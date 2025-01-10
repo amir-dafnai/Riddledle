@@ -1,5 +1,10 @@
 import { LOGINSTATUS } from "./Consts";
-import { setUserData, setUserStats } from "./localStorageUtils";
+import {
+  getUserData,
+  storeProgress,
+  storeUserData,
+  setUserStats,
+} from "./localStorageUtils";
 import { fetchStats } from "./Stats";
 
 const fetchUserInfo = async (accessToken) => {
@@ -20,16 +25,27 @@ const fetchUserInfo = async (accessToken) => {
   }
 };
 
-export const onLoginSuccess = async (setLoginStatus, tokenResponse) => {
+export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   const userInfo = await fetchUserInfo(tokenResponse.access_token);
   const stats = await fetchStats(userInfo.email);
-  setUserData(userInfo);
-  setLoginStatus(LOGINSTATUS.user);
+  const currStoredUser = getUserData();
+  if (currStoredUser && currStoredUser.email !== userInfo.email) storeProgress({});
+  userInfo.loggedIn = true
+  storeUserData(userInfo);
+  setUserInfo(userInfo);
   setUserStats(stats);
 };
 
-export const setGuestUser = (setLoginStatus) => {
+export const setGuestUser = (setUserInfo) => {
   const now = Date.now();
-  setUserData({ email: LOGINSTATUS.guest, name: now });
-  setLoginStatus(LOGINSTATUS.guest);
+  const userInfo = { email: now, name: LOGINSTATUS.guest , loggedIn : false };
+  storeUserData(userInfo);
+  setUserInfo(userInfo);
 };
+
+
+export const logOut = (setUserInfo)=>{
+  const newUserInfo = {...getUserData() , loggedIn : false}
+  storeUserData(newUserInfo);
+  setUserInfo(newUserInfo);
+}

@@ -5,7 +5,7 @@ import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
 
 import "./Navbar.css";
-import { onLoginSuccess, setGuestUser } from "./loginPage";
+import { logOut, onLoginSuccess } from "./loginPage";
 import { useGoogleLogin } from "@react-oauth/google";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,10 +22,10 @@ const showMustLoginToast = () => {
   });
 };
 
-const Navbar = ({ isLoggedIn, setLoginStatus, setViewStatus }) => {
+const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus }) => {
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      await onLoginSuccess(setLoginStatus, tokenResponse);
+      await onLoginSuccess(setUserDetails, tokenResponse);
     },
     onError: () => {
       console.error("Login Failed");
@@ -78,7 +78,7 @@ const Navbar = ({ isLoggedIn, setLoginStatus, setViewStatus }) => {
           ) : (
             <button
               onClick={() => {
-                setGuestUser(setLoginStatus);
+                logOut(setUserDetails);
               }}
             >
               <IoIosLogOut size={24} /> {/* LogOut Icon */}

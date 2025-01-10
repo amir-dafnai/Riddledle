@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { getUrl } from "./appUtils";
-import { setProgress, getProgress, getUserData } from "./localStorageUtils";
+import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
 import Navbar from "./Navbar";
 import { setGuestUser } from "./loginPage";
-import { LOGINSTATUS, VIEWS } from "./Consts";
+import { VIEWS } from "./Consts";
 
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle);
@@ -15,7 +15,7 @@ const useRiddle = () => {
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
       if (riddle && riddle.id === data.riddle.id) return;
-      setProgress({});
+      storeProgress({});
       setRiddle(data.riddle);
     };
     fetchData();
@@ -26,33 +26,32 @@ const useRiddle = () => {
 
 const App = () => {
   const [riddle, setRiddle] = useRiddle();
-  const [logInStatus, setLoginStatus] = useState(null);
+  const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
 
   useEffect(() => {
     const storedUser = getUserData();
     if (storedUser) {
-      const loginStatus = storedUser.email === LOGINSTATUS.guest ? LOGINSTATUS.guest : LOGINSTATUS.user;
-      setLoginStatus(loginStatus);
+      setUserDetails(storedUser);
     } else {
-      setGuestUser(setLoginStatus);
+      setGuestUser(setUserDetails);
     }
   }, []);
 
-  if (logInStatus !== null && riddle) {
+  if (userDetials && riddle) {
     return (
       <>
         <Navbar
-          isLoggedIn={logInStatus === LOGINSTATUS.user}
-          setLoginStatus={setLoginStatus}
+          isLoggedIn={userDetials.loggedIn}
+          setUserDetails={setUserDetails}
           setViewStatus={setViewStatus}
         />
         <Game
-          key={riddle.id}
+          key={`${riddle.id}-${userDetials.email}`}
           riddle={riddle}
           reset={() => {
-            setRiddle(null);
-            setProgress({});
+            setRiddle(undefined);
+            storeProgress({});
           }}
           viewStatus={viewStatus}
           setViewStatus={setViewStatus}

@@ -1,3 +1,5 @@
+import { AnimationDelay } from "./Consts";
+
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
   const solutionChars = solution.map((char) => convertFromLastLetter(char));
@@ -186,3 +188,9 @@ export const convertFromLastLetter = (val) => {
       return val;
   }
 };
+
+
+export const getMaxDelay = (solution)=>{
+  const maxDelay =  (AnimationDelay * solution.length)
+  return maxDelay
+}

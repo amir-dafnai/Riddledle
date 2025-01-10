@@ -10,22 +10,33 @@ import {
   getUrl,
   getNextSquare,
   getPrevSquare,
+  getMaxDelay,
 } from "./appUtils";
-import { setProgress, getProgress, getUserData } from "./localStorageUtils";
-import { GameLost } from "./GameLost";
+import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
-import { GameWon } from "./GameWon";
 import { Riddle } from "./Riddle";
 import { StatisticsModal } from "./Stats";
-import { VIEWS } from "./Consts";
+import { GAMESTATUS, VIEWS } from "./Consts";
+import TimerToMidnight from "./Timer";
+
+const getGameLostText = (solution) => {
+  const solText = [...solution].reverse().join("");
+  return `לא נורא... הפתרון הנכון הוא ${solText} `;
+};
+
+const getTimerText = (gameStatus, solution) => {
+  const winText = "כל הכבוד!";
+  const lostText = getGameLostText(solution);
+  return gameStatus === GAMESTATUS.win ? winText : lostText;
+};
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
   const status = arraysAreEqual(solution, guesses[guesses.length - 1])
-    ? "win"
+    ? GAMESTATUS.win
     : currGuess === numberOfGuesses
-    ? "lose"
-    : "playing";
+    ? GAMESTATUS.lose
+    : GAMESTATUS.playing;
   return status;
 };
 
@@ -42,9 +53,26 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
+  const [timerWasClosed, setTimerWasClosed] = useState(false);
+  const [animationEnded, setAnimationEnded] = useState(true);
+
+  const shouldShowTimer = () => {
+    return (animationEnded && 
+      [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) && !timerWasClosed
+    );
+  };
 
   useEffect(() => {
-    setProgress({
+    const animationDuration = getMaxDelay(solution) *2 ; // Replace this with your animation's duration in milliseconds
+    const timer = setTimeout(() => {
+      setAnimationEnded(true);
+    }, animationDuration);
+
+    return () => clearTimeout(timer);
+  }, [guesses, solution]);
+
+  useEffect(() => {
+    storeProgress({
       riddle: riddle,
       guesses: guesses,
     });
@@ -62,6 +90,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     if (newStatus !== "playing") {
       storeStats(newGuesses, newStatus);
     }
+    setAnimationEnded(false);
     setGuesses(newGuesses);
     setCurrAnswer(getEmptyAnswer(solution));
   }
@@ -88,7 +117,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   }
 
   function handleKeyDown(event) {
-    if (gameStatus !== "playing" || viewStatus !== VIEWS.game) return;
+    if (gameStatus !== "playing" || viewStatus !== VIEWS.game || !animationEnded) return;
     const value = event.key || event;
     if (value === "Backspace" || value === "{Backspace}")
       setNewAnswer(getPrevSquare(currAnswer, solution), "");
@@ -104,6 +133,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
       onEnterClicked();
     }
   }
+
   return (
     <>
       <div className="riddle-container">
@@ -113,7 +143,6 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
         {viewStatus === VIEWS.stats && (
           <StatisticsModal setViewStatus={setViewStatus} />
         )}
-
         <h1 className={textDirection}>
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
@@ -125,11 +154,13 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
           handleKeyDown={handleKeyDown}
           solution={solution}
         />
-
-        {gameStatus === "win" && <GameWon handleClick={reset} />}
-        {gameStatus === "lose" && (
-          <GameLost solution={solution} handleClick={reset} />
-        )}
+        {shouldShowTimer() ? (
+          <TimerToMidnight
+            onClose={() => setTimerWasClosed(true)}
+            onTimeEnds={reset}
+            text={getTimerText(gameStatus, solution)}
+          />
+        ) : null}
       </div>
     </>
   );

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { AnimationDelay } from "./Consts";
 
 function Square({ value, style, delay }) {
   const color = style && style.backgroundColor;
   return (
     <div
       className={`square ${color} pop`}
-      style={{ animationDelay: `${150 * delay}ms` }}
+      style={{ animationDelay: `${AnimationDelay * delay}ms` }}
     >
       {value}
     </div>

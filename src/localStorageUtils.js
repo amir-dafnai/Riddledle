@@ -1,11 +1,11 @@
-export const setProgress = (progress) => {
+export const storeProgress = (progress) => {
   localStorage.setItem("progress", JSON.stringify(progress));
 };
 export const getProgress = () => {
   return JSON.parse(localStorage.getItem("progress") || "{}");
 };
 
-export const setUserData = (userData) => {
+export const storeUserData = (userData) => {
   localStorage.setItem("user", JSON.stringify(userData));
 };
 export const getUserData = () => {
@@ -19,7 +19,7 @@ export const setUserStats = (stats) => {
 };
 
 export const getUserStats = () => {
-  return "stats" in localStorage && localStorage.getItem("stats") !== '{}'
+  return "stats" in localStorage && localStorage.getItem("stats") !== "{}"
     ? JSON.parse(localStorage.getItem("stats"))
     : null;
 };
