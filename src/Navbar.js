@@ -19,8 +19,11 @@ const HowToPlayRules = ({ closeModal }) => {
         className="modal-content how-to-play-modal"
         onClick={(e) => e.stopPropagation()}
       >
+        <button className="modal-close-button" onClick={closeModal}>
+          ×
+        </button>
         <h2>איך משחקים</h2>
-        <p>פתרו את חידת ההגיון ב-4 ניסיונות</p>
+        <p>פתרו את חידת ההגיון ב-4 ניסיונות.</p>
         <ul>
           <li>צבע האותיות ישתנה כדי להראות עד כמה הניחוש קרוב לפתרון.</li>
         </ul>
