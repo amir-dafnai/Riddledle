@@ -1,0 +1,79 @@
+.navigation-bar {
+    position: relative;
+  }
+  
+  .help-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff; /* Adjust for dark mode */
+  }
+  
+  .help-menu {
+    position: absolute;
+    top: 40px; /* Adjust based on your layout */
+    right: 0;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .help-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .help-menu li {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #444;
+  }
+  
+  .help-menu li:hover {
+    background: #444;
+  }
+  
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Dark background for overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    text-align: center;
+    position: relative; /* To allow absolute positioning of the close button */
+  }
+  
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .modal-close-button:hover {
+    color: #ccc;
+  }
+  

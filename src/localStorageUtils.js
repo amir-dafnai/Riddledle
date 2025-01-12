@@ -14,7 +14,7 @@ export const getUserData = () => {
     : null;
 };
 
-export const setUserStats = (stats) => {
+export const storeUserStats = (stats) => {
   localStorage.setItem("stats", JSON.stringify(stats));
 };
 

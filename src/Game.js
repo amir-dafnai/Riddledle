@@ -13,10 +13,10 @@ import {
   getMaxDelay,
 } from "./appUtils";
 import { getKeyboardButtonTheme } from "./KeyBoard";
-import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
+import { storeProgress, getProgress, getUserData, storeUserStats } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
-import { StatisticsModal } from "./Stats";
+import { fetchStats, StatisticsModal } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
@@ -61,6 +61,8 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     getKeyboardButtonTheme(guesses, solution)
   );
 
+  const [shoudlFetchStats , setShouldUpdateStats] = useState(false)
+
   const shouldShowTimer = () => {
     return (
       animationEnded &&
@@ -86,6 +88,18 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     });
   }, [guesses, riddle]);
 
+  useEffect(() => {
+    const fetcAndStorehStats = async(email) => { 
+      const stats = await fetchStats(email)
+      storeUserStats(stats)
+    }
+    const email = getUserData().email
+    if(email && shoudlFetchStats) {
+      fetcAndStorehStats(email)
+      setShouldUpdateStats(false)
+    }
+  }, [shoudlFetchStats]);
+
   function setNewAnswer(currSquare, key) {
     const newAns = currAnswer.slice();
     newAns[currSquare] = key;
@@ -96,14 +110,15 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     const newGuesses = [...guesses, currAnswer];
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
     if (newStatus !== "playing") {
-      storeStats(newGuesses, newStatus);
+      sendStats(newGuesses, newStatus);
+      setShouldUpdateStats(true)
     }
     setAnimationEnded(false);
     setGuesses(newGuesses);
     setCurrAnswer(getEmptyAnswer(solution));
   }
 
-  function storeStats(newGuesses, newStatus) {
+  function sendStats(newGuesses, newStatus) {
     const guessesAsStrings = newGuesses.map((ans) =>
       [...ans].reverse().join("")
     );

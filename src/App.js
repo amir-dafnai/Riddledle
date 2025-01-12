@@ -45,6 +45,7 @@ const App = () => {
           isLoggedIn={userDetials.loggedIn}
           setUserDetails={setUserDetails}
           setViewStatus={setViewStatus}
+          viewStatus={viewStatus}
         />
         <Game
           key={`${riddle.id}-${userDetials.email}`}

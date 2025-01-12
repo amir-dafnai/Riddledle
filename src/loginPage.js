@@ -3,7 +3,7 @@ import {
   getUserData,
   storeProgress,
   storeUserData,
-  setUserStats,
+  storeUserStats,
 } from "./localStorageUtils";
 import { fetchStats } from "./Stats";
 
@@ -29,23 +29,23 @@ export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   const userInfo = await fetchUserInfo(tokenResponse.access_token);
   const stats = await fetchStats(userInfo.email);
   const currStoredUser = getUserData();
-  if (currStoredUser && currStoredUser.email !== userInfo.email) storeProgress({});
-  userInfo.loggedIn = true
+  if (currStoredUser && currStoredUser.email !== userInfo.email)
+    storeProgress({});
+  userInfo.loggedIn = true;
   storeUserData(userInfo);
   setUserInfo(userInfo);
-  setUserStats(stats);
+  storeUserStats(stats);
 };
 
 export const setGuestUser = (setUserInfo) => {
   const now = Date.now();
-  const userInfo = { email: now, name: LOGINSTATUS.guest , loggedIn : false };
+  const userInfo = { email: now, name: LOGINSTATUS.guest, loggedIn: false };
   storeUserData(userInfo);
   setUserInfo(userInfo);
 };
 
-
-export const logOut = (setUserInfo)=>{
-  const newUserInfo = {...getUserData() , loggedIn : false}
+export const logOut = (setUserInfo) => {
+  const newUserInfo = { ...getUserData(), loggedIn: false };
   storeUserData(newUserInfo);
   setUserInfo(newUserInfo);
-}
+};
