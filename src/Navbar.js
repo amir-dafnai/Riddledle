@@ -31,23 +31,21 @@ const HowToPlayRules = ({ closeModal }) => {
         <div className="examples">
           <div className="example-row">
             <div className="example-tiles">
-              <span className="tile green">ח</span>
-              <span className="tile">י</span>
-              <span className="tile">פ</span>
-              <span className="tile">ו</span>
-              <span className="tile">ש</span>
+              <span className="tile green">נ</span>
+              <span className="tile">ע</span>
+              <span className="tile">מ</span>
+              <span className="tile">ה</span>
             </div>
             <p className="example-description">
-              ח' נמצאת בפתרון ובמיקום הנכון.
+              נ' נמצאת בפתרון ובמיקום הנכון.
             </p>
           </div>
           <div className="example-row">
             <div className="example-tiles">
-              <span className="tile">מ</span>
+              <span className="tile">א</span>
+              <span className="tile">י</span>
               <span className="tile yellow">ת</span>
-              <span className="tile">כ</span>
-              <span className="tile">ו</span>
-              <span className="tile">ן</span>
+              <span className="tile">י</span>
             </div>
             <p className="example-description">
               ת' נמצאת בפתרון אך לא במיקום הנכון.
@@ -55,13 +53,11 @@ const HowToPlayRules = ({ closeModal }) => {
           </div>
           <div className="example-row">
             <div className="example-tiles">
-              <span className="tile grey">ש</span>
-              <span className="tile">ו</span>
+              <span className="tile grey">ס</span>
               <span className="tile">ל</span>
-              <span className="tile">ח</span>
-              <span className="tile">ן</span>
+              <span className="tile">ע</span>
             </div>
-            <p className="example-description">ש' לא נמצאת כלל בפתרון.</p>
+            <p className="example-description">ס' לא נמצאת כלל בפתרון.</p>
           </div>
         </div>
 
@@ -76,13 +72,12 @@ const HowToPlayLogic = ({ closeModal }) => {
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close-button" onClick={closeModal}>
-          X
+          x
         </button>
-        <h2>Tips and Tricks</h2>
+        <h2>חוקי חידות היגיון</h2>
+        
         <p>
-          1. Start with a word that has many vowels. <br />
-          2. Use process of elimination to narrow down the letters. <br />
-          3. Pay attention to repeated letters in the solution.
+
         </p>
       </div>
     </div>
