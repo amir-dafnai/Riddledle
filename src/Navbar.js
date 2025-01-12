@@ -15,19 +15,54 @@ import "./howToPlay.css";
 const HowToPlayRules = ({ closeModal }) => {
   return (
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-button" onClick={closeModal}>
-          X
-        </button>
+      <div
+        className="modal-content how-to-play-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2>איך משחקים</h2>
-        <p>
-          לפניכם ארבעה נסיונות לפתור את חידת ההגיון. 
-          לאחר כל ניחוש ייצבעו האותיות בצבעים ירוק כתום או אפור בהתאם למיקומן בפתרון החידה.
-          אפור - האות לא נמצאת בכלל בפתרון
-          כתום - האות נמצאת בפתרון אך במקום אחר
-          ירוק - האות נמצאת בפתרון באותו מקום
-        
-        </p>
+        <p>פתרו את חידת ההגיון ב-4 ניסיונות</p>
+        <ul>
+          <li>צבע האותיות ישתנה כדי להראות עד כמה הניחוש קרוב לפתרון.</li>
+        </ul>
+        <h3>דוגמאות</h3>
+        <div className="examples">
+          <div className="example-row">
+            <div className="example-tiles">
+              <span className="tile green">ח</span>
+              <span className="tile">י</span>
+              <span className="tile">פ</span>
+              <span className="tile">ו</span>
+              <span className="tile">ש</span>
+            </div>
+            <p className="example-description">
+              ח' נמצאת בפתרון ובמיקום הנכון.
+            </p>
+          </div>
+          <div className="example-row">
+            <div className="example-tiles">
+              <span className="tile">מ</span>
+              <span className="tile yellow">ת</span>
+              <span className="tile">כ</span>
+              <span className="tile">ו</span>
+              <span className="tile">ן</span>
+            </div>
+            <p className="example-description">
+              ת' נמצאת בפתרון אך לא במיקום הנכון.
+            </p>
+          </div>
+          <div className="example-row">
+            <div className="example-tiles">
+              <span className="tile grey">ש</span>
+              <span className="tile">ו</span>
+              <span className="tile">ל</span>
+              <span className="tile">ח</span>
+              <span className="tile">ן</span>
+            </div>
+            <p className="example-description">ש' לא נמצאת כלל בפתרון.</p>
+          </div>
+        </div>
+
+        <p>חידה חדשה תתפרסם מדי יום בחצות!</p>
       </div>
     </div>
   );
