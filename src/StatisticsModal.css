@@ -1,7 +1,6 @@
 /* Modal overlay background */
 .title{
   text-align: center;
-
 }
 
 .modal-overlay {
@@ -63,6 +62,10 @@
     font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
+    margin: 20px auto 0; /* Centers the button horizontally and adds margin on top */
+    display: block; /* Ensures the button behaves like a block-level element */
+
+    
   }
   
   .close-button:hover {
