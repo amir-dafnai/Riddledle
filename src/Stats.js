@@ -20,7 +20,7 @@ export const StatisticsModal = ({ setViewStatus }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>סטטיסטיקה</h2>
+        <h2 className="title">סטטיסטיקה</h2>
         <div className="stats-grid">
           <div>
             <h3>{stats.total}</h3>

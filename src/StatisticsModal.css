@@ -1,4 +1,9 @@
 /* Modal overlay background */
+.title{
+  text-align: center;
+
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -13,7 +18,7 @@
   }
   
   /* Modal content */
-  .modal-content {
+  .modal-content{
     background: #1e1e1e;
     color: #ffffff;
     padding: 20px;
