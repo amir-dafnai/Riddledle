@@ -7,16 +7,20 @@ import {
   textDirection,
   getLastLetterIndices,
   getStringLengths,
-  getUrl,
   getNextSquare,
   getPrevSquare,
   getMaxDelay,
 } from "./appUtils";
 import { getKeyboardButtonTheme } from "./KeyBoard";
-import { storeProgress, getProgress, getUserData, storeUserStats } from "./localStorageUtils";
+import {
+  storeProgress,
+  getProgress,
+  getUserData,
+  storeUserStats,
+} from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
-import { fetchStats, StatisticsModal } from "./Stats";
+import { fetchStats, insertStats, StatisticsModal } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
@@ -61,7 +65,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     getKeyboardButtonTheme(guesses, solution)
   );
 
-  const [shoudlFetchStats , setShouldUpdateStats] = useState(false)
+  const [shoudlFetchStats, setShouldUpdateStats] = useState(false);
 
   const shouldShowTimer = () => {
     return (
@@ -89,14 +93,14 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
   }, [guesses, riddle]);
 
   useEffect(() => {
-    const fetcAndStorehStats = async(email) => { 
-      const stats = await fetchStats(email)
-      storeUserStats(stats)
-    }
-    const email = getUserData().email
-    if(email && shoudlFetchStats) {
-      fetcAndStorehStats(email)
-      setShouldUpdateStats(false)
+    const fetcAndStorehStats = async (email) => {
+      const stats = await fetchStats(email);
+      storeUserStats(stats);
+    };
+    const email = getUserData().email;
+    if (email && shoudlFetchStats) {
+      fetcAndStorehStats(email);
+      setShouldUpdateStats(false);
     }
   }, [shoudlFetchStats]);
 
@@ -111,33 +115,28 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
     if (newStatus !== "playing") {
       sendStats(newGuesses, newStatus);
-      setShouldUpdateStats(true)
     }
     setAnimationEnded(false);
     setGuesses(newGuesses);
     setCurrAnswer(getEmptyAnswer(solution));
   }
 
-  function sendStats(newGuesses, newStatus) {
+  const sendStats = async (newGuesses, newStatus) => {
     const guessesAsStrings = newGuesses.map((ans) =>
       [...ans].reverse().join("")
     );
-    const url = getUrl();
     const userData = getUserData();
-    fetch(`${url}insert_stats`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        riddle_id: riddle.id,
-        status: newStatus,
-        guesses: guessesAsStrings,
-        user_name: userData.name,
-        email: userData.email,
-      }),
-    });
-  }
+    const body = {
+      riddle_id: riddle.id,
+      status: newStatus,
+      guesses: guessesAsStrings,
+      user_name: userData.name,
+      email: userData.email,
+    };
+    const response = insertStats(body);
+    await response;
+    setShouldUpdateStats(true);
+  };
 
   function handleKeyDown(event) {
     if (

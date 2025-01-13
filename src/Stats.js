@@ -4,6 +4,18 @@ import { getUrl } from "./appUtils";
 import { getUserStats } from "./localStorageUtils";
 import { VIEWS } from "./Consts";
 
+export const insertStats = (body)=>{ 
+  const url = getUrl();
+  const  response = fetch(`${url}insert_stats`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify(body),
+  });
+  return response
+}
+
 export const fetchStats = async (email) => {
   const response = await fetch(`${getUrl()}get_stats?&email=${email}`);
   const data = await response.json();
