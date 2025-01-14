@@ -12,7 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { VIEWS } from "./Consts";
 import "./howToPlay.css";
 
-const HowToPlayRules = ({ closeModal }) => {
+const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
+  const goToLogin = () => {
+    closeModal();
+    login();
+  };
+
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div
@@ -60,25 +65,12 @@ const HowToPlayRules = ({ closeModal }) => {
             <p className="example-description">ס' לא נמצאת כלל בפתרון.</p>
           </div>
         </div>
-
         <p>חידה חדשה תתפרסם מדי יום בחצות!</p>
-      </div>
-    </div>
-  );
-};
-
-const HowToPlayLogic = ({ closeModal }) => {
-  return (
-    <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-button" onClick={closeModal}>
-          x
-        </button>
-        <h2>חוקי חידות היגיון</h2>
-        
-        <p>
-
-        </p>
+        {!isLoggedIn ? (
+          <p className="login-redirect" onClick={goToLogin}>
+            <u> התחבר כדי להנות מסטטיסטיקות ויכולת להציע חידות משלך!</u>
+          </p>
+        ) : null}
       </div>
     </div>
   );
@@ -144,33 +136,23 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
               <button
                 onClick={() =>
                   setViewStatus((oldVal) =>
-                    oldVal === VIEWS.howToPLay ? VIEWS.game : VIEWS.howToPLay
+                    oldVal === VIEWS.howToPlayRules
+                      ? VIEWS.game
+                      : VIEWS.howToPlayRules
                   )
                 }
               >
                 <FaRegQuestionCircle size={24} /> {/* How to play */}
               </button>
-              {viewStatus === VIEWS.howToPLay && (
-                <div className="help-menu">
-                  <ul>
-                    <li onClick={() => setViewStatus(VIEWS.howToPlayRules)}>
-                      איך משחקים
-                    </li>
-                    <li onClick={() => setViewStatus(VIEWS.howToPlayLogic)}>
-                      חוקי חידות היגיון
-                    </li>
-                  </ul>
-                </div>
-              )}
             </li>
             {!isLoggedIn ? (
               <li>
-                <button onClick={login}>
+                <button onClick={login} disabled={viewStatus !== VIEWS.game}>
                   <IoIosLogIn size={24} /> {/* Login Icon */}
                 </button>
               </li>
             ) : (
-              <button
+              <button disabled={viewStatus !== VIEWS.game}
                 onClick={() => {
                   logOut(setUserDetails);
                 }}
@@ -182,10 +164,11 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
         </nav>
       </div>
       {viewStatus === VIEWS.howToPlayRules && (
-        <HowToPlayRules closeModal={closeModal} />
-      )}
-      {viewStatus === VIEWS.howToPlayLogic && (
-        <HowToPlayLogic closeModal={closeModal} />
+        <HowToPlayRules
+          closeModal={closeModal}
+          isLoggedIn={isLoggedIn}
+          login={login}
+        />
       )}
     </>
   );

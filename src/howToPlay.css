@@ -150,3 +150,17 @@
     line-height: 1.2;  /* Compact line spacing */
   }
   
+
+
+  .login-redirect {
+    margin-top: 20px;
+    color: #00bcd4; /* Light blue */
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .login-redirect:hover {
+    color: #008c9e; /* Darker blue for hover effect */
+  }
+  
