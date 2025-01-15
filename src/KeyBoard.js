@@ -1,6 +1,8 @@
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { getColors, convertFromLastLetter } from "./appUtils";
+import { useState } from "react";
+import "./Keyboard.css"; // Add custom CSS here
 
 const layout = {
   default: [
@@ -11,12 +13,34 @@ const layout = {
 };
 
 export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
+  const [pressedKey, setPressedKey] = useState("");
+
+  const onKeyPress = (button) => {
+    // Trigger the parent function
+    handleKeyDown(button);
+
+    // Add feedback: vibration and highlight
+    if (navigator.vibrate) {
+      navigator.vibrate(50); // Vibrate for 50ms
+    }
+    setPressedKey(button);
+
+    // Remove the highlight after a short delay
+    setTimeout(() => setPressedKey(""), 200);
+  };
+
   return (
     <Keyboard
-      onKeyPress={handleKeyDown}
+      onKeyPress={onKeyPress}
       layout={layout}
       theme={"hg-theme-default hg-layout-default myTheme"}
-      buttonTheme={buttonTheme}
+      buttonTheme={[
+        ...buttonTheme,
+        {
+          class: "pressed",
+          buttons: pressedKey,
+        },
+      ]}
       display={{
         "{Backspace}": "⌫",
         "{Enter}": "⏎",
@@ -24,6 +48,7 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
     />
   );
 }
+
 export const getKeyboardButtonTheme = (guesses, solution) => {
   if (!guesses || guesses.length === 0) return [];
   const charsByColor = { green: [], orange: [], gray: [] };

@@ -1,0 +1,10 @@
+/* Default key styles */
+.myTheme .hg-button {
+    transition: transform 0.1s ease-in-out; /* Smooth animation */
+  }
+  
+  /* Highlight effect when a key is pressed */
+  .pressed {
+    transform: scale(1.3); /* Enlarge the key slightly */
+  }
+  
