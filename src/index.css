@@ -183,17 +183,6 @@ body {
   
 }
 
-.rtl {
-  direction: rtl;
-  pointer-events: none;
-  user-select: none;
-}
-
-.ltr {
-  direction: ltr;
-}
-
-
 /* Overlay Styles */
 .overlay {
   position: fixed;
