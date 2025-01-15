@@ -185,6 +185,8 @@ body {
 
 .rtl {
   direction: rtl;
+  pointer-events: none;
+  user-select: none;
 }
 
 .ltr {
@@ -354,6 +356,8 @@ body {
 /* RTL styling */
 .rtl-form {
   direction: rtl;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* Form title */

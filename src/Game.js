@@ -4,7 +4,6 @@ import { SuggestRiddleForm } from "./SuggestRiddle";
 import {
   getEmptyAnswer,
   arraysAreEqual,
-  textDirection,
   getLastLetterIndices,
   getStringLengths,
   getNextSquare,
@@ -170,7 +169,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
         {viewStatus === VIEWS.stats && (
           <StatisticsModal setViewStatus={setViewStatus} />
         )}
-        <h1 className={textDirection}>
+        <h1 className="rtl-form">
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}

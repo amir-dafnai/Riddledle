@@ -82,7 +82,6 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-export const textDirection = "rtl";
 
 export const getLastLetterIndices = (solution) => {
   const lastLetterIndices = [];
