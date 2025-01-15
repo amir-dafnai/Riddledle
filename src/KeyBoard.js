@@ -21,7 +21,7 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
 
     // Add feedback: vibration and highlight
     if (navigator.vibrate) {
-      navigator.vibrate([0.05,2,0.05]); // Vibrate for 50ms
+      navigator.vibrate([0.005,20,0.005]); // Vibrate for 50ms
     }
     setPressedKey(button);
 
