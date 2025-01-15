@@ -1,7 +1,6 @@
 import React from "react";
 import { FiBarChart2 } from "react-icons/fi"; // Import icons
 import { TfiWrite } from "react-icons/tfi";
-import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
 
 import "./Navbar.css";
@@ -146,18 +145,16 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
               </button>
             </li>
             {!isLoggedIn ? (
-              <li>
                 <button onClick={login} disabled={viewStatus !== VIEWS.game}>
-                  <IoIosLogIn size={24} /> {/* Login Icon */}
+                  התחבר
                 </button>
-              </li>
             ) : (
               <button disabled={viewStatus !== VIEWS.game}
                 onClick={() => {
                   logOut(setUserDetails);
                 }}
               >
-                <IoIosLogOut size={24} /> {/* LogOut Icon */}
+                התנתק
               </button>
             )}
           </ul>
