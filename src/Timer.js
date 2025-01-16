@@ -30,7 +30,7 @@ const TimerToMidnight = ({onTimeEnds, onClose , text}) => {
     return { hours, minutes, seconds };
   }
   return (
-    <div className="timer-modal-overlay">
+    <div className="timer-modal-overlay unselectable">
       <div className="timer-modal-content">
         <button className="timer-close-button" onClick={onClose}>
           ✖
