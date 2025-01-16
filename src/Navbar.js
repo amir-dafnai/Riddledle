@@ -104,7 +104,7 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
       <div>
         <nav className="navbar unselectable">
           <div className="navbar-logo">
-            <h1>Riddledle</h1>
+            <h1 className="unclickable">Riddledle</h1>
           </div>
           <ul className="navbar-links">
             <li>

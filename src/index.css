@@ -187,6 +187,9 @@ body {
 .unselectable {
   user-select: none;
 }
+.unclickable{
+  pointer-events: none;
+}
 
 
 /* Overlay Styles */
