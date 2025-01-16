@@ -145,11 +145,11 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
               </button>
             </li>
             {!isLoggedIn ? (
-              <button onClick={login} disabled={viewStatus !== VIEWS.game}>
+              <button className="unselectable" onClick={login} disabled={viewStatus !== VIEWS.game} >
                 התחבר
               </button>
             ) : (
-              <button
+              <button className="unselectable"
                 disabled={viewStatus !== VIEWS.game}
                 onClick={() => {
                   logOut(setUserDetails);
