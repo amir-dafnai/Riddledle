@@ -6,6 +6,7 @@ import { Game } from "./Game";
 import Navbar from "./Navbar";
 import { setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
+import { ToastContainer } from "react-toastify";
 
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle);
@@ -41,6 +42,7 @@ const App = () => {
   if (userDetials && riddle) {
     return (
       <>
+        <ToastContainer theme="dark"/>
         <Navbar
           isLoggedIn={userDetials.loggedIn}
           setUserDetails={setUserDetails}

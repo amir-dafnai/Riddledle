@@ -169,7 +169,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
         {viewStatus === VIEWS.stats && (
           <StatisticsModal setViewStatus={setViewStatus} />
         )}
-        <h1 className="rtl-form">
+        <h1 className="rtl-form unselectable">
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}

@@ -6,7 +6,7 @@ import { FaRegQuestionCircle } from "react-icons/fa";
 import "./Navbar.css";
 import { logOut, onLoginSuccess } from "./loginPage";
 import { useGoogleLogin } from "@react-oauth/google";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { VIEWS } from "./Consts";
 import "./howToPlay.css";
@@ -102,7 +102,6 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
   return (
     <>
       <div>
-        <ToastContainer theme="dark" />
         <nav className="navbar">
           <div className="navbar-logo">
             <h1>Riddledle</h1>
@@ -146,11 +145,12 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
               </button>
             </li>
             {!isLoggedIn ? (
-                <button onClick={login} disabled={viewStatus !== VIEWS.game}>
-                  התחבר
-                </button>
+              <button onClick={login} disabled={viewStatus !== VIEWS.game}>
+                התחבר
+              </button>
             ) : (
-              <button disabled={viewStatus !== VIEWS.game}
+              <button
+                disabled={viewStatus !== VIEWS.game}
                 onClick={() => {
                   logOut(setUserDetails);
                 }}
