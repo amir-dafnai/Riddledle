@@ -185,7 +185,6 @@ body {
 
 
 .unselectable {
-  pointer-events: none;
   user-select: none;
 }
 

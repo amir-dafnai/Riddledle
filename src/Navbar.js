@@ -102,7 +102,7 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
   return (
     <>
       <div>
-        <nav className="navbar">
+        <nav className="navbar unselectable">
           <div className="navbar-logo">
             <h1>Riddledle</h1>
           </div>
