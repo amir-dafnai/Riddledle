@@ -5,7 +5,7 @@ function Square({ value, style, delay }) {
   const color = style && style.backgroundColor;
   return (
     <div
-      className={`square ${color} pop`}
+      className={`square ${color} pop unselectable unclickable`}
       style={{ animationDelay: `${AnimationDelay * delay}ms` }}
     >
       {value}
