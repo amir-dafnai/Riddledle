@@ -57,11 +57,12 @@ const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
           </div>
           <div className="example-row">
             <div className="example-tiles">
-              <span className="tile grey">ס</span>
-              <span className="tile">ל</span>
-              <span className="tile">ע</span>
+              <span className="tile grey">א</span>
+              <span className="tile">מ</span>
+              <span className="tile">י</span>
+              <span className="tile">ר</span>
             </div>
-            <p className="example-description">ס' לא נמצאת כלל בפתרון.</p>
+            <p className="example-description">א' לא נמצאת כלל בפתרון.</p>
           </div>
         </div>
         <p>חידה חדשה תתפרסם מדי יום בחצות!</p>
