@@ -1,3 +1,4 @@
+/* Navigation Bar */
 .navigation-bar {
   position: relative;
 }
@@ -36,6 +37,7 @@
   background: #444;
 }
 
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -55,14 +57,15 @@
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-  max-width: 500px;
+  max-width: 500px; /* For larger screens */
   max-height: 90vh;
-  width: 90%;
+  width: 90%; /* Adaptable width */
   overflow-y: auto;
   text-align: right;
   direction: rtl; /* For Hebrew alignment */
   position: relative;
   font-family: Arial, sans-serif;
+  font-size: 1rem; /* Base font size */
 }
 
 .modal-close-button {
@@ -76,36 +79,74 @@
   cursor: pointer;
 }
 
-.how-to-play-modal h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
+/* Responsive Adjustments for Smaller Devices */
+@media screen and (max-width: 390px) {
+  .modal-content {
+    max-width: 95%;
+    padding: 15px;
+    font-size: 0.9rem; /* Slightly smaller font size */
+  }
+
+  .modal-close-button {
+    font-size: 1.2rem;
+    top: 8px;
+    right: 8px;
+  }
+
+  .how-to-play-modal h2 {
+    font-size: 1.4rem; /* Smaller headings */
+    margin-bottom: 8px;
+  }
+
+  .how-to-play-modal p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .example-tiles .tile {
+    width: 18px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .example-description {
+    font-size: 0.8rem;
+  }
+
+  .login-redirect {
+    font-size: 0.9rem;
+    margin-top: 15px;
+  }
 }
 
-.how-to-play-modal p {
-  font-size: 1.2rem;
-  line-height: 1.6;
+@media screen and (min-width: 391px) and (max-width: 600px) {
+  .modal-content {
+    max-width: 80%; /* Moderate width for modern devices */
+    padding: 20px; /* Normal padding */
+    font-size: 1rem;
+  }
+
+  .how-to-play-modal h2 {
+    font-size: 1.6rem;
+  }
+
+  .how-to-play-modal p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .example-tiles .tile {
+    width: 20px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+
+  .example-description {
+    font-size: 0.9rem;
+  }
 }
 
-.how-to-play-modal ul {
-  list-style: disc;
-  padding-right: 20px;
-  margin-bottom: 20px;
-}
-
-.how-to-play-modal ul li {
-  margin-bottom: 10px;
-}
-
-.examples {
-  margin-top: 20px;
-  text-align: right; /* Aligns all examples to the right */
-  direction: rtl;    /* Ensures proper alignment for Hebrew text */
-}
-
-.example-row {
-  margin-bottom: 15px; /* Reduces the vertical space between rows */
-}
-
+/* Tile Styles */
 .example-tiles {
   display: inline-flex;
   justify-content: flex-end; /* Aligns tiles to the right */
@@ -113,8 +154,8 @@
 }
 
 .tile {
-  width: 20px; /* Reduced width */
-  height: 32px; /* Reduced height */
+  width: 20px;
+  height: 32px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -130,6 +171,7 @@
   margin-left: 0;
 }
 
+/* Tile Colors */
 .tile.green {
   background-color: #6aaa64;
 }
@@ -142,13 +184,15 @@
   background-color: #787c7e;
 }
 
+/* Example Description */
 .example-description {
   font-size: 0.8rem; /* Smaller font size */
-  color: #d9d9d9;    /* Subtle color for the description */
-  margin-top: 2px;   /* Closer to the tiles */
-  line-height: 1.2;  /* Compact line spacing */
+  color: #d9d9d9; /* Subtle color for the description */
+  margin-top: 2px; /* Closer to the tiles */
+  line-height: 1.2; /* Compact line spacing */
 }
 
+/* Login Redirect */
 .login-redirect {
   margin-top: 20px;
   color: #00bcd4; /* Light blue */
@@ -159,42 +203,4 @@
 
 .login-redirect:hover {
   color: #008c9e; /* Darker blue for hover effect */
-}
-
-/* Media Queries for iPhone SE */
-@media screen and (max-width: 375px) {
-  .modal-content {
-    max-width: 90%;
-    padding: 15px;
-    font-size: 0.9rem; /* Smaller font size for text */
-  }
-
-  .modal-close-button {
-    font-size: 1.2rem; /* Slightly smaller close button */
-    top: 8px;
-    right: 8px;
-  }
-
-  .how-to-play-modal h2 {
-    font-size: 1.5rem; /* Smaller heading */
-  }
-
-  .how-to-play-modal p {
-    font-size: 1rem; /* Adjust font size for better readability */
-    line-height: 1.4;
-  }
-
-  .example-tiles .tile {
-    width: 18px; /* Smaller tile width */
-    height: 30px; /* Smaller tile height */
-    font-size: 1rem; /* Adjust tile font size */
-  }
-
-  .example-description {
-    font-size: 0.7rem; /* Smaller description font size */
-  }
-
-  .login-redirect {
-    font-size: 0.9rem; /* Smaller redirect text */
-  }
 }
