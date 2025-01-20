@@ -141,10 +141,7 @@ body {
     gap: 15px;
   }
 
-  .word-container {
-    gap: 5px;
-  }
-
+ 
   .hg-button {
     height: 60px;
     font-size: 18px;
@@ -167,9 +164,6 @@ body {
     gap: 8px;
   }
 
-  .word-container {
-    gap: 4px;
-  }
 
   .hg-button {
     height: 50px;

@@ -1,4 +1,3 @@
-import { LOGINSTATUS } from "./Consts";
 import {
   getUserData,
   storeProgress,
@@ -39,7 +38,7 @@ export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
 
 export const setGuestUser = (setUserInfo) => {
   const now = Date.now();
-  const userInfo = { email: now, name: LOGINSTATUS.guest, loggedIn: false };
+  const userInfo = { email: now, name: now, loggedIn: false };
   storeUserData(userInfo);
   setUserInfo(userInfo);
 };

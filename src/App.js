@@ -38,7 +38,7 @@ const App = () => {
       setGuestUser(setUserDetails);
     }
   }, []);
-
+  
   if (userDetials && riddle) {
     return (
       <>
