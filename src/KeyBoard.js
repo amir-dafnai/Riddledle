@@ -12,6 +12,17 @@ const layout = {
   ],
 };
 
+const getPressedKeyTheme = (pressedKey) => {
+  return pressedKey
+    ? [
+        {
+          class: "pressed",
+          buttons: pressedKey,
+        },
+      ]
+    : [];
+};
+
 export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
   const [pressedKey, setPressedKey] = useState("");
 
@@ -21,26 +32,21 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
 
     // Add feedback: vibration and highlight
     if (navigator.vibrate) {
-      navigator.vibrate([1,20,1]); // Vibrate for 50ms
+      navigator.vibrate([1, 20, 1]); // Vibrate for 50ms
     }
     setPressedKey(button);
 
     // Remove the highlight after a short delay
     setTimeout(() => setPressedKey(""), 200);
   };
+  const pressedKeyTheme = getPressedKeyTheme(pressedKey)
 
   return (
     <Keyboard
       onKeyPress={onKeyPress}
       layout={layout}
       theme={"hg-theme-default hg-layout-default myTheme"}
-      buttonTheme={[
-        ...buttonTheme,
-        {
-          class: "pressed",
-          buttons: pressedKey,
-        },
-      ]}
+      buttonTheme={[...buttonTheme, ...pressedKeyTheme]}
       display={{
         "{Backspace}": "⌫",
         "{Enter}": "⏎",
