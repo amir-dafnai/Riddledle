@@ -27,12 +27,10 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
   const [pressedKey, setPressedKey] = useState("");
 
   const onKeyPress = (button) => {
-    // Trigger the parent function
     handleKeyDown(button);
 
-    // Add feedback: vibration and highlight
     if (navigator.vibrate) {
-      navigator.vibrate([1, 20, 1]); // Vibrate for 50ms
+      navigator.vibrate([1, 20, 1]); 
     }
     setPressedKey(button);
 
