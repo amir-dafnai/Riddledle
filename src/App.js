@@ -8,6 +8,10 @@ import { setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
 import { ToastContainer } from "react-toastify";
 
+const riddlesAreEqual = (r1, r2) => {  
+  return r1.id === r2.id && r1.definition === r2.definition;
+};
+
 const useRiddle = () => {
   const [riddle, setRiddle] = useState(getProgress().riddle);
   useEffect(() => {
@@ -15,7 +19,7 @@ const useRiddle = () => {
     const fetchData = async () => {
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
-      if (riddle && riddle.id === data.riddle.id) return;
+      if (riddle && riddlesAreEqual(riddle, data.riddle)) return;
       storeProgress({});
       setRiddle(data.riddle);
     };
@@ -38,11 +42,11 @@ const App = () => {
       setGuestUser(setUserDetails);
     }
   }, []);
-  
+
   if (userDetials && riddle) {
     return (
       <>
-        <ToastContainer theme="dark"/>
+        <ToastContainer theme="dark" />
         <Navbar
           isLoggedIn={userDetials.loggedIn}
           setUserDetails={setUserDetails}
