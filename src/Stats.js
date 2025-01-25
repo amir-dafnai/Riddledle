@@ -45,15 +45,15 @@ export const StatisticsModal = ({ setViewStatus }) => {
                 : Math.round((stats.wins / stats.total) * 100)}
               %
             </h3>
-            <p>אחוז נצחונות</p>
+            <p>אחוז הצלחות</p>
           </div>
           <div>
             <h3>{stats.curr_streak}</h3>
-            <p>נצחונות ברצף</p>
+            <p>הצלחות ברצף</p>
           </div>
           <div>
             <h3>{stats.longest_streak}</h3>
-            <p>רצף נצחונות מקסימלי</p>
+            <p>רצף הצלחות מקסימלי</p>
           </div>
         </div>
         <button
