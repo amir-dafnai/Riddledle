@@ -4,9 +4,10 @@ import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
 import Navbar from "./Navbar";
-import { setGuestUser } from "./loginPage";
+import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
 import { ToastContainer } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const riddlesAreEqual = (r1, r2) => {  
   return r1.id === r2.id && r1.definition === r2.definition;
@@ -34,6 +35,17 @@ const App = () => {
   const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
 
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      await onLoginSuccess(setUserDetails, tokenResponse);
+    },
+    onError: () => {
+      console.error("Login Failed");
+    },
+  });
+
+
   useEffect(() => {
     const storedUser = getUserData();
     if (storedUser) {
@@ -48,6 +60,7 @@ const App = () => {
       <>
         <ToastContainer theme="dark" />
         <Navbar
+          login = {login}
           isLoggedIn={userDetials.loggedIn}
           setUserDetails={setUserDetails}
           setViewStatus={setViewStatus}
@@ -62,6 +75,8 @@ const App = () => {
           }}
           viewStatus={viewStatus}
           setViewStatus={setViewStatus}
+          isLoggedIn={userDetials.loggedIn}
+          login={login}
         />
       </>
     );

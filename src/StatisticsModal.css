@@ -72,3 +72,9 @@
     background: #008c9e;
   }
   
+
+  .dimmed {
+    opacity: 0.3; /* Makes the content visually faded */
+    filter: grayscale(50%); /* Optional: Slightly desaturates the colors */
+  }
+  

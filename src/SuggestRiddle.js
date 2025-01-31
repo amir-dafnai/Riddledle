@@ -16,7 +16,7 @@ const showSuccessToast = () => {
   });
 };
 
-export const SuggestRiddleForm = ({ setViewStatus }) => {
+export const SuggestRiddleForm = ({ setViewStatus, isLoggedIn, login }) => {
   const definitionInputRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,6 @@ export const SuggestRiddleForm = ({ setViewStatus }) => {
       definitionInputRef.current.focus();
     }
   }, []);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,6 +55,15 @@ export const SuggestRiddleForm = ({ setViewStatus }) => {
             הצעת חידה חדשה <br></br>
             <br></br>שלחו חידה משלכם ואולי היא תכנס למאגר!
           </h2>
+          {!isLoggedIn && (
+            <p className="warning-text">
+              {" יש להתחבר למערכת כדי לשלוח חידה  "    }
+              <span className="login-link" onClick={login}>
+                להתחברות
+              </span>
+            </p>
+          )}
+
           <label>
             <span className="label-text">הגדרה:</span>
             <input
@@ -85,7 +93,14 @@ export const SuggestRiddleForm = ({ setViewStatus }) => {
             >
               ביטול
             </button>
-            <button type="submit" className="submit-button">
+            <button
+              type="submit"
+              className={`submit-button ${
+                !isLoggedIn ? "disabled-button" : ""
+              }`}
+              disabled={!isLoggedIn}
+              title={!isLoggedIn ? "יש להתחבר למערכת כדי לשלוח חידה" : ""}
+            >
               שליחה
             </button>
           </div>

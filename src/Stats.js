@@ -22,8 +22,8 @@ export const fetchStats = async (email) => {
   return data.stats;
 };
 
-export const StatisticsModal = ({ setViewStatus }) => {
-  let stats = getUserStats();
+export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
+  let stats = isLoggedIn? getUserStats() : null;
   stats =
     stats === null
       ? { total: 0, wins: 0, curr_streak: 0, longest_streak: 0 }
@@ -33,7 +33,15 @@ export const StatisticsModal = ({ setViewStatus }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2 className="title">סטטיסטיקה</h2>
-        <div className="stats-grid">
+        {!isLoggedIn && (
+            <p className="title">
+              {" יש להתחבר למערכת כדי לצפות בסטטיסטיקה  "    }
+              <span className="login-link" onClick={login}>
+                להתחברות
+              </span>
+            </p>
+          )}
+        <div className= {`stats-grid ${!isLoggedIn ? "dimmed" : ""}`}>
           <div>
             <h3>{stats.total}</h3>
             <p>כמות משחקים</p>

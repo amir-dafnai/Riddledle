@@ -436,3 +436,23 @@ button:hover {
   background-color: #333; /* Even lighter on click */
   transform: translateY(0); /* Reset lift effect */
 }
+
+
+
+
+.disabled-button {
+  background-color: #888 !important; /* Gray background */
+  cursor: not-allowed !important; /* Show "🚫" cursor */
+  opacity: 0.6; /* Make it look faded */
+}
+
+.login-link {
+  color: rgb(0, 150, 255);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.login-link:hover {
+  color: rgb(0, 200, 255); /* Darker shade on hover */
+}

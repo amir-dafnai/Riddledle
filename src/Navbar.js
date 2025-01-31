@@ -4,10 +4,8 @@ import { TfiWrite } from "react-icons/tfi";
 import { FaRegQuestionCircle } from "react-icons/fa";
 
 import "./Navbar.css";
-import { logOut, onLoginSuccess } from "./loginPage";
-import { useGoogleLogin } from "@react-oauth/google";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { logOut } from "./loginPage";
+
 import { VIEWS } from "./Consts";
 import "./howToPlay.css";
 
@@ -76,28 +74,14 @@ const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
   );
 };
 
-const showMustLoginToast = () => {
-  toast.warn("Must be logged in", {
-    position: "top-center",
-    autoClose: 2000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-  });
-};
-
-const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
+const Navbar = ({
+  isLoggedIn,
+  login,
+  setUserDetails,
+  setViewStatus,
+  viewStatus,
+}) => {
   const closeModal = () => setViewStatus(VIEWS.game);
-
-  const login = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      await onLoginSuccess(setUserDetails, tokenResponse);
-    },
-    onError: () => {
-      console.error("Login Failed");
-    },
-  });
 
   return (
     <>
@@ -110,9 +94,7 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
             <li>
               <button
                 onClick={() => {
-                  if (!isLoggedIn) {
-                    showMustLoginToast();
-                  } else setViewStatus(VIEWS.form);
+                  setViewStatus(VIEWS.form);
                 }}
               >
                 <TfiWrite size={24} /> {/* Suggest riddle */}
@@ -121,11 +103,7 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
             <li>
               <button
                 onClick={() => {
-                  if (!isLoggedIn) {
-                    showMustLoginToast();
-                  } else {
-                    setViewStatus(VIEWS.stats);
-                  }
+                  setViewStatus(VIEWS.stats);
                 }}
               >
                 <FiBarChart2 size={24} /> {/* Statistics Icon */}
@@ -145,11 +123,16 @@ const Navbar = ({ isLoggedIn, setUserDetails, setViewStatus, viewStatus }) => {
               </button>
             </li>
             {!isLoggedIn ? (
-              <button className="unselectable" onClick={login} disabled={viewStatus !== VIEWS.game} >
+              <button
+                className="unselectable"
+                onClick={login}
+                disabled={viewStatus !== VIEWS.game}
+              >
                 התחבר
               </button>
             ) : (
-              <button className="unselectable"
+              <button
+                className="unselectable"
                 disabled={viewStatus !== VIEWS.game}
                 onClick={() => {
                   logOut(setUserDetails);

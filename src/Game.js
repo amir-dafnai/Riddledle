@@ -45,7 +45,7 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({ riddle, reset, viewStatus, setViewStatus }) {
+export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , login }) {
   const progress = getProgress();
 
   const solution = riddle.solution;
@@ -164,10 +164,10 @@ export function Game({ riddle, reset, viewStatus, setViewStatus }) {
     <>
       <div className="riddle-container">
         {viewStatus === VIEWS.form && (
-          <SuggestRiddleForm setViewStatus={setViewStatus} />
+          <SuggestRiddleForm setViewStatus={setViewStatus} isLoggedIn={isLoggedIn} login={login} />
         )}
         {viewStatus === VIEWS.stats && (
-          <StatisticsModal setViewStatus={setViewStatus} />
+          <StatisticsModal setViewStatus={setViewStatus} isLoggedIn={isLoggedIn} login={login} />
         )}
         <h1 className="rtl-form unselectable">
           {riddle.definition} {getStringLengths(riddle.solution)}
