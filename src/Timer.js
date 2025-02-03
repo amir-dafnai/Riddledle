@@ -19,7 +19,7 @@ const getTimeToSolveText = (timeToSolveMs) => {
 
 const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const timeToSolveText = getTimeToSolveText(timeToSolve);
+  const timeToSolveText = timeToSolve ?  getTimeToSolveText(timeToSolve) : null ;
   useEffect(() => {
     const timer = setInterval(() => {
       const time = calculateTimeLeft();
@@ -50,7 +50,7 @@ const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
           ✖
         </button>
         <h1>{text}</h1>
-        <h2>{timeToSolveText}</h2>
+        {timeToSolveText && <h2>{timeToSolveText}</h2>}
         <h3>החידה הבאה בעוד</h3>
         <div className="time">
           {timeLeft.hours.toString().padStart(2, "0")}:

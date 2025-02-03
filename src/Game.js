@@ -197,7 +197,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
             onClose={() => setTimerWasClosed(true)}
             onTimeEnds={reset}
             text={getTimerText(gameStatus, solution)}
-            timeToSolve={(riddle.endTime-riddle.startTime)}
+            timeToSolve={riddle.startTime ? (riddle.endTime-riddle.startTime) : null}
           />
         ) : null}
       </div>
