@@ -32,8 +32,16 @@ const getGameLostText = (solution) => {
 const getTimerText = (gameStatus, solution) => {
   const winText = "!כל הכבוד";
   const lostText = getGameLostText(solution);
-  return gameStatus === GAMESTATUS.win ? winText : lostText;
+  return  gameStatus === GAMESTATUS.win ? winText : lostText;
+
+
 };
+
+const getTimeToSolve = (start , end) => {
+  const timeToSolve =  ((end - start) / 1000).toFixed(2)
+  console.log('timeToSolve = ' , timeToSolve)
+  return timeToSolve
+}
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
@@ -113,6 +121,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
     const newGuesses = [...guesses, currAnswer];
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
     if (newStatus !== "playing") {
+      riddle.endTime = Date.now()
       sendStats(newGuesses, newStatus);
     }
     setAnimationEnded(false);
@@ -131,6 +140,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
       guesses: guessesAsStrings,
       user_name: userData.name,
       email: userData.email,
+      time_to_solve : getTimeToSolve(riddle.startTime , riddle.endTime)
     };
     const response = insertStats(body);
     await response;
@@ -187,6 +197,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
             onClose={() => setTimerWasClosed(true)}
             onTimeEnds={reset}
             text={getTimerText(gameStatus, solution)}
+            timeToSolve={(riddle.endTime-riddle.startTime)}
           />
         ) : null}
       </div>

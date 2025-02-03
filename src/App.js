@@ -21,6 +21,8 @@ const useRiddle = () => {
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
       if (riddle && riddlesAreEqual(riddle, data.riddle)) return;
+      data.riddle.startTime = Date.now()
+      data.riddle.endTime = null
       storeProgress({});
       setRiddle(data.riddle);
     };

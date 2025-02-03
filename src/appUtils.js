@@ -82,7 +82,6 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-
 export const getLastLetterIndices = (solution) => {
   const lastLetterIndices = [];
   for (let i = solution.length; i >= 0; i--) {
@@ -160,4 +159,11 @@ export const convertFromLastLetter = (val) => {
 export const getMaxDelay = (solution) => {
   const maxDelay = AnimationDelay * solution.length;
   return maxDelay;
+};
+
+export const getTimeDifference = (start, end) => {
+  const deltaMs = end - start;
+  const totalSeconds = parseInt(Math.floor(deltaMs / 1000), 10);
+  const totalMinutes = parseInt(Math.floor(totalSeconds / 60), 10);
+  return [totalSeconds, totalMinutes];
 };
