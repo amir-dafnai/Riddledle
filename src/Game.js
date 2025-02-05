@@ -16,10 +16,16 @@ import {
   getProgress,
   getUserData,
   storeUserStats,
+  storeGlobalStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
-import { fetchStats, insertStats, StatisticsModal } from "./Stats";
+import {
+  fetchGlobalStats,
+  fetchStats,
+  insertStats,
+  StatisticsModal,
+} from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
@@ -32,16 +38,14 @@ const getGameLostText = (solution) => {
 const getTimerText = (gameStatus, solution) => {
   const winText = "!כל הכבוד";
   const lostText = getGameLostText(solution);
-  return  gameStatus === GAMESTATUS.win ? winText : lostText;
-
-
+  return gameStatus === GAMESTATUS.win ? winText : lostText;
 };
 
-const getTimeToSolve = (start , end) => {
-  const timeToSolve =  ((end - start) / 1000).toFixed(2)
-  console.log('timeToSolve = ' , timeToSolve)
-  return timeToSolve
-}
+const getTimeToSolve = (start, end) => {
+  const timeToSolve = ((end - start) / 1000).toFixed(2);
+  console.log("timeToSolve = ", timeToSolve);
+  return timeToSolve;
+};
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
@@ -53,7 +57,14 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , login }) {
+export function Game({
+  riddle,
+  reset,
+  viewStatus,
+  setViewStatus,
+  isLoggedIn,
+  login,
+}) {
   const progress = getProgress();
 
   const solution = riddle.solution;
@@ -104,12 +115,18 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
       const stats = await fetchStats(email);
       storeUserStats(stats);
     };
+    const fetchAndStoreGlobalStats = async (riddlId) => {
+      const globalStats = await fetchGlobalStats(riddle.id);
+      console.log(globalStats);
+      storeGlobalStats(globalStats);
+    };
+    fetchAndStoreGlobalStats()
     const email = getUserData().email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
       setShouldUpdateStats(false);
     }
-  }, [shoudlFetchStats]);
+  }, [shoudlFetchStats, riddle.id]);
 
   function setNewAnswer(currSquare, key) {
     const newAns = currAnswer.slice();
@@ -121,7 +138,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
     const newGuesses = [...guesses, currAnswer];
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
     if (newStatus !== "playing") {
-      riddle.endTime = Date.now()
+      riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
     }
     setAnimationEnded(false);
@@ -140,7 +157,7 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
       guesses: guessesAsStrings,
       user_name: userData.name,
       email: userData.email,
-      time_to_solve : getTimeToSolve(riddle.startTime , riddle.endTime)
+      time_to_solve: getTimeToSolve(riddle.startTime, riddle.endTime),
     };
     const response = insertStats(body);
     await response;
@@ -174,10 +191,18 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
     <>
       <div className="riddle-container">
         {viewStatus === VIEWS.form && (
-          <SuggestRiddleForm setViewStatus={setViewStatus} isLoggedIn={isLoggedIn} login={login} />
+          <SuggestRiddleForm
+            setViewStatus={setViewStatus}
+            isLoggedIn={isLoggedIn}
+            login={login}
+          />
         )}
         {viewStatus === VIEWS.stats && (
-          <StatisticsModal setViewStatus={setViewStatus} isLoggedIn={isLoggedIn} login={login} />
+          <StatisticsModal
+            setViewStatus={setViewStatus}
+            isLoggedIn={isLoggedIn}
+            login={login}
+          />
         )}
         <h1 className="rtl-form unselectable">
           {riddle.definition} {getStringLengths(riddle.solution)}
@@ -197,7 +222,9 @@ export function Game({ riddle, reset, viewStatus, setViewStatus,isLoggedIn , log
             onClose={() => setTimerWasClosed(true)}
             onTimeEnds={reset}
             text={getTimerText(gameStatus, solution)}
-            timeToSolve={riddle.startTime ? (riddle.endTime-riddle.startTime) : null}
+            timeToSolve={
+              riddle.startTime ? riddle.endTime - riddle.startTime : null
+            }
           />
         ) : null}
       </div>

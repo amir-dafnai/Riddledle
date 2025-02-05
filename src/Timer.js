@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./Timer.css";
+import { getGlobalStats } from "./localStorageUtils";
 
 const getTimeToSolveText = (timeToSolveMs) => {
   const totalSeconds = parseInt(Math.floor(timeToSolveMs / 1000), 10);
@@ -17,9 +18,15 @@ const getTimeToSolveText = (timeToSolveMs) => {
   return `פתרת ב ${timeToSolve} ${units}`;
 };
 
+
 const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const timeToSolveText = timeToSolve ?  getTimeToSolveText(timeToSolve) : null ;
+
+  const userStats = getGlobalStats()
+  
+  
+
   useEffect(() => {
     const timer = setInterval(() => {
       const time = calculateTimeLeft();
@@ -57,9 +64,33 @@ const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
           {timeLeft.minutes.toString().padStart(2, "0")}:
           {timeLeft.seconds.toString().padStart(2, "0")}
         </div>
+  
+        {/* User Statistics Section */}
+        <div className="user-stats">
+          <h3>🔥 נתוני משתמש</h3>
+          <div className="stats-container">
+            <div className="stat-item">
+              <span className="stat-label">⏱️ הזמן הכי טוב:</span>
+              <span className="stat-value">{userStats.best_time} שניות</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">🎮 משחקים ששוחקו:</span>
+              <span className="stat-value">{userStats.total_plays}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">🏆 נצחונות:</span>
+              <span className="stat-value">{userStats.total_wins}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">👤 שחקן:</span>
+              <span className="stat-value">{userStats.user_name}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
+  
 };
 
 export default TimerToMidnight;

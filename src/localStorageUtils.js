@@ -23,3 +23,15 @@ export const getUserStats = () => {
     ? JSON.parse(localStorage.getItem("stats"))
     : null;
 };
+
+
+export const storeGlobalStats = (stats) => {
+  localStorage.setItem("globalStats", JSON.stringify(stats));
+}
+
+export const getGlobalStats = () => {
+  return "globalStats" in localStorage && localStorage.getItem("globalStats") !== "{}"
+    ? JSON.parse(localStorage.getItem("globalStats"))
+    : null;
+};
+

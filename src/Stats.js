@@ -22,6 +22,12 @@ export const fetchStats = async (email) => {
   return data.stats;
 };
 
+export const fetchGlobalStats = async(riddleId) =>{
+  const response = await fetch(`${getUrl()}get_global_stats?&riddle_id=${riddleId}`);
+  const data = await response.json();
+  return data.global_stats;
+}
+
 export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
   let stats = isLoggedIn? getUserStats() : null;
   stats =
