@@ -150,7 +150,7 @@ const Stats = () => {
   );
 };
 
-const GuestUserMessage = (login) => {
+const GuestUserMessage = ({login}) => {
   return (
     <>
       <h3> ...אם היית מחובר היו כאן סטטיסטיקות</h3>
@@ -176,7 +176,7 @@ const TimerToMidnight = ({
           ✖
         </button>
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
-        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
+        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login}/>}
         <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
