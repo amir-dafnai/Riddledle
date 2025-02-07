@@ -2,19 +2,49 @@ import React, { useState, useEffect } from "react";
 import "./Timer.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
 
+const getFixedPercentage = (numerator, denomeneator) => {
+  const percentage = (numerator / denomeneator) * 100;
+  const fixedPercentage = percentage !==100 ?  percentage.toFixed(1): 100;
+  return fixedPercentage;
+};
+
+const getTimeToSolve = (start, end) => {
+  const diffInSeconds = Math.round((end - start) / 1000);
+  const hours = Math.floor(diffInSeconds / 3600);
+  const minutes = Math.floor((diffInSeconds % 3600) / 60);
+  const seconds = diffInSeconds % 60;
+
+  const formattedTime =
+    hours > 0
+      ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+          2,
+          "0"
+        )}:${String(seconds).padStart(2, "0")}`
+      : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+          2,
+          "0"
+        )}`;
+  return formattedTime;
+};
+
 const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const word = riddle.solution;
-  const timeToSolve = ((riddle.endTime - riddle.startTime) / 1000).toFixed(2);
+  const timeToSolve = getTimeToSolve(riddle.startTime, riddle.endTime);
   const personalStats = getUserStats();
   const globalStats = getGlobalStats();
-  const winPercentage = ((personalStats.wins / personalStats.total) * 100).toFixed(1);
-  const globalWinPercentage = ((globalStats.total_wins / globalStats.total_plays) * 100).toFixed(1);
+  const winPercentage = getFixedPercentage(
+    personalStats.wins , personalStats.total
+  );
+  const globalWinPercentage = getFixedPercentage(
+    globalStats.total_wins , globalStats.total_plays
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
       const time = calculateTimeLeft();
-      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) onTimeEnds();
+      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0)
+        onTimeEnds();
       setTimeLeft(time);
     }, 1000);
 
@@ -53,13 +83,10 @@ const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
 
         {/* Time to Solve */}
         <div className="stat-large stats-time-to-solve">{timeToSolve}</div>
-        <div className="stat-label">זמן פתרון</div>
-
-        
+        <div className="stat-label"> זמן פתרון </div>
 
         {/* Personal Stats */}
         <div className="stats-container personal-stats">
-          <h3 className="personal-title">הסטטיסטיקות שלך</h3>
           <div className="stat">
             <div className="stat-large">{personalStats.best_time}</div>
             <div className="stat-label">הזמן הקצר ביותר שלך</div>
@@ -70,13 +97,11 @@ const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
               {personalStats.wins} / {personalStats.total} הצלחות
             </div>
           </div>
+          <h3 className="personal-title">הסטטיסטיקות שלך</h3>
         </div>
-
-        
 
         {/* Global Stats */}
         <div className="stats-container global-stats">
-          <h3 className="global-title">סטטיסטיקות גלובליות</h3>
           <div className="stat">
             <div className="stat-large">{globalStats.best_time}</div>
             <div className="stat-label">
@@ -89,6 +114,7 @@ const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
               {globalStats.total_wins} / {globalStats.total_plays} הצליחו
             </div>
           </div>
+          <h3 className="global-title">סטטיסטיקות גלובליות</h3>
         </div>
 
         {/* Countdown Timer */}
