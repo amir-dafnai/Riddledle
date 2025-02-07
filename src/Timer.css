@@ -1,4 +1,4 @@
-/* Keep modal and general styling */
+/* General Modal Styling */
 .timer-modal-overlay {
   position: fixed;
   top: 0;
@@ -12,20 +12,18 @@
   z-index: 9999;
 }
 
-/* Modal content */
 .timer-modal-content {
-  background: #222;
+  background: #121212;
   color: #fff;
-  border-radius: 12px;
-  padding: 25px;
+  border-radius: 15px;
+  padding: 30px;
   width: 90%;
-  max-width: 420px;
-  text-align: center; /* Keep main elements centered */
+  max-width: 500px;
+  text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: relative;
 }
 
-/* Close button (keep top-right for LTR look) */
+/* Close Button */
 .timer-close-button {
   position: absolute;
   top: 12px;
@@ -33,66 +31,121 @@
   background: transparent;
   border: none;
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
 }
 
-/* Timer (centered) */
-.time {
-  font-size: 2.5rem;
-  margin-top: 10px;
-  font-family: "Courier New", Courier, monospace;
+/* Win Message */
+.win-message {
+  font-size: 1.6rem;
   font-weight: bold;
-  color: #ffcc00;
-  text-align: center;
+  color: #00ff80;
+  margin-bottom: 15px;
 }
 
-/* ---------------- */
-/* Right-Aligned Stats Section (RTL) */
-/* ---------------- */
-.user-stats {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  direction: rtl; /* Apply RTL only to this section */
-  text-align: right; /* Align text to the right */
+/* Word Display */
+.word-display {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 15px;
 }
 
-/* Stats title (keep right-aligned for consistency) */
-.user-stats h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #ffcc00;
-  text-align: center;
+.letter-tile {
+  background: #00ff80;
+  color: #000;
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 10px 14px;
+  border-radius: 6px;
 }
 
-/* Stats container */
+/* Stats Section */
 .stats-container {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-around;
+  margin: 15px 0;
 }
 
-/* Each stat item */
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 1rem;
+/* Stronger Separation for Personal Stats */
+.personal-stats {
+  background: rgba(0, 255, 128, 0.12);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
 }
 
-/* Labels aligned right */
+.personal-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ff80;
+  margin-bottom: 8px;
+}
+
+/* Global Stats Section */
+.global-stats {
+  padding: 10px;
+  background: rgb(67, 67, 24);
+}
+
+.global-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+
+/* Stat Blocks */
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+/* BIG NUMBERS */
+.stat-large {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+.stats-time-to-solve{
+  color: #00ff80;
+}
+
+.personal-stats .stat-large {
+  color: #00ff80;
+}
+
+.global-stats .stat-large {
+  font-size: 2rem;
+  color: #ffd700;
+}
+
+/* Small Labels */
 .stat-label {
-  font-weight: bold;
-  color: #ddd;
+  font-size: 0.9rem;
+  color: #bbbbbb;
 }
 
-/* Values aligned left */
-.stat-value {
+/* Divider */
+.divider {
+  border: none;
+  height: 1px;
+  background: #333;
+  margin: 25px 0;
+}
+
+/* Countdown Timer */
+.timer {
+  margin-top: 15px;
+}
+
+.timer h3 {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.time {
+  font-size: 1.9rem;
   font-weight: bold;
-  color: #fff;
-  text-align: left;
+  color: #ffffff;
 }

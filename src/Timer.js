@@ -1,41 +1,24 @@
 import React, { useState, useEffect } from "react";
-
 import "./Timer.css";
-import { getGlobalStats } from "./localStorageUtils";
+import { getGlobalStats, getUserStats } from "./localStorageUtils";
 
-const getTimeToSolveText = (timeToSolveMs) => {
-  const totalSeconds = parseInt(Math.floor(timeToSolveMs / 1000), 10);
-  const totalMinutes = parseInt(Math.floor(totalSeconds / 60), 10);
-  var totalHours = parseInt(Math.floor(totalMinutes / 60), 10);
-  const timeToSolve =
-    totalHours !== 0
-      ? totalHours
-      : totalMinutes !== 0
-      ? totalMinutes
-      : totalSeconds;
-  const units =
-    totalHours !== 0 ? "שעות" : totalMinutes !== 0 ? "דקות" : "שניות";
-  return `פתרת ב ${timeToSolve} ${units}`;
-};
-
-
-const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
+const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const timeToSolveText = timeToSolve ?  getTimeToSolveText(timeToSolve) : null ;
-
-  const userStats = getGlobalStats()
-  
-  
+  const word = riddle.solution;
+  const timeToSolve = ((riddle.endTime - riddle.startTime) / 1000).toFixed(2);
+  const personalStats = getUserStats();
+  const globalStats = getGlobalStats();
+  const winPercentage = ((personalStats.wins / personalStats.total) * 100).toFixed(1);
+  const globalWinPercentage = ((globalStats.total_wins / globalStats.total_plays) * 100).toFixed(1);
 
   useEffect(() => {
     const timer = setInterval(() => {
       const time = calculateTimeLeft();
-      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0)
-        onTimeEnds();
+      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) onTimeEnds();
       setTimeLeft(time);
     }, 1000);
 
-    return () => clearInterval(timer); // Cleanup the interval on component unmount
+    return () => clearInterval(timer);
   }, [onTimeEnds]);
 
   function calculateTimeLeft() {
@@ -44,53 +27,82 @@ const TimerToMidnight = ({ onTimeEnds, onClose, text, timeToSolve }) => {
     midnight.setHours(24, 1, 0, 0);
     const difference = midnight - now;
 
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / (1000 * 60)) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    return { hours, minutes, seconds };
+    return {
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / (1000 * 60)) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
   }
+
   return (
     <div className="timer-modal-overlay unselectable">
       <div className="timer-modal-content">
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        <h1>{text}</h1>
-        {timeToSolveText && <h2>{timeToSolveText}</h2>}
-        <h3>החידה הבאה בעוד</h3>
-        <div className="time">
-          {timeLeft.hours.toString().padStart(2, "0")}:
-          {timeLeft.minutes.toString().padStart(2, "0")}:
-          {timeLeft.seconds.toString().padStart(2, "0")}
+
+        {/* Header Section */}
+        <h2 className="win-message">!הצלחת</h2>
+        <div className="word-display">
+          {word.map((letter, index) => (
+            <div key={index} className="letter-tile">
+              {letter}
+            </div>
+          ))}
         </div>
-  
-        {/* User Statistics Section */}
-        <div className="user-stats">
-          <h3>🔥 נתוני משתמש</h3>
-          <div className="stats-container">
-            <div className="stat-item">
-              <span className="stat-label">⏱️ הזמן הכי טוב:</span>
-              <span className="stat-value">{userStats.best_time} שניות</span>
+
+        {/* Time to Solve */}
+        <div className="stat-large stats-time-to-solve">{timeToSolve}</div>
+        <div className="stat-label">זמן פתרון</div>
+
+        
+
+        {/* Personal Stats */}
+        <div className="stats-container personal-stats">
+          <h3 className="personal-title">הסטטיסטיקות שלך</h3>
+          <div className="stat">
+            <div className="stat-large">{personalStats.best_time}</div>
+            <div className="stat-label">הזמן הקצר ביותר שלך</div>
+          </div>
+          <div className="stat">
+            <div className="stat-large">{winPercentage}%</div>
+            <div className="stat-label">
+              {personalStats.wins} / {personalStats.total} הצלחות
             </div>
-            <div className="stat-item">
-              <span className="stat-label">🎮 משחקים ששוחקו:</span>
-              <span className="stat-value">{userStats.total_plays}</span>
+          </div>
+        </div>
+
+        
+
+        {/* Global Stats */}
+        <div className="stats-container global-stats">
+          <h3 className="global-title">סטטיסטיקות גלובליות</h3>
+          <div className="stat">
+            <div className="stat-large">{globalStats.best_time}</div>
+            <div className="stat-label">
+              הזמן הקצר ביותר <br /> {globalStats.user_name}
             </div>
-            <div className="stat-item">
-              <span className="stat-label">🏆 נצחונות:</span>
-              <span className="stat-value">{userStats.total_wins}</span>
+          </div>
+          <div className="stat">
+            <div className="stat-large">{globalWinPercentage}%</div>
+            <div className="stat-label">
+              {globalStats.total_wins} / {globalStats.total_plays} הצליחו
             </div>
-            <div className="stat-item">
-              <span className="stat-label">👤 שחקן:</span>
-              <span className="stat-value">{userStats.user_name}</span>
-            </div>
+          </div>
+        </div>
+
+        {/* Countdown Timer */}
+        <div className="timer">
+          <h3>החידה הבאה בעוד</h3>
+          <div className="time">
+            {timeLeft.hours.toString().padStart(2, "0")}:
+            {timeLeft.minutes.toString().padStart(2, "0")}:
+            {timeLeft.seconds.toString().padStart(2, "0")}
           </div>
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default TimerToMidnight;
