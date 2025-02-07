@@ -39,7 +39,6 @@
 .win-message {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #00ff80;
   margin-bottom: 12px;
 }
 
@@ -70,7 +69,7 @@
 
 /* Personal Stats */
 .personal-stats {
-  background: rgba(0, 255, 128, 0.2);
+  background: rgba(93, 106, 100, 0.2);
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 12px;
@@ -79,21 +78,20 @@
 .personal-title {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #00ff80;
+  
   margin-bottom: 8px;
 }
 
 /* Global Stats */
 .global-stats {
   padding: 15px;
-  background: rgba(255, 215, 0, 0.2);
+  background: rgba(93, 106, 100, 0.2);
   border-radius: 10px;
 }
 
 .global-title {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #ffd700;
   margin-bottom: 8px;
 }
 
@@ -109,17 +107,6 @@
   color: #ffffff;
 }
 
-.stats-time-to-solve {
-  color: #00ff80;
-}
-
-.personal-stats .stat-large {
-  color: #00ff80;
-}
-
-.global-stats .stat-large {
-  color: #ffd700;
-}
 
 /* Small Labels */
 .stat-label {
@@ -153,7 +140,6 @@
 
 /* Mobile Optimization for Google Pixel 6a */
 @media {
-
   .timer-modal-content {
     width: 90%;
     padding: 15px;
