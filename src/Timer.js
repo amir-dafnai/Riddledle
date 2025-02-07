@@ -68,7 +68,7 @@ const PersonalStats = () => {
           {personalStats.wins} / {personalStats.total} הצלחות
         </div>
       </div>
-      <h3 className="personal-title">הסטטיסטיקות שלך</h3>
+      <h3 className="personal-title">אישי</h3>
     </div>
   );
 };
@@ -95,7 +95,7 @@ const GlobalStats = () => {
             {globalStats.total_wins} / {globalStats.total_plays} הצליחו
           </div>
         </div>
-        <h3 className="global-title">סטטיסטיקות גלובליות</h3>
+        <h3 className="global-title">גלובלי</h3>
       </div>
     </>
   );
