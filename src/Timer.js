@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Timer.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
+import { GAMESTATUS } from "./Consts";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
-  const fixedPercentage = percentage !==100 ?  percentage.toFixed(1): 100;
+  const fixedPercentage = percentage !== 100 ? percentage.toFixed(1) : 100;
   return fixedPercentage;
 };
 
@@ -27,18 +28,81 @@ const getTimeToSolve = (start, end) => {
   return formattedTime;
 };
 
-const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const word = riddle.solution;
+const Top = ({ word, riddle, gameStatus }) => {
+  const text = gameStatus === GAMESTATUS.win  ? "הצלחת!" : "לא נורא..."
   const timeToSolve = getTimeToSolve(riddle.startTime, riddle.endTime);
+  return (
+    <>
+      {" "}
+      {/* Header Section */}
+      <h2 className="win-message" dir="rtl">{text}</h2>
+      <div className="word-display">
+        {word.map((letter, index) => (
+          <div key={index} className="letter-tile">
+            {letter}
+          </div>
+        ))}
+      </div>
+      {/* Time to Solve */}
+      <div className="stat-large stats-time-to-solve">{timeToSolve}</div>
+      <div className="stat-label"> זמן פתרון </div>
+    </>
+  );
+};
+
+const PersonalStats = () => {
   const personalStats = getUserStats();
-  const globalStats = getGlobalStats();
   const winPercentage = getFixedPercentage(
-    personalStats.wins , personalStats.total
+    personalStats.wins,
+    personalStats.total
   );
+  return (
+    <div className="stats-container personal-stats">
+      <div className="stat">
+        <div className="stat-large">{personalStats.best_time}</div>
+        <div className="stat-label">הזמן הקצר ביותר שלך</div>
+      </div>
+      <div className="stat">
+        <div className="stat-large">{winPercentage}%</div>
+        <div className="stat-label">
+          {personalStats.wins} / {personalStats.total} הצלחות
+        </div>
+      </div>
+      <h3 className="personal-title">הסטטיסטיקות שלך</h3>
+    </div>
+  );
+};
+
+const GlobalStats = () => {
+  const globalStats = getGlobalStats();
+
   const globalWinPercentage = getFixedPercentage(
-    globalStats.total_wins , globalStats.total_plays
+    globalStats.total_wins,
+    globalStats.total_plays
   );
+  return (
+    <>
+      <div className="stats-container global-stats">
+        <div className="stat">
+          <div className="stat-large">{globalStats.best_time}</div>
+          <div className="stat-label">
+            הזמן הקצר ביותר <br /> {globalStats.user_name}
+          </div>
+        </div>
+        <div className="stat">
+          <div className="stat-large">{globalWinPercentage}%</div>
+          <div className="stat-label">
+            {globalStats.total_wins} / {globalStats.total_plays} הצליחו
+          </div>
+        </div>
+        <h3 className="global-title">סטטיסטיקות גלובליות</h3>
+      </div>
+    </>
+  );
+};
+
+const Timer = (onTimeEnds) => {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -63,69 +127,57 @@ const TimerToMidnight = ({ onTimeEnds, onClose, riddle }) => {
       seconds: Math.floor((difference / 1000) % 60),
     };
   }
+  return (
+    <>
+      <div className="timer">
+        <h3>החידה הבאה בעוד</h3>
+        <div className="time">
+          {timeLeft.hours.toString().padStart(2, "0")}:
+          {timeLeft.minutes.toString().padStart(2, "0")}:
+          {timeLeft.seconds.toString().padStart(2, "0")}
+        </div>
+      </div>
+    </>
+  );
+};
 
+const Stats = () => {
+  return (
+    <>
+      <PersonalStats />
+      <GlobalStats />
+    </>
+  );
+};
+
+const GuestUserMessage = (login) => {
+  return (
+    <>
+      <h3> ...אם היית מחובר היו כאן סטטיסטיקות</h3>
+      <span className="login-link" onClick={login}>
+        להתחברות
+      </span>
+    </>
+  );
+};
+
+const TimerToMidnight = ({
+  onTimeEnds,
+  onClose,
+  riddle,
+  isLoggedIn,
+  gameStatus,
+  login,
+}) => {
   return (
     <div className="timer-modal-overlay unselectable">
       <div className="timer-modal-content">
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-
-        {/* Header Section */}
-        <h2 className="win-message">!הצלחת</h2>
-        <div className="word-display">
-          {word.map((letter, index) => (
-            <div key={index} className="letter-tile">
-              {letter}
-            </div>
-          ))}
-        </div>
-
-        {/* Time to Solve */}
-        <div className="stat-large stats-time-to-solve">{timeToSolve}</div>
-        <div className="stat-label"> זמן פתרון </div>
-
-        {/* Personal Stats */}
-        <div className="stats-container personal-stats">
-          <div className="stat">
-            <div className="stat-large">{personalStats.best_time}</div>
-            <div className="stat-label">הזמן הקצר ביותר שלך</div>
-          </div>
-          <div className="stat">
-            <div className="stat-large">{winPercentage}%</div>
-            <div className="stat-label">
-              {personalStats.wins} / {personalStats.total} הצלחות
-            </div>
-          </div>
-          <h3 className="personal-title">הסטטיסטיקות שלך</h3>
-        </div>
-
-        {/* Global Stats */}
-        <div className="stats-container global-stats">
-          <div className="stat">
-            <div className="stat-large">{globalStats.best_time}</div>
-            <div className="stat-label">
-              הזמן הקצר ביותר <br /> {globalStats.user_name}
-            </div>
-          </div>
-          <div className="stat">
-            <div className="stat-large">{globalWinPercentage}%</div>
-            <div className="stat-label">
-              {globalStats.total_wins} / {globalStats.total_plays} הצליחו
-            </div>
-          </div>
-          <h3 className="global-title">סטטיסטיקות גלובליות</h3>
-        </div>
-
-        {/* Countdown Timer */}
-        <div className="timer">
-          <h3>החידה הבאה בעוד</h3>
-          <div className="time">
-            {timeLeft.hours.toString().padStart(2, "0")}:
-            {timeLeft.minutes.toString().padStart(2, "0")}:
-            {timeLeft.seconds.toString().padStart(2, "0")}
-          </div>
-        </div>
+        <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
+        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
+        <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
   );

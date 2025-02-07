@@ -30,21 +30,9 @@ import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
 
-const getGameLostText = (solution) => {
-  const solText = [...solution].reverse().join("");
-  return `לא נורא... הפתרון הנכון הוא ${solText} `;
-};
-
-const getTimerText = (gameStatus, solution) => {
-  const winText = "!כל הכבוד";
-  const lostText = getGameLostText(solution);
-  return gameStatus === GAMESTATUS.win ? winText : lostText;
-};
-
 const getTimeToSolve = (start, end) => {
-  const timeToSolve = ((end - start) / 1000).toFixed(2);
-  console.log("timeToSolve = ", timeToSolve);
-  return timeToSolve;
+  const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
+  return timeToSolveSeconds;
 };
 
 const getGameStatus = (solution, guesses, numberOfGuesses) => {
@@ -120,7 +108,7 @@ export function Game({
       console.log(globalStats);
       storeGlobalStats(globalStats);
     };
-    fetchAndStoreGlobalStats()
+    fetchAndStoreGlobalStats();
     const email = getUserData().email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
@@ -221,9 +209,10 @@ export function Game({
           <TimerToMidnight
             onClose={() => setTimerWasClosed(true)}
             onTimeEnds={reset}
-            text={getTimerText(gameStatus, solution)}
-            //timeToSolve={(gameStatus === GAMESTATUS.win && riddle.startTime)? (riddle.endTime-riddle.startTime) : null}
+            gameStatus={gameStatus}
             riddle={riddle}
+            isLoggedIn={isLoggedIn}
+            login = {login}
           />
         ) : null}
       </div>
