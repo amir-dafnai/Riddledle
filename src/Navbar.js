@@ -74,6 +74,20 @@ const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
   );
 };
 
+const StatsButton = ({onclick})=>{
+  
+  return null 
+  // eslint-disable-next-line
+  return (          <li>
+    <button
+      onClick={onclick}
+    >
+      <FiBarChart2 size={24} /> {/* Statistics Icon */}
+    </button>
+  </li>)
+  
+}
+
 const Navbar = ({
   isLoggedIn,
   login,
@@ -100,15 +114,9 @@ const Navbar = ({
                 <TfiWrite size={24} /> {/* Suggest riddle */}
               </button>
             </li>
-            <li>
-              <button
-                onClick={() => {
-                  setViewStatus(VIEWS.stats);
-                }}
-              >
-                <FiBarChart2 size={24} /> {/* Statistics Icon */}
-              </button>
-            </li>
+            <StatsButton onclick={() => setViewStatus(VIEWS.stats)}/>
+        
+            
             <li>
               <button
                 onClick={() =>
