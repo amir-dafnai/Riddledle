@@ -185,7 +185,7 @@ const TimerToMidnight = ({
           ✖
         </button>
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
-        {true ? <Stats /> : <GuestUserMessage login={login}/>}
+        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login}/>}
         <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
