@@ -28,7 +28,11 @@ export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   const userInfo = await fetchUserInfo(tokenResponse.access_token);
   const stats = await fetchStats(userInfo.email);
   const currStoredUser = getUserData();
-  if (currStoredUser && currStoredUser.email !== userInfo.email)
+  if (
+    currStoredUser &&
+    currStoredUser.email.includes("@") &&
+    currStoredUser.email !== userInfo.email
+  )
     storeProgress({});
   userInfo.loggedIn = true;
   storeUserData(userInfo);
