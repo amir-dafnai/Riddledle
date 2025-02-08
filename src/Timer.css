@@ -14,7 +14,6 @@
 
 .timer-modal-content {
   background: #121212;
-  color: #fff;
   border-radius: 15px;
   padding: 30px;
   width: 90%;
@@ -62,7 +61,7 @@
 .stats-container {
   display: flex;
   justify-content: space-around;
-  margin: 12px 0;
+  margin: 15px 0;
   padding: 12px;
   border-radius: 8px;
 }
@@ -121,7 +120,6 @@
 .time {
   font-size: 1rem;
   font-weight: bold;
-  color: #ffffff;
 }
 
 /* Mobile Optimization for Google Pixel 6a */
@@ -179,18 +177,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    min-height: 70px; /* Set a minimum height */
+    min-height: 120px; /* Set a minimum height */
   }
 
   .stat-large {
     font-size: 1.6rem;
   }
 
-  .timer {
-    margin-top: 1px;
-    font-size: 1rem;
-
-  }
 
 
   /* Close Button */
