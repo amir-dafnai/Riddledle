@@ -52,8 +52,7 @@ const Top = ({ word, riddle, gameStatus }) => {
         ))}
       </div>
       {/* Time to Solve */}
-      <div className="stat-large stats-time-to-solve">{timeToSolve}</div>
-      <div className="stat-label"> זמן פתרון </div>
+      <div className="solve-label stat-label"> {timeToSolve} זמן פתרון    </div>
     </>
   );
 };

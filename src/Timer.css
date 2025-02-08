@@ -110,10 +110,6 @@
 
 
 /* Small Labels */
-.stat-label {
-  font-size: 1rem;
-  color: #bbbbbb;
-}
 
 /* Divider */
 .divider {
@@ -172,6 +168,12 @@
 
   .stat-label {
     font-size: 0.9rem;
+    color: #bbbbbb;
+  }
+
+  .solve-label{
+    font-size: 1.2rem;
+
   }
 
   /* Stats Section */
