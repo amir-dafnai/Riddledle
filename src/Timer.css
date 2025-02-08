@@ -120,6 +120,7 @@
 .time {
   font-size: 1rem;
   font-weight: bold;
+  
 }
 
 /* Mobile Optimization for Google Pixel 6a */
@@ -177,7 +178,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    min-height: 120px; /* Set a minimum height */
+    min-height: 160px; 
   }
 
   .stat-large {
