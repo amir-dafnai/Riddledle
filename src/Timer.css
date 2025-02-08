@@ -70,7 +70,6 @@
 /* Personal Stats */
 .personal-stats {
   background: rgba(93, 106, 100, 0.2);
-  padding: 15px;
   border-radius: 10px;
   margin-bottom: 12px;
 }
@@ -89,7 +88,6 @@
 
 /* Global Stats */
 .global-stats {
-  padding: 15px;
   background: rgba(93, 106, 100, 0.2);
   border-radius: 10px;
 }
@@ -119,18 +117,9 @@
   margin: 20px 0;
 }
 
-/* Countdown Timer */
-.timer {
-  margin-top: 12px;
-}
-
-.timer h3 {
-  font-size: 1rem;
-  font-weight: normal;
-}
 
 .time {
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #ffffff;
 }
@@ -160,7 +149,6 @@
 
   
 
-  /* Time to Solve */
   .stats-time-to-solve {
     font-size: 1.6rem;
     margin-bottom: 5px;
@@ -184,7 +172,7 @@
   }
 
   .personal-stats, .global-stats {
-    padding: 12px;
+    padding: 1px;
   }
 
   .stat-large {
@@ -192,16 +180,11 @@
   }
 
   .timer {
-    margin-top: 10px;
+    margin-top: 1px;
+    font-size: 1rem;
+
   }
 
-  .timer h3 {
-    font-size: 0.9rem;
-  }
-
-  .time {
-    font-size: 1.8rem;
-  }
 
   /* Close Button */
   .timer-close-button {
