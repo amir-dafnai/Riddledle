@@ -5,16 +5,15 @@ import { GAMESTATUS } from "./Consts";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
-  const fixedPercentage = percentage !== 100 ? percentage.toFixed(1) : 100;
+  const fixedPercentage = percentage.toFixed(0) 
   return fixedPercentage;
 };
 
-const getTimeToSolve = (start, end) => {
-  const diffInSeconds = Math.round((end - start) / 1000);
-  const hours = Math.floor(diffInSeconds / 3600);
-  const minutes = Math.floor((diffInSeconds % 3600) / 60);
-  const seconds = diffInSeconds % 60;
-
+const getHMSFormat = (timeInSeconds_) =>{
+  const timeInSeconds = Math.round(timeInSeconds_)
+  const hours = Math.floor(timeInSeconds / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = timeInSeconds % 60;
   const formattedTime =
     hours > 0
       ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
@@ -25,6 +24,15 @@ const getTimeToSolve = (start, end) => {
           2,
           "0"
         )}`;
+  return formattedTime;
+
+
+
+}
+
+const getTimeToSolve = (start, end) => {
+  const diffInSeconds = Math.round((end-start) / 1000);
+  const formattedTime =getHMSFormat(diffInSeconds)
   return formattedTime;
 };
 
@@ -59,7 +67,7 @@ const PersonalStats = () => {
   return (
     <div className="stats-container personal-stats">
       <div className="stat">
-        <div className="stat-large">{personalStats.best_time}</div>
+        <div className="stat-large">{getHMSFormat(personalStats.best_time)}</div>
         <div className="stat-label">הזמן הקצר ביותר שלך</div>
       </div>
       <div className="stat">
@@ -84,7 +92,7 @@ const GlobalStats = () => {
     <>
       <div className="stats-container global-stats">
         <div className="stat">
-          <div className="stat-large">{globalStats.best_time}</div>
+          <div className="stat-large">{getHMSFormat(globalStats.best_time)}</div>
           <div className="stat-label">
             הזמן הקצר ביותר <br /> {globalStats.user_name}
           </div>
@@ -176,7 +184,7 @@ const TimerToMidnight = ({
           ✖
         </button>
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
-        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login}/>}
+        {true ? <Stats /> : <GuestUserMessage login={login}/>}
         <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
