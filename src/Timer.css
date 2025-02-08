@@ -69,27 +69,28 @@
 
 /* Personal Stats */
 .personal-stats {
-  background: rgba(93, 106, 100, 0.2);
-  border-radius: 10px;
   margin-bottom: 12px;
 }
 
 .personal-title {
   font-size: 0.7rem;
-  font-weight: bold;
-  margin-bottom: 8px;
 }
 
 .global-title {
   font-size: 0.9rem;
-  font-weight: bold;
-  margin-bottom: 8px;
 }
+
+.personal-title, .global-title {
+  align-self: flex-start; 
+  font-weight: bold;
+}
+
+
+
+
 
 /* Global Stats */
 .global-stats {
-  background: rgba(93, 106, 100, 0.2);
-  border-radius: 10px;
 }
 
 
@@ -107,7 +108,6 @@
 }
 
 
-/* Small Labels */
 
 /* Divider */
 .divider {
@@ -172,7 +172,14 @@
   }
 
   .personal-stats, .global-stats {
-    padding: 1px;
+    background: rgba(93, 106, 100, 0.2);
+    border-radius: 10px;
+    padding: 10px; /* Uniform padding */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 70px; /* Set a minimum height */
   }
 
   .stat-large {

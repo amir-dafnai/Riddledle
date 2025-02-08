@@ -139,7 +139,7 @@ const Timer = (onTimeEnds) => {
   return (
     <>
       <div className="timer">
-        <h3>החידה הבאה בעוד</h3>
+        <h3 className="time">החידה הבאה בעוד</h3>
         <div className="time">
           {timeLeft.hours.toString().padStart(2, "0")}:
           {timeLeft.minutes.toString().padStart(2, "0")}:
@@ -185,7 +185,7 @@ const TimerToMidnight = ({
           ✖
         </button>
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
-        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login}/>}
+        {true ? <Stats /> : <GuestUserMessage login={login}/>}
         <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
