@@ -70,13 +70,14 @@ const PersonalStats = () => {
         <div className="stat-large">{getHMSFormat(personalStats.best_time)}</div>
         <div className="stat-label">הזמן הקצר ביותר שלך</div>
       </div>
+      <h3 className="personal-title">המשחקים שלך</h3>
       <div className="stat">
         <div className="stat-large">{winPercentage}%</div>
         <div className="stat-label">
           {personalStats.wins} / {personalStats.total} הצלחות
         </div>
       </div>
-      <h3 className="personal-title">אישי</h3>
+      
     </div>
   );
 };
@@ -97,13 +98,14 @@ const GlobalStats = () => {
             הזמן הקצר ביותר <br /> {globalStats.user_name}
           </div>
         </div>
+        <h3 className="global-title">היום</h3>
         <div className="stat">
           <div className="stat-large">{globalWinPercentage}%</div>
           <div className="stat-label">
             {globalStats.total_wins} / {globalStats.total_plays} הצליחו
           </div>
         </div>
-        <h3 className="global-title">גלובלי</h3>
+        
       </div>
     </>
   );
