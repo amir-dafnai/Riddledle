@@ -8,8 +8,8 @@ import {
 const didBreakRecords = (riddle) => {
   const personalStats = getUserStats();
   const globalStats = getGlobalStats();
-  const currPersonalRecord = personalStats.best_time;
-  const currGlobalRecord = globalStats.best_time;
+  const currPersonalRecord = personalStats && personalStats.best_time;
+  const currGlobalRecord = globalStats && globalStats.best_time;
   const currTimeSeconds = Math.round(
     (riddle.endTime - riddle.startTime) / 1000
   );
