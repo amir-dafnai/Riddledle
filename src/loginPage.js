@@ -30,7 +30,7 @@ export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   const currStoredUser = getUserData();
   if (
     currStoredUser &&
-    currStoredUser.email.includes("@") &&
+    String(currStoredUser.email).includes("@") &&
     currStoredUser.email !== userInfo.email
   )
     storeProgress({});

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Timer.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
+import { RecordBreakView } from "./RecordsBreak";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
@@ -17,8 +18,7 @@ const isNumeric = (str) => {
 };
 
 const getHMSFormat = (timeInSeconds_) => {
-
-  if (!isNumeric(timeInSeconds_)) return '00:00';
+  if (!isNumeric(timeInSeconds_)) return "00:00";
 
   const timeInSeconds = Math.round(timeInSeconds_);
   const hours = Math.floor(timeInSeconds / 3600);
@@ -182,6 +182,8 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
+
+
 const TimerToMidnight = ({
   onTimeEnds,
   onClose,
@@ -189,6 +191,7 @@ const TimerToMidnight = ({
   isLoggedIn,
   gameStatus,
   login,
+  
 }) => {
   return (
     <div className="timer-modal-overlay unselectable">
@@ -196,6 +199,7 @@ const TimerToMidnight = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
+        <RecordBreakView />
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
         <Timer onTimeEnds={onTimeEnds} />

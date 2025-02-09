@@ -29,6 +29,7 @@ import {
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
+import { updateRecordsBreak } from "./RecordsBreak";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -92,7 +93,9 @@ export function Game({
   }, [guesses, solution]);
 
   useEffect(() => {
+    const progress = getProgress();
     storeProgress({
+      ...progress,
       riddle: riddle,
       guesses: guesses,
     });
@@ -103,13 +106,12 @@ export function Game({
       const stats = await fetchStats(email);
       storeUserStats(stats);
     };
-    const fetchAndStoreGlobalStats = async (riddlId) => {
+    const fetchAndStoreGlobalStats = async () => {
       const globalStats = await fetchGlobalStats(riddle.id);
-      console.log(globalStats);
       storeGlobalStats(globalStats);
     };
     fetchAndStoreGlobalStats();
-    const userData = getUserData()
+    const userData = getUserData();
     const email = userData && userData.email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
@@ -126,9 +128,12 @@ export function Game({
   function onEnterClicked() {
     const newGuesses = [...guesses, currAnswer];
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
-    if (newStatus !== "playing") {
+    if (newStatus !== GAMESTATUS.playing) {
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
+    }
+    if (newStatus === GAMESTATUS.win) {
+      updateRecordsBreak(riddle);
     }
     setAnimationEnded(false);
     setGuesses(newGuesses);
@@ -213,7 +218,7 @@ export function Game({
             gameStatus={gameStatus}
             riddle={riddle}
             isLoggedIn={isLoggedIn}
-            login = {login}
+            login={login}
           />
         ) : null}
       </div>
