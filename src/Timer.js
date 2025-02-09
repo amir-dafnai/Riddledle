@@ -17,8 +17,7 @@ const isNumeric = (str) => {
 };
 
 const getHMSFormat = (timeInSeconds_) => {
-
-  if (!isNumeric(timeInSeconds_)) return '00:00';
+  if (!isNumeric(timeInSeconds_)) return "00:00";
 
   const timeInSeconds = Math.round(timeInSeconds_);
   const hours = Math.floor(timeInSeconds / 3600);
@@ -182,6 +181,21 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
+const getRecordsBreakText = (personal, global) => {
+  if (!(personal || global)) return null;
+  if (personal && global) return `שברת שיא אישי וגם את השיא היומי!`;
+  if (personal) return `שברת שיא אישי!`;
+  if (global) return `שברת את השיא היומי!`;
+};
+
+const RecordBreak = ({ recordsBreak }) => {
+  const textToShow = getRecordsBreakText(
+    recordsBreak.personal,
+    recordsBreak.global
+  );
+  return textToShow && <h3 dir="rtl"> {textToShow} </h3>;
+};
+
 const TimerToMidnight = ({
   onTimeEnds,
   onClose,
@@ -189,6 +203,7 @@ const TimerToMidnight = ({
   isLoggedIn,
   gameStatus,
   login,
+  recordsBreak,
 }) => {
   return (
     <div className="timer-modal-overlay unselectable">
@@ -196,6 +211,7 @@ const TimerToMidnight = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
+        <RecordBreak recordsBreak={recordsBreak}/>
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
         <Timer onTimeEnds={onTimeEnds} />
