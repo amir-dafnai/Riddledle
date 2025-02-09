@@ -5,6 +5,12 @@ import {
   storeProgress,
 } from "./localStorageUtils";
 
+
+const brokeBothText = `שברת שיא אישי וגם את השיא היומי!🎉`
+const brokePersonalText = `שברת שיא אישי!🎉`;
+const brokeGlobalText = `שברת את השיא היומי!🎉`
+
+
 const didBreakRecords = (riddle) => {
   const personalStats = getUserStats();
   const globalStats = getGlobalStats();
@@ -39,9 +45,9 @@ export const updateRecordsBreak = (riddle) => {
 
 const getRecordsBreakText = (personal, global) => {
     if (!(personal || global)) return null;
-    if (personal && global) return `שברת שיא אישי וגם את השיא היומי!🎉`;
-    if (personal) return `שברת שיא אישי!🎉`;
-    if (global) return `שברת את השיא היומי!`;
+    if (personal && global) return brokeBothText;
+    if (personal) return brokePersonalText; 
+    if (global) return brokeGlobalText;
   };
   
   export const RecordBreakView = () => {

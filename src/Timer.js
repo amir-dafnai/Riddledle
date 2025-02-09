@@ -3,6 +3,7 @@ import "./Timer.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
 import { RecordBreakView } from "./RecordsBreak";
+import { StatsContainer } from "./StatsContainer";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
@@ -73,23 +74,15 @@ const PersonalStats = () => {
     personalStats.wins,
     personalStats.total
   );
-  return (
-    <div className="stats-container personal-stats">
-      <div className="stat">
-        <div className="stat-large">
-          {getHMSFormat(personalStats.best_time)}
-        </div>
-        <div className="stat-label">הזמן הקצר ביותר שלך</div>
-      </div>
-      <h3 className="personal-title">המשחקים שלך</h3>
-      <div className="stat">
-        <div className="stat-large">{winPercentage}%</div>
-        <div className="stat-label">
-          {personalStats.wins} / {personalStats.total} הצלחות
-        </div>
-      </div>
-    </div>
-  );
+  const statsInfo = {
+    title: "המשחקים שלך",
+    leftLabel: "הזמן הקצר ביותר שלך",
+    leftVal: getHMSFormat(personalStats.best_time),
+    rightLabel: `${personalStats.wins} / ${personalStats.total} הצלחות`,
+    rightVal: `${winPercentage}%`,
+  };
+
+  return <StatsContainer statsInfo={statsInfo} />;
 };
 
 const GlobalStats = () => {
@@ -99,27 +92,15 @@ const GlobalStats = () => {
     globalStats.total_wins,
     globalStats.total_plays
   );
-  return (
-    <>
-      <div className="stats-container global-stats">
-        <div className="stat">
-          <div className="stat-large">
-            {getHMSFormat(globalStats.best_time)}
-          </div>
-          <div className="stat-label">
-            הזמן הקצר ביותר <br /> {globalStats.user_name}
-          </div>
-        </div>
-        <h3 className="global-title">היום</h3>
-        <div className="stat">
-          <div className="stat-large">{globalWinPercentage}%</div>
-          <div className="stat-label">
-            {globalStats.total_wins} / {globalStats.total_plays} הצליחו
-          </div>
-        </div>
-      </div>
-    </>
-  );
+  const statsInfo = {
+    title: "היום",
+    leftLabel: `הזמן הקצר ביותר 
+              ${globalStats.user_name}`,
+    leftVal: getHMSFormat(globalStats.best_time),
+    rightLabel: `${globalStats.total_wins} / ${globalStats.total_plays} הצליחו`,
+    rightVal: `${globalWinPercentage}%`,
+  };
+  return <StatsContainer statsInfo={statsInfo} />;
 };
 
 const Timer = (onTimeEnds) => {
@@ -182,8 +163,6 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
-
-
 const TimerToMidnight = ({
   onTimeEnds,
   onClose,
@@ -191,7 +170,6 @@ const TimerToMidnight = ({
   isLoggedIn,
   gameStatus,
   login,
-  
 }) => {
   return (
     <div className="timer-modal-overlay unselectable">

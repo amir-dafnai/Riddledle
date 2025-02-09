@@ -15,7 +15,6 @@
 .timer-modal-content {
   background: #121212;
   border-radius: 15px;
-  padding: 30px;
   width: 90%;
   max-width: 500px;
   text-align: center;
@@ -46,7 +45,7 @@
   display: flex;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .letter-tile {
@@ -64,57 +63,37 @@
   margin: 15px 0;
   padding: 12px;
   border-radius: 8px;
+  background: rgba(93, 106, 100, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 160px; 
 }
 
-/* Personal Stats */
-.personal-stats {
-  margin-bottom: 12px;
-}
 
-.personal-title {
-  font-size: 0.7rem;
-}
 
-.global-title {
-  font-size: 0.9rem;
-}
-
-.personal-title, .global-title {
+.stats-title {
   align-self: flex-start; 
-  font-weight: bold;
-}
-
-
-
-
-
-/* Global Stats */
-.global-stats {
+  font-size: 0.9rem;
+  color: #6a6767;
 }
 
 
 
 /* Stat Blocks */
 .stat {
-  text-align: center;
   flex: 1;
 }
 
 .stat-large {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #ffffff;
 }
 
 
-
-/* Divider */
-.divider {
-  border: none;
-  height: 1px;
-  background: #333;
-  margin: 20px 0;
-}
 
 
 .time {
@@ -146,45 +125,13 @@
     border-radius: 5px;
   }
 
-  
-
-  .stats-time-to-solve {
-    font-size: 1.6rem;
-    margin-bottom: 5px;
-  }
 
   .stat-label {
     font-size: 0.9rem;
     color: #bbbbbb;
-  }
-
-  .solve-label{
-    font-size: 1.2rem;
+    white-space: pre-line;
 
   }
-
-  /* Stats Section */
-  .stats-container {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px;
-  }
-
-  .personal-stats, .global-stats {
-    background: rgba(93, 106, 100, 0.2);
-    border-radius: 10px;
-    padding: 10px; /* Uniform padding */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-height: 160px; 
-  }
-
-  .stat-large {
-    font-size: 1.6rem;
-  }
-
 
 
   /* Close Button */
