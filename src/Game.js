@@ -29,7 +29,6 @@ import {
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
-import { updateRecordsBreak } from "./RecordsBreak";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -131,9 +130,6 @@ export function Game({
     if (newStatus !== GAMESTATUS.playing) {
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
-    }
-    if (newStatus === GAMESTATUS.win) {
-      updateRecordsBreak(riddle);
     }
     setAnimationEnded(false);
     setGuesses(newGuesses);

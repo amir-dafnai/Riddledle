@@ -27,12 +27,6 @@ const didBreakRecords = (riddle) => {
 };
 export const updateRecordsBreak = (riddle) => {
   const progress = getProgress();
-  if (
-    progress &&
-    progress.recordBreak &&
-    (progress.recordBreak.personal || progress.recordBreak.global)
-  )
-    return;
   const [brokePersonalRecord, brokeGloballRecord] = didBreakRecords(riddle);
   const recordBreak = {
     personal: brokePersonalRecord,
@@ -50,7 +44,9 @@ const getRecordsBreakText = (personal, global) => {
     if (global) return brokeGlobalText;
   };
   
-  export const RecordBreakView = () => {
+  export const RecordBreakView = ({riddle}) => {
+    updateRecordsBreak(riddle)
+    
     const recordBreak = getProgress().recordBreak;
     const textToShow = recordBreak
       ? getRecordsBreakText(recordBreak.personal, recordBreak.global)

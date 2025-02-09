@@ -177,7 +177,7 @@ const TimerToMidnight = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        <RecordBreakView />
+        {gameStatus === GAMESTATUS.win && < RecordBreakView riddle={riddle}/>}
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
         <Timer onTimeEnds={onTimeEnds} />
