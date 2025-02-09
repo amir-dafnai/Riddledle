@@ -135,7 +135,8 @@ export function Game({
       storeGlobalStats(globalStats);
     };
     fetchAndStoreGlobalStats();
-    const email = getUserData().email;
+    const userData = getUserData()
+    const email = userData && userData.email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
       setShouldUpdateStats(false);
