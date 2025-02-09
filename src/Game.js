@@ -17,8 +17,6 @@ import {
   getUserData,
   storeUserStats,
   storeGlobalStats,
-  getGlobalStats,
-  getUserStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
@@ -31,6 +29,7 @@ import {
 import { GAMESTATUS, VIEWS } from "./Consts";
 import TimerToMidnight from "./Timer";
 import { MyKeyBoard } from "./KeyBoard";
+import { updateRecordsBreak } from "./RecordsBreak";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -45,29 +44,6 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
     ? GAMESTATUS.lose
     : GAMESTATUS.playing;
   return status;
-};
-
-const didBreakRecords = (riddle) => {
-  const personalStats = getUserStats();
-  const globalStats = getGlobalStats();
-  const currPersonalRecord = personalStats.best_time;
-  const currGlobalRecord = globalStats.best_time;
-  const currTimeSeconds = Math.round(
-    (riddle.endTime - riddle.startTime) / 1000
-  );
-  const brokePersonalRecord =
-    !currPersonalRecord || currTimeSeconds < currPersonalRecord;
-  const brokeGloballRecord =
-    !currGlobalRecord || currTimeSeconds < currGlobalRecord;
-  return [brokePersonalRecord, brokeGloballRecord];
-};
-
-const updateRecordsBreak = (riddle, setRecordsBreak) => {
-  const [brokePersonalRecord, brokeGloballRecord] = didBreakRecords(riddle)
-  if (!(brokePersonalRecord || brokeGloballRecord)) 
-    return
-  const newVals = {personal : brokeGloballRecord , global: brokeGloballRecord}
-  setRecordsBreak(newVals)
 };
 
 export function Game({
@@ -97,7 +73,6 @@ export function Game({
   );
 
   const [shoudlFetchStats, setShouldUpdateStats] = useState(false);
-  const [recordsBreak, setRecordsBreak] = useState({personal : false , global: false});
 
   const shouldShowTimer = () => {
     return (
@@ -118,7 +93,9 @@ export function Game({
   }, [guesses, solution]);
 
   useEffect(() => {
+    const progress = getProgress();
     storeProgress({
+      ...progress,
       riddle: riddle,
       guesses: guesses,
     });
@@ -131,11 +108,10 @@ export function Game({
     };
     const fetchAndStoreGlobalStats = async () => {
       const globalStats = await fetchGlobalStats(riddle.id);
-      console.log(globalStats);
       storeGlobalStats(globalStats);
     };
     fetchAndStoreGlobalStats();
-    const userData = getUserData()
+    const userData = getUserData();
     const email = userData && userData.email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
@@ -149,7 +125,6 @@ export function Game({
     setCurrAnswer(newAns);
   }
 
-
   function onEnterClicked() {
     const newGuesses = [...guesses, currAnswer];
     const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
@@ -157,8 +132,8 @@ export function Game({
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
     }
-    if (newStatus === GAMESTATUS.win){
-      updateRecordsBreak(riddle,setRecordsBreak)
+    if (newStatus === GAMESTATUS.win) {
+      updateRecordsBreak(riddle);
     }
     setAnimationEnded(false);
     setGuesses(newGuesses);
@@ -244,7 +219,6 @@ export function Game({
             riddle={riddle}
             isLoggedIn={isLoggedIn}
             login={login}
-            recordsBreak={recordsBreak}
           />
         ) : null}
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Timer.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
+import { RecordBreakView } from "./RecordsBreak";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
@@ -181,20 +182,7 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
-const getRecordsBreakText = (personal, global) => {
-  if (!(personal || global)) return null;
-  if (personal && global) return `שברת שיא אישי וגם את השיא היומי!`;
-  if (personal) return `שברת שיא אישי!`;
-  if (global) return `שברת את השיא היומי!`;
-};
 
-const RecordBreak = ({ recordsBreak }) => {
-  const textToShow = getRecordsBreakText(
-    recordsBreak.personal,
-    recordsBreak.global
-  );
-  return textToShow && <h3 dir="rtl"> {textToShow} </h3>;
-};
 
 const TimerToMidnight = ({
   onTimeEnds,
@@ -203,7 +191,7 @@ const TimerToMidnight = ({
   isLoggedIn,
   gameStatus,
   login,
-  recordsBreak,
+  
 }) => {
   return (
     <div className="timer-modal-overlay unselectable">
@@ -211,7 +199,7 @@ const TimerToMidnight = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        <RecordBreak recordsBreak={recordsBreak}/>
+        <RecordBreakView />
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
         <Timer onTimeEnds={onTimeEnds} />
