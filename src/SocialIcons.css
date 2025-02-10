@@ -1,0 +1,29 @@
+.social-icons {
+    display: flex;
+    justify-content: center; /* Centers icons horizontally */
+    align-items: center; /* Centers icons vertically */
+    gap: 15px; /* Spacing between icons */
+    margin-top: 20px; /* Adjust top spacing */
+  }
+
+  
+  .facebook {
+    color: #1877F2; /* Facebook blue */
+  }
+  
+  .instagram {
+    color: #E4405F; /* Instagram pink */
+  }
+  
+  /* Hover Effects */
+  .icon {
+    font-size: 1.7rem;
+    opacity: 0.7;
+    color: rgb(188, 184, 187);
+  }
+  
+  .icon:hover {
+    transform: scale(1.2);
+    color: gray; /* Turns gray on hover */
+  }
+  

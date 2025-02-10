@@ -8,8 +8,9 @@ import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
 import { ToastContainer } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
+import SocialIcons from "./SocialIcons";
 
-const riddlesAreEqual = (r1, r2) => {  
+const riddlesAreEqual = (r1, r2) => {
   return r1.id === r2.id && r1.definition === r2.definition;
 };
 
@@ -20,9 +21,10 @@ const useRiddle = () => {
     const fetchData = async () => {
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
-      if (riddle && riddle.startTime && riddlesAreEqual(riddle, data.riddle)) return;
-      data.riddle.startTime = Date.now()
-      data.riddle.endTime = null
+      if (riddle && riddle.startTime && riddlesAreEqual(riddle, data.riddle))
+        return;
+      data.riddle.startTime = Date.now();
+      data.riddle.endTime = null;
       storeProgress({});
       setRiddle(data.riddle);
     };
@@ -37,7 +39,6 @@ const App = () => {
   const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
 
-
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       await onLoginSuccess(setUserDetails, tokenResponse);
@@ -46,7 +47,6 @@ const App = () => {
       console.error("Login Failed");
     },
   });
-
 
   useEffect(() => {
     const storedUser = getUserData();
@@ -62,7 +62,7 @@ const App = () => {
       <>
         <ToastContainer theme="dark" />
         <Navbar
-          login = {login}
+          login={login}
           isLoggedIn={userDetials.loggedIn}
           setUserDetails={setUserDetails}
           setViewStatus={setViewStatus}
@@ -80,6 +80,7 @@ const App = () => {
           isLoggedIn={userDetials.loggedIn}
           login={login}
         />
+        <SocialIcons />
       </>
     );
   }
