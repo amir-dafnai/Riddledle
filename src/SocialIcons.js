@@ -22,7 +22,7 @@ export const WhatsAppShareButton = ({ message }) => {
 };
 
 
-const SocialIcons = ({message}) => {
+const SocialIcons = () => {
 
   return (
     <div className="social-icons">
