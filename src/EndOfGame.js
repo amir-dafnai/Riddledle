@@ -158,12 +158,12 @@ const Stats = () => {
 
 const GuestUserMessage = ({ login }) => {
   return (
-    <>
+    <div className="guest-user-message">
       <h3> ...אם היית מחובר היו כאן סטטיסטיקות</h3>
       <span className="login-link" onClick={login}>
         להתחברות
       </span>
-    </>
+    </div>
   );
 };
 

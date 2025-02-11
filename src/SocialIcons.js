@@ -1,12 +1,11 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaWhatsapp} from "react-icons/fa";
-import "./SocialIcons.css"; 
+import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import "./SocialIcons.css";
 
-const url = "https://riddledle.com"
+const url = "https://riddledle.com";
 
-
-export const WhatsAppShareButton = ({message}) => {
-  const messageToUse = message || "🔥 מצאתי משחק בדיוק בשבילך! "
+export const WhatsAppShareButton = ({ message }) => {
+  const messageToUse = message || "🔥 מצאתי משחק בדיוק בשבילך! ";
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(
     messageToUse + " " + url
   )}`;
@@ -15,16 +14,14 @@ export const WhatsAppShareButton = ({message}) => {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="whatsapp-button"
+      className="icon"
     >
-      <FaWhatsapp className="icon" />
+      <FaWhatsapp />
     </a>
   );
 };
 
-
 const SocialIcons = () => {
-
   return (
     <div className="social-icons">
       <a
@@ -33,21 +30,12 @@ const SocialIcons = () => {
       >
         <FaFacebook />
       </a>
-      <a
-        href="https://www.instagram.com/riddldle/"
-
-        className="icon"
-      >
+      <a href="https://www.instagram.com/riddldle/" className="icon">
         <FaInstagram />
       </a>
-     <WhatsAppShareButton />
+      <WhatsAppShareButton />
     </div>
   );
 };
 
 export default SocialIcons;
-
-
-
-
-
