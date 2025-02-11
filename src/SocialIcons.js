@@ -5,9 +5,10 @@ import "./SocialIcons.css";
 const url = "https://riddledle.com"
 
 
-export const WhatsAppShareButton = ({ message }) => {
+export const WhatsAppShareButton = ({message}) => {
+  const messageToUse = message || "🔥 מצאתי משחק בדיוק בשבילך! "
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(
-    message + " " + url
+    messageToUse + " " + url
   )}`;
   return (
     <a
@@ -39,7 +40,7 @@ const SocialIcons = () => {
       >
         <FaInstagram />
       </a>
-     <WhatsAppShareButton message={"🔥 מצאתי משחק בדיוק בשבילך! "}/>
+     <WhatsAppShareButton />
     </div>
   );
 };

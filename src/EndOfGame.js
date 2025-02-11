@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./EndOfGame.css";
-import { getGlobalStats, getUserStats } from "./localStorageUtils";
+import { getGlobalStats, getProgress, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
 import { RecordBreakView } from "./RecordsBreak";
 import { StatsContainer } from "./StatsContainer";
+import { WhatsAppShareButton } from "./SocialIcons";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   const percentage = (numerator / denomeneator) * 100;
@@ -56,7 +57,10 @@ const Top = ({ word, riddle, gameStatus }) => {
       </h2>
       <div className="word-display">
         {word.map((letter, index) => (
-          <div key={index} className={`letter-tile ${letter !==' ' ? 'green' : ''}`}>
+          <div
+            key={index}
+            className={`letter-tile ${letter !== " " ? "green" : ""}`}
+          >
             {letter}
           </div>
         ))}
@@ -163,6 +167,18 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
+const getWhatsAppMessage = (isLoggedIn, gameStatus) => {
+  const recordBreak = getProgress().recordBreak;
+  if (
+    !isLoggedIn ||
+    gameStatus !== GAMESTATUS.win ||
+    !recordBreak ||
+    !recordBreak.global
+  )
+    return null;
+  return "😈 שברתי את השיא היומי! בוא נראה אותך";
+};
+
 const EndOfGameForm = ({
   onTimeEnds,
   onClose,
@@ -177,9 +193,14 @@ const EndOfGameForm = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        {gameStatus === GAMESTATUS.win && <RecordBreakView riddle={riddle} />}
+        {gameStatus === GAMESTATUS.win && isLoggedIn && (
+          <RecordBreakView riddle={riddle} />
+        )}
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
+        <WhatsAppShareButton
+          message={getWhatsAppMessage(isLoggedIn, gameStatus)}
+        />
         <Timer onTimeEnds={onTimeEnds} />
       </div>
     </div>
