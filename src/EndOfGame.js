@@ -169,14 +169,10 @@ const GuestUserMessage = ({ login }) => {
 
 const getWhatsAppMessage = (isLoggedIn, gameStatus) => {
   const recordBreak = getProgress().recordBreak;
-  if (
-    !isLoggedIn ||
-    gameStatus !== GAMESTATUS.win ||
-    !recordBreak ||
-    !recordBreak.global
-  )
-    return null;
-  return "😈 שברתי את השיא היומי! בוא נראה אותך";
+  if (!isLoggedIn || gameStatus !== GAMESTATUS.win) return null;
+  if (!recordBreak || !recordBreak.global)
+    return "אני כבר פתרתי את החידה היומית 🏆 בוא נראה אותך";
+  return "שברתי את השיא היומי! 🥇 בוא נראה אותך";
 };
 
 const EndOfGameForm = ({
