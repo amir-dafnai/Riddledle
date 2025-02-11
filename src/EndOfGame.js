@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Timer.css";
+import "./EndOfGame.css";
 import { getGlobalStats, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
 import { RecordBreakView } from "./RecordsBreak";
@@ -163,7 +163,7 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
-const TimerToMidnight = ({
+const EndOfGameForm = ({
   onTimeEnds,
   onClose,
   riddle,
@@ -177,7 +177,7 @@ const TimerToMidnight = ({
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        {gameStatus === GAMESTATUS.win && < RecordBreakView riddle={riddle}/>}
+        {gameStatus === GAMESTATUS.win && <RecordBreakView riddle={riddle} />}
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
         {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
         <Timer onTimeEnds={onTimeEnds} />
@@ -186,4 +186,4 @@ const TimerToMidnight = ({
   );
 };
 
-export default TimerToMidnight;
+export default EndOfGameForm;

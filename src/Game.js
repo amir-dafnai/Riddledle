@@ -27,7 +27,7 @@ import {
   StatisticsModal,
 } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
-import TimerToMidnight from "./Timer";
+import EndOfGameForm from "./EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 
 const getTimeToSolve = (start, end) => {
@@ -208,7 +208,7 @@ export function Game({
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
 
         {shouldShowTimer() ? (
-          <TimerToMidnight
+          <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
             onTimeEnds={reset}
             gameStatus={gameStatus}
