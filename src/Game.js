@@ -71,7 +71,7 @@ export function Game({
     getKeyboardButtonTheme(guesses, solution)
   );
 
-  const [shoudlFetchStats, setShouldUpdateStats] = useState(false);
+  const [shoudlFetchStats, setShouldUpdateStats] = useState(true);
 
   const shouldShowTimer = () => {
     return (
