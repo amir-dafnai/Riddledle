@@ -7,6 +7,7 @@ import { StatsContainer } from "./StatsContainer";
 import { WhatsAppShareButton } from "./SocialIcons";
 
 const getFixedPercentage = (numerator, denomeneator) => {
+  if(!numerator || !denomeneator) return 0
   const percentage = (numerator / denomeneator) * 100;
   const fixedPercentage = percentage.toFixed(0);
   return fixedPercentage;
@@ -99,7 +100,7 @@ const GlobalStats = () => {
   const statsInfo = {
     title: "היום",
     leftLabel: `הזמן הקצר ביותר 
-              ${globalStats.user_name}`,
+              ${globalStats.user_name || ''}`,
     leftVal: getHMSFormat(globalStats.best_time),
     rightLabel: `${globalStats.total_wins} / ${globalStats.total_plays} הצליחו`,
     rightVal: `${globalWinPercentage}%`,
