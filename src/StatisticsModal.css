@@ -43,7 +43,7 @@
   .stats-grid h3 {
     margin: 0;
     font-size: 2rem;
-    color: #00bcd4; /* Light blue for numbers */
+    color: #6aaa64; /* Light blue for numbers */
   }
   
   .stats-grid p {
@@ -57,7 +57,7 @@
     margin-top: 20px;
     padding: 10px 20px;
     border: none;
-    background: #00bcd4;
+    background: #6aaa64;
     color: #ffffff;
     font-size: 1rem;
     border-radius: 5px;
@@ -69,7 +69,7 @@
   }
   
   .close-button:hover {
-    background: #008c9e;
+    background: #7ec678;
   }
   
 

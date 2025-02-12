@@ -75,9 +75,6 @@ const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
 };
 
 const StatsButton = ({onclick})=>{
-  
-  return null 
-  // eslint-disable-next-line
   return (          <li>
     <button
       onClick={onclick}
