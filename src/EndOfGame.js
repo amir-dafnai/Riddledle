@@ -59,7 +59,7 @@ const Top = ({ word, riddle, gameStatus }) => {
         {word.map((letter, index) => (
           <div
             key={index}
-            className={`letter-tile ${letter !== " " ? "green" : ""}`}
+            className={`letter-tile ${letter !== " " ? "green-tile" : ""}`}
           >
             {letter}
           </div>
