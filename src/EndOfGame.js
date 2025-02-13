@@ -7,8 +7,8 @@ import { StatsContainer } from "./StatsContainer";
 import { WhatsAppShareButton } from "./SocialIcons";
 
 const getFixedPercentage = (numerator, denomeneator) => {
-  if(!numerator || !denomeneator) return 0
-  const percentage = (numerator / denomeneator) * 100;
+  if (!numerator || !denomeneator) return 0;
+  const percentage = denomeneator === 0 ? 0 : (numerator / denomeneator) * 100;
   const fixedPercentage = percentage.toFixed(0);
   return fixedPercentage;
 };
@@ -74,10 +74,11 @@ const Top = ({ word, riddle, gameStatus }) => {
 };
 
 const PersonalStats = () => {
-  const personalStats = getUserStats();
+  const defaultStats = { best_time: null, wins: 0, total: 0 };
+  const personalStats = getUserStats() || defaultStats;
   const winPercentage = getFixedPercentage(
-    personalStats && personalStats.wins,
-    personalStats && personalStats.total
+    personalStats.wins,
+    personalStats.total
   );
   const statsInfo = {
     title: "המשחקים שלך",
@@ -91,8 +92,8 @@ const PersonalStats = () => {
 };
 
 const GlobalStats = () => {
-  const globalStats = getGlobalStats();
-
+  const defaultStats = {total_wins : 0 , total_plays : 0 , user_name : null , best_time : null}
+  const globalStats = getGlobalStats() || defaultStats;
   const globalWinPercentage = getFixedPercentage(
     globalStats && globalStats.total_wins,
     globalStats && globalStats.total_plays
@@ -100,7 +101,7 @@ const GlobalStats = () => {
   const statsInfo = {
     title: "היום",
     leftLabel: `הזמן הקצר ביותר 
-              ${globalStats.user_name || ''}`,
+              ${globalStats.user_name || ""}`,
     leftVal: getHMSFormat(globalStats.best_time),
     rightLabel: `${globalStats.total_wins} / ${globalStats.total_plays} הצליחו`,
     rightVal: `${globalWinPercentage}%`,
