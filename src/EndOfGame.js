@@ -76,8 +76,8 @@ const Top = ({ word, riddle, gameStatus }) => {
 const PersonalStats = () => {
   const personalStats = getUserStats();
   const winPercentage = getFixedPercentage(
-    personalStats.wins,
-    personalStats.total
+    personalStats && personalStats.wins,
+    personalStats && personalStats.total
   );
   const statsInfo = {
     title: "המשחקים שלך",
@@ -94,8 +94,8 @@ const GlobalStats = () => {
   const globalStats = getGlobalStats();
 
   const globalWinPercentage = getFixedPercentage(
-    globalStats.total_wins,
-    globalStats.total_plays
+    globalStats && globalStats.total_wins,
+    globalStats && globalStats.total_plays
   );
   const statsInfo = {
     title: "היום",
