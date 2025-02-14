@@ -1,51 +1,7 @@
-.navigation-bar {
-    position: relative;
-  }
-  
-  .help-icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #fff; /* Adjust for dark mode */
-  }
-  
-  .help-menu {
-    position: absolute;
-    top: 40px; /* Adjust based on your layout */
-    right: 0;
-    background: #333;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .help-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .help-menu li {
-    padding: 5px 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #444;
-  }
-  
-  .help-menu li:hover {
-    background: #444;
-  }
-  
 
-
+ 
   .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
@@ -55,15 +11,15 @@
     background: #333;
     color: #fff;
     padding: 20px;
-    border-radius: 12px;
+    margin-top: 10px;
+    border-radius: 20px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-    max-width: 500px;
-    max-height: 90vh;
-    width: 90%;
+    
+    
     overflow-y: auto;
     text-align: right;
     direction: rtl; /* For Hebrew alignment */
-    position: relative;
+    
     font-family: Arial, sans-serif;
   }
   
@@ -78,25 +34,30 @@
     cursor: pointer;
   }
   
-  .how-to-play-modal h2 {
+   h2 {
     font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-  
-  .how-to-play-modal p {
-    font-size: 1.2rem;
+    margin: 20px;
     line-height: 1.6;
+
   }
+
+  .how-to-play-modal{
+    margin: 30px;
+    position: relative;
+    line-height: 100%;
+    list-style: disc;
+    
+  }
+
   
-  .how-to-play-modal ul {
+  
+   ul {
     list-style: disc;
     padding-right: 20px;
     margin-bottom: 20px;
   }
   
-  .how-to-play-modal ul li {
-    margin-bottom: 10px;
-  }
+
   .examples {
     margin-top: 20px;
     text-align: right; /* Aligns all examples to the right */
@@ -111,6 +72,7 @@
     display: inline-flex;
     justify-content: flex-end; /* Aligns tiles to the right */
     margin-bottom: 2px; /* Brings tiles closer to the description */
+    
   }
   .tile {
     width: 20px; /* Reduced width */
@@ -144,7 +106,7 @@
   
   
   .example-description {
-    font-size: 0.8rem; /* Smaller font size */
+    font-size: 1rem; /* Smaller font size */
     color: #d9d9d9;    /* Subtle color for the description */
     margin-top: 2px;   /* Closer to the tiles */
     line-height: 1.2;  /* Compact line spacing */
@@ -164,3 +126,10 @@
     color: #008c9e; /* Darker blue for hover effect */
   }
   
+  @media screen {
+    .modal-content{
+      margin-top: 80px;
+    }
+    
+    
+  }
