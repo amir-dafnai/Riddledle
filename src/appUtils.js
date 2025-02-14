@@ -160,3 +160,33 @@ export const getMaxDelay = (solution) => {
   const maxDelay = AnimationDelay * solution.length;
   return maxDelay;
 };
+
+export const getTimeToSolveSeconds = (riddle) => {
+  if (!riddle.endTime || !riddle.startTime) return null;
+  return Math.round((riddle.endTime - riddle.startTime) / 1000);
+};
+export const getHMSFormat = (timeInSeconds_) => {
+  if (!isNumeric(timeInSeconds_)) return "00:00";
+
+  const timeInSeconds = Math.round(timeInSeconds_);
+  const hours = Math.floor(timeInSeconds / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = timeInSeconds % 60;
+  const formattedTime =
+    hours > 0
+      ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+          2,
+          "0"
+        )}:${String(seconds).padStart(2, "0")}`
+      : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+          2,
+          "0"
+        )}`;
+  return formattedTime;
+};
+export const isNumeric = (str) => {
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+};

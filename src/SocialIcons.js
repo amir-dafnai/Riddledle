@@ -1,13 +1,23 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import "./SocialIcons.css";
+import { GAMESTATUS } from "./Consts";
+import { getProgress } from "./localStorageUtils";
 
 const url = "https://riddledle.com";
 
+export const getWhatsAppMessage = (isLoggedIn, gameStatus) => {
+  const recordBreak = getProgress().recordBreak;
+  if (!isLoggedIn || gameStatus !== GAMESTATUS.win)
+    return "🔥 מצאתי משחק בדיוק בשבילך! ";
+  if (recordBreak && recordBreak.global)
+    return "שברתי את השיא היומי! 🥇 בוא נראה אותך";
+  return "אני כבר פתרתי את החידה היומית 🏆 בוא נראה אותך";
+};
+
 export const WhatsAppShareButton = ({ message }) => {
-  const messageToUse = message || "🔥 מצאתי משחק בדיוק בשבילך! ";
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(
-    messageToUse + " " + url
+    message + " " + url
   )}`;
   return (
     <a
@@ -21,7 +31,7 @@ export const WhatsAppShareButton = ({ message }) => {
   );
 };
 
-const SocialIcons = () => {
+export const SocialIcons = ({ watsAppMessage }) => {
   return (
     <div className="social-icons">
       <a
@@ -33,9 +43,8 @@ const SocialIcons = () => {
       <a href="https://www.instagram.com/riddldle/" className="icon">
         <FaInstagram />
       </a>
-      <WhatsAppShareButton />
+      <WhatsAppShareButton message={watsAppMessage} />
     </div>
   );
 };
 
-export default SocialIcons;

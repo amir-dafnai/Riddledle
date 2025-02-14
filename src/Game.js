@@ -29,6 +29,7 @@ import {
 import { GAMESTATUS, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
+import {SocialIcons,  getWhatsAppMessage}  from "./SocialIcons";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -217,6 +218,7 @@ export function Game({
             login={login}
           />
         ) : null}
+        <SocialIcons watsAppMessage={getWhatsAppMessage(isLoggedIn, gameStatus)}/>
       </div>
     </>
   );

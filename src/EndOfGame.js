@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./EndOfGame.css";
-import { getGlobalStats, getProgress, getUserStats } from "./localStorageUtils";
+import { getGlobalStats, getUserStats } from "./localStorageUtils";
 import { GAMESTATUS } from "./Consts";
 import { RecordBreakView } from "./RecordsBreak";
 import { StatsContainer } from "./StatsContainer";
-import { WhatsAppShareButton } from "./SocialIcons";
+import { getWhatsAppMessage, WhatsAppShareButton } from "./SocialIcons";
+import { getHMSFormat, getTimeToSolveSeconds } from "./appUtils";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   if (!numerator || !denomeneator) return 0;
@@ -13,42 +14,15 @@ const getFixedPercentage = (numerator, denomeneator) => {
   return fixedPercentage;
 };
 
-const isNumeric = (str) => {
-  return (
-    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-    !isNaN(parseFloat(str))
-  ); // ...and ensure strings of whitespace fail
-};
-
-const getHMSFormat = (timeInSeconds_) => {
-  if (!isNumeric(timeInSeconds_)) return "00:00";
-
-  const timeInSeconds = Math.round(timeInSeconds_);
-  const hours = Math.floor(timeInSeconds / 3600);
-  const minutes = Math.floor((timeInSeconds % 3600) / 60);
-  const seconds = timeInSeconds % 60;
-  const formattedTime =
-    hours > 0
-      ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-          2,
-          "0"
-        )}:${String(seconds).padStart(2, "0")}`
-      : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-          2,
-          "0"
-        )}`;
-  return formattedTime;
-};
-
-const getTimeToSolve = (start, end) => {
-  const diffInSeconds = Math.round((end - start) / 1000);
+const getTimeToSolveText = (riddle) => {
+  const diffInSeconds = getTimeToSolveSeconds(riddle);
   const formattedTime = getHMSFormat(diffInSeconds);
   return formattedTime;
 };
 
 const Top = ({ word, riddle, gameStatus }) => {
   const text = gameStatus === GAMESTATUS.win ? "הצלחת!" : "לא נורא...";
-  const timeToSolve = getTimeToSolve(riddle.startTime, riddle.endTime);
+  const timeToSolve = getTimeToSolveText(riddle);
   return (
     <>
       {" "}
@@ -92,7 +66,12 @@ const PersonalStats = () => {
 };
 
 const GlobalStats = () => {
-  const defaultStats = {total_wins : 0 , total_plays : 0 , user_name : null , best_time : null}
+  const defaultStats = {
+    total_wins: 0,
+    total_plays: 0,
+    user_name: null,
+    best_time: null,
+  };
   const globalStats = getGlobalStats() || defaultStats;
   const globalWinPercentage = getFixedPercentage(
     globalStats && globalStats.total_wins,
@@ -167,14 +146,6 @@ const GuestUserMessage = ({ login }) => {
       </span>
     </div>
   );
-};
-
-const getWhatsAppMessage = (isLoggedIn, gameStatus) => {
-  const recordBreak = getProgress().recordBreak;
-  if (!isLoggedIn || gameStatus !== GAMESTATUS.win) return null;
-  if (!recordBreak || !recordBreak.global)
-    return "אני כבר פתרתי את החידה היומית 🏆 בוא נראה אותך";
-  return "שברתי את השיא היומי! 🥇 בוא נראה אותך";
 };
 
 const EndOfGameForm = ({

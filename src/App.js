@@ -8,7 +8,6 @@ import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
 import { ToastContainer } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
-import SocialIcons from "./SocialIcons";
 
 const riddlesAreEqual = (r1, r2) => {
   return r1.id === r2.id && r1.definition === r2.definition;
@@ -80,7 +79,6 @@ const App = () => {
           isLoggedIn={userDetials.loggedIn}
           login={login}
         />
-        <SocialIcons />
       </>
     );
   }
