@@ -195,7 +195,7 @@ export function Game({
             login={login}
           />
         )}
-        <h1 className="rtl-form unselectable">
+        <h1 data-nosnippet className="rtl-form unselectable">
           {riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
