@@ -29,7 +29,7 @@ import {
 import { GAMESTATUS, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
-import {SocialIcons,  getWhatsAppMessage}  from "./SocialIcons";
+import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -195,9 +195,11 @@ export function Game({
             login={login}
           />
         )}
-        <h1 data-nosnippet className="rtl-form unselectable">
-          {riddle.definition} {getStringLengths(riddle.solution)}
-        </h1>
+        <div data-nosnippet>
+          <h1 className="rtl-form unselectable">
+            {riddle.definition} {getStringLengths(riddle.solution)}
+          </h1>
+        </div>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
         <Riddle
           currAnswer={currAnswer}
@@ -218,7 +220,9 @@ export function Game({
             login={login}
           />
         ) : null}
-        <SocialIcons watsAppMessage={getWhatsAppMessage(isLoggedIn, gameStatus)}/>
+        <SocialIcons
+          watsAppMessage={getWhatsAppMessage(isLoggedIn, gameStatus)}
+        />
       </div>
     </>
   );
