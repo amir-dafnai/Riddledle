@@ -1,39 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he"> <!-- Ensure Hebrew language is set -->
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/myfavicon.png" />
+    <title>חידת הגיון יומית - Riddledle</title>
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="פתרו חידת הגיון חדשה בכל יום ב-Riddledle! תרגול חשיבה מחוץ לקופסה ושיפור מיומנויות החשיבה.">
+    <meta name="keywords" content="חידות, חידות היגיון, חידון יומי, חשיבה מחוץ לקופסה">
+    <meta name="author" content="Riddledle">
+    
+    <!-- Mobile & Theming -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/myfavicon.png" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/myfavicon.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="חידת הגיון יומית - Riddledle">
+    <meta property="og:description" content="פתרו חידת הגיון חדשה בכל יום ב-Riddledle!">
+    <meta property="og:image" content="https://riddledle.com/your-thumbnail.jpg">
+    <meta property="og:url" content="https://riddledle.com">
+    <meta property="og:type" content="website">
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Riddledle</title>
+    <!-- Twitter Card for Twitter Shares -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="חידת הגיון יומית - Riddledle">
+    <meta name="twitter:description" content="פתרו חידת הגיון חדשה בכל יום ב-Riddledle!">
+    <meta name="twitter:image" content="https://riddledle.com/your-thumbnail.jpg">
+    
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Structured Data for Google (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Website",
+      "name": "Riddledle",
+      "url": "https://riddledle.com",
+      "description": "פתרו חידת הגיון חדשה בכל יום ב-Riddledle!",
+      "image": "https://riddledle.com/your-thumbnail.jpg"
+    }
+    </script>
+    
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>עליך להפעיל JavaScript כדי להשתמש באפליקציה זו.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
