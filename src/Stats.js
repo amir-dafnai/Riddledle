@@ -1,6 +1,6 @@
 import React from "react";
 import "./StatisticsModal.css";
-import { getUrl } from "./appUtils";
+import { getHMSFormat, getUrl } from "./appUtils";
 import { getUserStats } from "./localStorageUtils";
 import { VIEWS } from "./Consts";
 
@@ -38,7 +38,7 @@ export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2 className="title">סטטיסטיקה</h2>
+        <h2 className="title">הנתונים שלך</h2>
         {!isLoggedIn && (
             <p className="title">
               {" יש להתחבר למערכת כדי לצפות בסטטיסטיקה  "    }
@@ -52,6 +52,7 @@ export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
             <h3>{stats.total}</h3>
             <p>כמות משחקים</p>
           </div>
+
           <div>
             <h3>
               {stats.total === 0
@@ -62,8 +63,8 @@ export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
             <p>אחוז הצלחות</p>
           </div>
           <div>
-            <h3>{stats.curr_streak}</h3>
-            <p>הצלחות ברצף</p>
+            <h3>{getHMSFormat(stats.best_time)}</h3>
+            <p>הזמן הטוב ביותר</p>
           </div>
           <div>
             <h3>{stats.longest_streak}</h3>
