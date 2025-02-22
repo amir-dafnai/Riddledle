@@ -20,7 +20,7 @@ const getUserPosition = (globalStats , email) => {
 };
 
 const getPLayersToShow = (email) => {
-  const globalStats = getGlobalStats() || [];
+  const globalStats = getGlobalStats() &&  getGlobalStats()[0] ? getGlobalStats() : [];
   const winners = getTopWinners(globalStats);
   const [userPosition , user] = getUserPosition(globalStats, email);
   if (userPosition && userPosition > 4 && user && user.status === WIN) {
