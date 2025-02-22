@@ -6,6 +6,7 @@ import { RecordBreakView } from "./RecordsBreak";
 import { StatsContainer } from "./StatsContainer";
 import { getWhatsAppMessage, WhatsAppShareButton } from "./SocialIcons";
 import { getHMSFormat, getTimeToSolveSeconds } from "./appUtils";
+import Leaderboard from "./Leaderboard";
 
 const getFixedPercentage = (numerator, denomeneator) => {
   if (!numerator || !denomeneator) return 0;
@@ -22,7 +23,6 @@ const getTimeToSolveText = (riddle) => {
 
 const Top = ({ word, riddle, gameStatus }) => {
   const text = gameStatus === GAMESTATUS.win ? "הצלחת!" : "לא נורא...";
-  const timeToSolve = getTimeToSolveText(riddle);
   return (
     <>
       {" "}
@@ -34,15 +34,16 @@ const Top = ({ word, riddle, gameStatus }) => {
         {word.map((letter, index) => (
           <div
             key={index}
-            className={`${letter !== " " ?  "letter-tile" : "invisible-tile"} ${letter !== " " ? "green-tile" : ""}`}
+            className={`${letter !== " " ? "letter-tile" : "invisible-tile"} ${
+              letter !== " " ? "green-tile" : ""
+            }`}
           >
             {letter}
           </div>
         ))}
       </div>
-      {/* Time to Solve */}
-      <div className="stat-large"> {timeToSolve} </div>
-      <div className="stat-label"> זמן פתרון </div>
+    
+
     </>
   );
 };
@@ -166,7 +167,7 @@ const EndOfGameForm = ({
           <RecordBreakView riddle={riddle} />
         )}
         <Top word={riddle.solution} riddle={riddle} gameStatus={gameStatus} />
-        {isLoggedIn ? <Stats /> : <GuestUserMessage login={login} />}
+        {isLoggedIn ? <Leaderboard /> : <GuestUserMessage login={login} />}
         <WhatsAppShareButton
           message={getWhatsAppMessage(isLoggedIn, gameStatus)}
         />

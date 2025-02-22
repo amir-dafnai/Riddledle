@@ -9,12 +9,17 @@ const brokeBothText = `שברת שיא אישי וגם את השיא היומי!
 const brokePersonalText = `שברת שיא אישי!🎉`;
 const brokeGlobalText = `שברת את השיא היומי!🎉`;
 
+const getBestTimeGlobal=()=>{
+  const globalStats = getGlobalStats();
+  const bestWinner = globalStats ? globalStats.find((e)=>e.status === 'win' && e.was_logged_in) : null
+  return bestWinner && bestWinner.time 
+}
+
 const didBreakRecords = (riddle) => {
   const personalStats = getUserStats();
-  const globalStats = getGlobalStats();
   const progress = getProgress();
   const currPersonalRecord = personalStats && personalStats.best_time;
-  const currGlobalRecord = globalStats && globalStats.best_time;
+  const currGlobalRecord = getBestTimeGlobal()
   const currTimeSeconds = Math.round(
     (riddle.endTime - riddle.startTime) / 1000
   );
