@@ -13,7 +13,6 @@ const getTopWinners = (stats, n = 5) => {
 };
 
 const getUserPosition = (globalStats , email) => {
-  console.log(globalStats)
   for (const [position, player] of globalStats.entries()) {
     if (player.email === email) return [position, player];
   }
@@ -24,7 +23,6 @@ const getPLayersToShow = (email) => {
   const globalStats = getGlobalStats() || [];
   const winners = getTopWinners(globalStats);
   const [userPosition , user] = getUserPosition(globalStats, email);
-  console.log(userPosition , user)
   if (userPosition && userPosition > 4 && user && user.status === WIN) {
     winners.push({...user , position : userPosition})
   }
