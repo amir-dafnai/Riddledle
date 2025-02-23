@@ -24,7 +24,7 @@ const getPLayersToShow = (email) => {
   const winners = getTopWinners(globalStats);
   const [userPosition , user] = getUserPosition(globalStats, email);
   if (userPosition && userPosition > 4 && user && user.status === WIN) {
-    winners.push({...user , position : userPosition})
+    winners.push({...user , position : userPosition + 1})
   }
   return winners
 };
