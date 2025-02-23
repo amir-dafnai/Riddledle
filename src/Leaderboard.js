@@ -5,18 +5,22 @@ import { getHMSFormat } from "./appUtils";
 
 const WIN = "win";
 
+const getLoggedInWinners= (players)=>{
+    if(!players) return [];
+    return players.filter((e) => e.status === WIN && e.was_logged_in)
+}
+
 const getTopWinners = (stats, n = 5) => {
-  const winners = stats
-    ? stats.filter((e) => e.status === WIN && e.was_logged_in).slice(0, n)
-    : [];
-  return winners;
+    const winners = getLoggedInWinners(stats).slice(0, n)
+    return winners;
 };
 
 const getUserPosition = (globalStats , email) => {
-  for (const [position, player] of globalStats.entries()) {
-    if (player.email === email) return [position, player];
-  }
-  return [null, null];
+    const winners = getLoggedInWinners(globalStats)
+    for (const [position, player] of winners.entries()) {
+        if (player.email === email) return [position, player];
+    }
+    return [null, null];
 };
 
 const getPLayersToShow = (email) => {
