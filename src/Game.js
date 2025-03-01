@@ -27,7 +27,7 @@ import {
   StatisticsModal,
 } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
-import EndOfGameForm from "./EndOfGame";
+import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 
@@ -46,13 +46,7 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({
-  riddle,
-  viewStatus,
-  setViewStatus,
-  isLoggedIn,
-  login,
-}) {
+export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
   const progress = getProgress();
 
   const solution = riddle.solution;
@@ -209,7 +203,7 @@ export function Game({
         />
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
 
-        {shouldShowTimer() ? (
+        {shouldShowTimer() ||true ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
             gameStatus={gameStatus}
