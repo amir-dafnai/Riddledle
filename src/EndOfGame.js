@@ -42,8 +42,6 @@ const Top = ({ word, riddle, gameStatus }) => {
           </div>
         ))}
       </div>
-    
-
     </>
   );
 };
@@ -89,19 +87,30 @@ const GlobalStats = () => {
   return <StatsContainer statsInfo={statsInfo} />;
 };
 
-const Timer = (onTimeEnds) => {
+const Stats = () => {
+  return (
+    <>
+      <GlobalStats />
+      <PersonalStats />
+    </>
+  );
+};
+
+const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const timerDone = (time) => {
+    return time.hours === 0 && time.minutes === 0 && time.seconds === 0;
+  };
 
   useEffect(() => {
+    if (timerDone(timeLeft)) return;
     const timer = setInterval(() => {
       const time = calculateTimeLeft();
-      if (time.hours === 0 && time.minutes === 0 && time.seconds === 0)
-        onTimeEnds();
       setTimeLeft(time);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [onTimeEnds]);
+  }, [timeLeft]);
 
   function calculateTimeLeft() {
     const now = new Date();
@@ -115,25 +124,17 @@ const Timer = (onTimeEnds) => {
       seconds: Math.floor((difference / 1000) % 60),
     };
   }
+  const refresh = timerDone(timeLeft) ? "(רענן)" : "";
   return (
     <>
       <h3 className="time">
-        {`           החידה הבאה בעוד ${timeLeft.hours
-          .toString()
-          .padStart(2, "0")}:${timeLeft.minutes
+        {`           החידה הבאה בעוד      
+        ${timeLeft.hours.toString().padStart(2, "0")}:${timeLeft.minutes
           .toString()
           .padStart(2, "0")}:${timeLeft.seconds.toString().padStart(2, "0")}
-          `}
+          
+        ${refresh}`}
       </h3>
-    </>
-  );
-};
-
-const Stats = () => {
-  return (
-    <>
-      <GlobalStats />
-      <PersonalStats />
     </>
   );
 };
@@ -149,14 +150,7 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
-const EndOfGameForm = ({
-  onTimeEnds,
-  onClose,
-  riddle,
-  isLoggedIn,
-  gameStatus,
-  login,
-}) => {
+const EndOfGameForm = ({ onClose, riddle, isLoggedIn, gameStatus, login }) => {
   return (
     <div className="timer-modal-overlay unselectable">
       <div className="timer-modal-content">
@@ -171,7 +165,7 @@ const EndOfGameForm = ({
         <WhatsAppShareButton
           message={getWhatsAppMessage(isLoggedIn, gameStatus)}
         />
-        <Timer onTimeEnds={onTimeEnds} />
+        <Timer />
       </div>
     </div>
   );

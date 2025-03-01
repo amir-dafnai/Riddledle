@@ -48,7 +48,6 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
 
 export function Game({
   riddle,
-  reset,
   viewStatus,
   setViewStatus,
   isLoggedIn,
@@ -213,7 +212,6 @@ export function Game({
         {shouldShowTimer() ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
-            onTimeEnds={reset}
             gameStatus={gameStatus}
             riddle={riddle}
             isLoggedIn={isLoggedIn}

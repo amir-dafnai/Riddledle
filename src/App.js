@@ -30,11 +30,11 @@ const useRiddle = () => {
     fetchData();
   }, [riddle]);
 
-  return [riddle, setRiddle];
+  return riddle
 };
 
 const App = () => {
-  const [riddle, setRiddle] = useRiddle();
+  const riddle = useRiddle();
   const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
 
@@ -70,10 +70,6 @@ const App = () => {
         <Game
           key={`${riddle.id}-${userDetials.email}`}
           riddle={riddle}
-          reset={() => {
-            setRiddle(undefined);
-            storeProgress({});
-          }}
           viewStatus={viewStatus}
           setViewStatus={setViewStatus}
           isLoggedIn={userDetials.loggedIn}
