@@ -203,7 +203,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
         />
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
 
-        {shouldShowTimer() ||true ? (
+        {shouldShowTimer()? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
             gameStatus={gameStatus}
