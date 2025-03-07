@@ -28,7 +28,7 @@ const EndOfGameForm = ({ onClose, riddle, isLoggedIn, gameStatus, login }) => {
           <RecordBreakView riddle={riddle} />
         )}
         <Top word={riddle.solution} gameStatus={gameStatus} />
-        {isLoggedIn ? <Leaderboard /> : <GuestUserMessage login={login} />}
+        {isLoggedIn ? <Leaderboard riddle={riddle}/> : <GuestUserMessage login={login} />}
         <WhatsAppShareButton
           message={getWhatsAppMessage(isLoggedIn, gameStatus)}
         />

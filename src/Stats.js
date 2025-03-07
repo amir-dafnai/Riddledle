@@ -1,7 +1,11 @@
 import React from "react";
 import "./StatisticsModal.css";
 import { getHMSFormat, getUrl } from "./appUtils";
-import { getUserStats } from "./localStorageUtils";
+import {
+  getUserStats,
+  storeAllTimeWinners,
+  storeGlobalStats,
+} from "./localStorageUtils";
 import { VIEWS } from "./Consts";
 
 export const insertStats = (body) => {
@@ -22,14 +26,22 @@ export const fetchStats = async (email) => {
   return data.stats;
 };
 
-export const fetchGlobalStats = async(riddleId) =>{
-  const response = await fetch(`${getUrl()}get_global_stats?&riddle_id=${riddleId}`);
+export const fetchGlobalStats = async (riddleId) => {
+  const response = await fetch(
+    `${getUrl()}get_global_stats?&riddle_id=${riddleId}`
+  );
   const data = await response.json();
-  return data.global_stats;
-}
+  return data;
+};
 
-export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
-  let stats = isLoggedIn? getUserStats() : null;
+export const fetchAndStoreGlobalStats = async (riddle) => {
+  const data = await fetchGlobalStats(riddle.id);
+  storeGlobalStats(data.global_stats);
+  if (data.all_time_winners) storeAllTimeWinners(data.all_time_winners);
+};
+
+export const StatisticsModal = ({ isLoggedIn, login, setViewStatus }) => {
+  let stats = isLoggedIn ? getUserStats() : null;
   stats =
     stats === null
       ? { total: 0, wins: 0, curr_streak: 0, longest_streak: 0 }
@@ -40,14 +52,14 @@ export const StatisticsModal = ({isLoggedIn, login,   setViewStatus }) => {
       <div className="modal-content">
         <h2 className="title">הנתונים שלך</h2>
         {!isLoggedIn && (
-            <p className="title">
-              {" יש להתחבר למערכת כדי לצפות בסטטיסטיקה  "    }
-              <span className="login-link" onClick={login}>
-                להתחברות
-              </span>
-            </p>
-          )}
-        <div className= {`stats-grid ${!isLoggedIn ? "dimmed" : ""}`}>
+          <p className="title">
+            {" יש להתחבר למערכת כדי לצפות בסטטיסטיקה  "}
+            <span className="login-link" onClick={login}>
+              להתחברות
+            </span>
+          </p>
+        )}
+        <div className={`stats-grid ${!isLoggedIn ? "dimmed" : ""}`}>
           <div>
             <h3>{stats.total}</h3>
             <p>כמות משחקים</p>

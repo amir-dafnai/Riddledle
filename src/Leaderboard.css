@@ -21,6 +21,7 @@
     padding: 10px;
     font-size: 16px;
     color: white;
+
   }
   
   tr:nth-child(even) {
@@ -35,3 +36,32 @@
   }
 
   
+
+
+
+  .leaderboard-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .leaderboard-toggle button {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    background: #131212;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+
+.leaderboard-toggle button.active {
+  background: #36393b;
+  font-weight: bold;
+}
+
+.leaderboard-toggle button:hover {
+  background: #323335;
+}

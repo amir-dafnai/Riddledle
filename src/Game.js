@@ -16,12 +16,11 @@ import {
   getProgress,
   getUserData,
   storeUserStats,
-  storeGlobalStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
 import {
-  fetchGlobalStats,
+  fetchAndStoreGlobalStats,
   fetchStats,
   insertStats,
   StatisticsModal,
@@ -99,18 +98,15 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
       const stats = await fetchStats(email);
       storeUserStats(stats);
     };
-    const fetchAndStoreGlobalStats = async () => {
-      const globalStats = await fetchGlobalStats(riddle.id);
-      storeGlobalStats(globalStats);
-    };
-    fetchAndStoreGlobalStats();
+
+    fetchAndStoreGlobalStats(riddle);
     const userData = getUserData();
     const email = userData && userData.email;
     if (email && shoudlFetchStats) {
       fetcAndStorehStats(email);
       setShouldUpdateStats(false);
     }
-  }, [shoudlFetchStats, riddle.id]);
+  }, [shoudlFetchStats, riddle]);
 
   function setNewAnswer(currSquare, key) {
     const newAns = currAnswer.slice();
