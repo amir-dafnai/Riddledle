@@ -48,13 +48,26 @@ const getOrFetchAllTimeWinners = (riddle, n = 5) => {
   return getAllTimeWinners().slice(0, n);
 };
 
-function Leaderboard({ riddle }) {
+const GuestUserMessage = ({ login }) => {
+    return (
+      <div className="guest-user-message">
+        <h3 dir="rtl"> רוצה גם להופיע כאן?</h3>
+        <span className="login-link" onClick={login}>
+          להתחברות
+        </span>
+      </div>
+    );
+  };
+
+function Leaderboard({ riddle ,login}) {
   const [isAllTime, setIsAllTime] = useState(false);
-  const email = getUserData() && getUserData().email;
+  const userData = getUserData()
+  const email = userData && userData.loggedIn ? userData.email : '';
   const todayPlayers = getTodaysPLayers(email);
   const allTimePlayers = getOrFetchAllTimeWinners(riddle);
   const players = !isAllTime ? todayPlayers : allTimePlayers;
   return (
+    <div>
     <div className="leaderboard">
       <div className="leaderboard-toggle">
         <button
@@ -89,6 +102,8 @@ function Leaderboard({ riddle }) {
           ))}
         </tbody>
       </table>
+    </div>
+    <GuestUserMessage login={login}/>
     </div>
   );
 }

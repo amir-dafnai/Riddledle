@@ -6,16 +6,7 @@ import Leaderboard from "../Leaderboard";
 import { Timer } from "./Timer";
 import { Top } from "./FromTopSection";
 
-const GuestUserMessage = ({ login }) => {
-  return (
-    <div className="guest-user-message">
-      <h3> ... אם היית מחובר היו כאן את הסטטיסטיקות שלך</h3>
-      <span className="login-link" onClick={login}>
-        להתחברות
-      </span>
-    </div>
-  );
-};
+
 
 const EndOfGameForm = ({ onClose, riddle, isLoggedIn, gameStatus, login }) => {
   return (
@@ -28,7 +19,7 @@ const EndOfGameForm = ({ onClose, riddle, isLoggedIn, gameStatus, login }) => {
           <RecordBreakView riddle={riddle} />
         )}
         <Top word={riddle.solution} gameStatus={gameStatus} />
-        {isLoggedIn ? <Leaderboard riddle={riddle}/> : <GuestUserMessage login={login} />}
+        <Leaderboard riddle={riddle} login={login}/>
         <WhatsAppShareButton
           message={getWhatsAppMessage(isLoggedIn, gameStatus)}
         />
