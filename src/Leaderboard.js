@@ -103,7 +103,7 @@ function Leaderboard({ riddle ,login}) {
         </tbody>
       </table>
     </div>
-    <GuestUserMessage login={login}/>
+    {!userData.loggedIn && <GuestUserMessage login={login}/>}
     </div>
   );
 }
