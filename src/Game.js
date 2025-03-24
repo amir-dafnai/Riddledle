@@ -29,6 +29,7 @@ import { GAMESTATUS, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
+import { areWordsValid } from "./WordValidation";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -65,6 +66,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
   );
 
   const [shoudlFetchStats, setShouldUpdateStats] = useState(true);
+  const [invalidWordMessage, setInvalidWordMessage] = useState(false);
 
   const shouldShowTimer = () => {
     return (
@@ -144,7 +146,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
     setShouldUpdateStats(true);
   };
 
-  function handleKeyDown(event) {
+  async function handleKeyDown(event) {
     if (
       gameStatus !== "playing" ||
       viewStatus !== VIEWS.game ||
@@ -163,7 +165,12 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
       (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {
-      onEnterClicked();
+      const isValidHebrew = arraysAreEqual(currAnswer , solution) || await areWordsValid([...currAnswer].reverse());
+      console.log('** ' , isValidHebrew)
+      if (!isValidHebrew) {
+        setInvalidWordMessage(true);
+        setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
+      } else onEnterClicked();
     }
   }
 
@@ -190,6 +197,11 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
           </h1>
         </div>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
+        <div className="tooltip-container">
+          {invalidWordMessage && (
+            <div dir="rtl" className="tooltip">נא להכניס מילה בעברית!</div>
+          )}
+        </div>
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}
@@ -198,8 +210,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
           solution={solution}
         />
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
-
-        {shouldShowTimer()? (
+        {shouldShowTimer() ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
             gameStatus={gameStatus}

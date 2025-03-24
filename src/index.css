@@ -456,3 +456,38 @@ button:hover {
 .login-link:hover {
   color: rgb(0, 200, 255); /* Darker shade on hover */
 }
+
+
+
+.tooltip {
+  position: absolute;
+  top: -40px; /* Adjust so it appears above the input area */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgb(244, 235, 235);
+  margin-top: 25px;
+  border-radius: 5px;
+  font-size: 20px;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+/* Ensure the tooltip container is correctly positioned */
+.tooltip-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.tooltip {
+  animation: shake 0.4s ease-in-out;
+}
