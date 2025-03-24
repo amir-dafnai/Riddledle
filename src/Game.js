@@ -166,7 +166,6 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
       currAnswer.every((element) => element !== "")
     ) {
       const isValidHebrew = arraysAreEqual(currAnswer , solution) || await areWordsValid([...currAnswer].reverse());
-      console.log('** ' , isValidHebrew)
       if (!isValidHebrew) {
         setInvalidWordMessage(true);
         setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
