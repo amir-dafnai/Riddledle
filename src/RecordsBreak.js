@@ -12,13 +12,13 @@ const brokeGlobalText = `שברת את השיא היומי!🎉`;
 const getBestTimeGlobal=()=>{
   const globalStats = getGlobalStats();
   const bestWinner = globalStats ? globalStats.find((e)=>e.status === 'win' && e.was_logged_in) : null
-  return bestWinner && bestWinner.time 
+  return bestWinner && Number(bestWinner.time)
 }
 
 const didBreakRecords = (riddle) => {
   const personalStats = getUserStats();
   const progress = getProgress();
-  const currPersonalRecord = personalStats && personalStats.best_time;
+  const currPersonalRecord = personalStats && Number(personalStats.best_time);
   const currGlobalRecord = getBestTimeGlobal()
   const currTimeSeconds = Math.round(
     (riddle.endTime - riddle.startTime) / 1000
