@@ -165,7 +165,9 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
       (value === "Enter" || value === "{Enter}") &&
       currAnswer.every((element) => element !== "")
     ) {
-      const isValidHebrew = arraysAreEqual(currAnswer , solution) || await areWordsValid([...currAnswer].reverse());
+      const isValidHebrew =
+        arraysAreEqual(currAnswer, solution) ||
+        (await areWordsValid([...currAnswer].reverse()));
       if (!isValidHebrew) {
         setInvalidWordMessage(true);
         setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
@@ -196,11 +198,6 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
           </h1>
         </div>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
-        <div className="tooltip-container">
-          {invalidWordMessage && (
-            <div dir="rtl" className="tooltip">נא להכניס מילה בעברית!</div>
-          )}
-        </div>
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}
@@ -208,6 +205,13 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
           handleKeyDown={handleKeyDown}
           solution={solution}
         />
+        <div className="tooltip-container">
+          {invalidWordMessage && (
+            <div dir="rtl" className="tooltip">
+              נא להכניס מילה בעברית!
+            </div>
+          )}
+        </div>
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
         {shouldShowTimer() ? (
           <EndOfGameForm

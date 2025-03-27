@@ -462,7 +462,7 @@ button:hover {
 
 .tooltip {
   position: absolute;
-  top: -45px; /* Adjust so it appears above the input area */
+  top: -30px; /* Adjust so it appears above the input area */
   background-color: rgba(0, 0, 0, 0.8);
   color: rgb(244, 235, 235);
   margin-top: 25px;

@@ -74,7 +74,7 @@ export function getDefaultStyles(nSquares, nGuesses) {
   return styles;
 }
 export function arraysAreEqual(arr1, arr2) {
-  return (
+  return Boolean(
     arr1 &&
     arr2 &&
     arr1.length === arr2.length &&
