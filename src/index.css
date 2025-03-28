@@ -25,7 +25,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.6s ease-in-out, background-color 0.6s ease-in-out;
+  transition: transform 0.6s ease
+  mar-in-out, background-color 0.6s ease-in-out;
   transform-origin: center;
 }
 
@@ -348,7 +349,7 @@ body {
 /* RTL styling */
 .rtl-form {
   direction: rtl;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 /* Form title */
