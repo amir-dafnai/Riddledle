@@ -62,7 +62,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
   const [timerWasClosed, setTimerWasClosed] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(true);
   const [keyBoardThem, setKeyBoardTheme] = useState(
-    getKeyboardButtonTheme(guesses, solution)
+    getKeyboardButtonTheme(guesses, solution, currAnswer)
   );
 
   const [shoudlFetchStats, setShouldUpdateStats] = useState(true);
@@ -80,11 +80,11 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
     const animationDuration = getMaxDelay(solution) * 3; // Replace this with your animation's duration in milliseconds
     const timer = setTimeout(() => {
       setAnimationEnded(true);
-      setKeyBoardTheme(getKeyboardButtonTheme(guesses, solution));
+      setKeyBoardTheme(getKeyboardButtonTheme(guesses, solution, currAnswer));
     }, animationDuration);
 
     return () => clearTimeout(timer);
-  }, [guesses, solution]);
+  }, [guesses, solution, currAnswer]);
 
   useEffect(() => {
     const progress = getProgress();

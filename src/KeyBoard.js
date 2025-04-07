@@ -38,7 +38,6 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
     setTimeout(() => setPressedKey(""), 200);
   };
   const pressedKeyTheme = getPressedKeyTheme(pressedKey)
-
   return (
     <Keyboard
       onKeyPress={onKeyPress}
@@ -53,9 +52,9 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
   );
 }
 
-export const getKeyboardButtonTheme = (guesses, solution) => {
-  if (!guesses || guesses.length === 0) return [];
+const getCharsByColors = (guesses, solution)=>{
   const charsByColor = { green: [], orange: [], gray: [] };
+  if (!guesses || guesses.length === 0) return charsByColor;
   for (let i = 0; i < guesses.length; i++) {
     const colors = getColors(solution, guesses[i]);
     for (let j = 0; j < colors.length; j++) {
@@ -74,12 +73,25 @@ export const getKeyboardButtonTheme = (guesses, solution) => {
         charsByColor["orange"].includes(char)
       )
   );
+  return charsByColor
 
+
+}
+
+export const getKeyboardButtonTheme = (guesses, solution, currAnswer) => {
+  const charsByColor = getCharsByColors(guesses , solution)
   const buttonTheme = Object.entries(charsByColor)
     .filter(([key, value]) => value.length > 0)
     .map(([key, value]) => ({
       class: key,
       buttons: value.join(" "),
     }));
+  console.log(currAnswer , solution)
+  if (currAnswer.filter(c=>c!=='').length >= solution.length){
+    buttonTheme.push({
+      class: "pump",
+      buttons: "{Enter}",
+    })
+  }
   return buttonTheme;
 };
