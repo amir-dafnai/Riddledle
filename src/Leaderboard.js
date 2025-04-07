@@ -42,7 +42,6 @@ const getTodaysPLayers = (email) => {
 const getOrFetchAllTimeWinners = (riddle, n = 5) => {
   const winners = getAllTimeWinners();
   if (!winners) {
-    console.log("fetching stats");
     fetchAndStoreGlobalStats(riddle);
   }
   return getAllTimeWinners().slice(0, n);

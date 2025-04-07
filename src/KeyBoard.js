@@ -86,7 +86,6 @@ export const getKeyboardButtonTheme = (guesses, solution, currAnswer) => {
       class: key,
       buttons: value.join(" "),
     }));
-  console.log(currAnswer , solution)
   if (currAnswer.filter(c=>c!=='').length >= solution.length){
     buttonTheme.push({
       class: "pump",
