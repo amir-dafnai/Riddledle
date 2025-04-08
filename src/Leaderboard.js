@@ -4,6 +4,7 @@ import {
   getAllTimeWinners,
   getGlobalStats,
   getUserData,
+  getWeeklyWinners,
 } from "./localStorageUtils";
 import { getHMSFormat } from "./appUtils";
 import { fetchAndStoreGlobalStats } from "./Stats";
@@ -44,65 +45,80 @@ const getOrFetchAllTimeWinners = (riddle, n = 5) => {
   if (!winners) {
     fetchAndStoreGlobalStats(riddle);
   }
-  return getAllTimeWinners().slice(0, n);
+  const weeklyWinners = (getWeeklyWinners() || []).slice(0, n)
+  const allTimeWinners = (getAllTimeWinners() || [] ).slice(0, n)
+  return [weeklyWinners , allTimeWinners];
 };
 
 const GuestUserMessage = ({ login }) => {
-    return (
-      <div className="guest-user-message">
-        <h3 dir="rtl"> רוצה גם להופיע כאן?</h3>
-        <span className="login-link" onClick={login}>
-          להתחברות
-        </span>
-      </div>
-    );
-  };
+  return (
+    <div className="guest-user-message">
+      <h3 dir="rtl"> רוצה גם להופיע כאן?</h3>
+      <span className="login-link" onClick={login}>
+        להתחברות
+      </span>
+    </div>
+  );
+};
 
-function Leaderboard({ riddle ,login}) {
-  const [isAllTime, setIsAllTime] = useState(false);
-  const userData = getUserData()
-  const email = userData && userData.loggedIn ? userData.email : '';
-  const todayPlayers = getTodaysPLayers(email);
-  const allTimePlayers = getOrFetchAllTimeWinners(riddle);
-  const players = !isAllTime ? todayPlayers : allTimePlayers;
+function Leaderboard({ riddle, login }) {
+  const [mode, setMode] = useState("today");
+  const userData = getUserData();
+  const email = userData && userData.loggedIn ? userData.email : "";
+  const todayWinners = getTodaysPLayers(email);
+  const [weeklyWinners, allTimePlayers] = getOrFetchAllTimeWinners(riddle);
+  const players =
+    mode === "today"
+      ? todayWinners
+      : mode === "week"
+      ? weeklyWinners
+      : allTimePlayers;
   return (
     <div>
-    <div className="leaderboard">
-      <div className="leaderboard-toggle">
-        <button
-          className={!isAllTime ? "active" : ""}
-          onClick={() => setIsAllTime(false)}
-        >
-          היום
-        </button>
-        <button
-          className={isAllTime ? "active" : ""}
-          onClick={() => setIsAllTime(true)}
-        >
-          אלופים
-        </button>
-      </div>
+      <div className="leaderboard">
+        <div className="leaderboard-toggle">
+          <button
+            className={mode === "today" ? "active" : ""}
+            onClick={() => setMode("today")}
+          >
+            היום
+          </button>
+          <button
+            className={mode === "week" ? "active" : ""}
+            onClick={() => setMode("week")}
+          >
+            מנצחי השבוע
+          </button>
+          <button
+            className={mode === "alltime" ? "active" : ""}
+            onClick={() => setMode("alltime")}
+          >
+            כל הזמנים
+          </button>
+        </div>
 
-      <table>
-        <thead dir="rtl"></thead>
-        <tbody>
-          {players.map((player, index) => (
-            <tr
-              key={index}
-              className={player.email === email  ? "highlight" : ""}
-            >
-              <td>#{player.position || index + 1}</td>
-              <td>
-                {player.user_name}{" "}
-                {index === 0  && player.email === email && "🏆"}
-              </td>
-              <td>{!isAllTime ? getHMSFormat(player.time) : player.count}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    {!userData.loggedIn && <GuestUserMessage login={login}/>}
+        <table>
+          <thead dir="rtl"></thead>
+          <tbody>
+            {players.map((player, index) => (
+              <tr
+                key={index}
+                className={player.email === email ? "highlight" : ""}
+              >
+                <td>#{player.position || index + 1}</td>
+                <td>
+                  {player.user_name}{" "}
+                  {index === 0 && player.email === email && "🏆"}
+                </td>
+                <td>
+                  {mode === "today" ? getHMSFormat(player.time) : player.count}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {!userData.loggedIn && <GuestUserMessage login={login} />}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {
   getUserStats,
   storeAllTimeWinners,
   storeGlobalStats,
+  storeWeeklyWinners,
 } from "./localStorageUtils";
 import { VIEWS } from "./Consts";
 
@@ -38,6 +39,7 @@ export const fetchAndStoreGlobalStats = async (riddle) => {
   const data = await fetchGlobalStats(riddle.id);
   storeGlobalStats(data.global_stats);
   if (data.all_time_winners) storeAllTimeWinners(data.all_time_winners);
+  if (data.weekly_winners) storeWeeklyWinners(data.weekly_winners);
 };
 
 export const StatisticsModal = ({ isLoggedIn, login, setViewStatus }) => {

@@ -38,7 +38,6 @@ export const getGlobalStats = () => {
 
 export const storeAllTimeWinners = (winners) =>{
   localStorage.setItem("allTimeWinners", JSON.stringify(winners));
-
 }
 
 export const getAllTimeWinners = () => {
@@ -47,3 +46,12 @@ export const getAllTimeWinners = () => {
     : null;
 };
 
+export const storeWeeklyWinners = (winners) => {
+  localStorage.setItem("weeklyWinners", JSON.stringify(winners))
+}
+
+export const getWeeklyWinners = () => {
+  return "weeklyWinners" in localStorage && localStorage.getItem("weeklyWinners") !== "{}"
+    ? JSON.parse(localStorage.getItem("weeklyWinners"))
+    : null;
+};

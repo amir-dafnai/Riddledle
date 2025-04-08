@@ -46,7 +46,7 @@
   }
   
   .leaderboard-toggle button {
-    flex: 1;
+    flex: 1 1 33%;
     padding: 10px;
     font-size: 14px;
     border: none;
