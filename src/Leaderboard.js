@@ -45,7 +45,7 @@ const getOrFetchAllTimeWinners = (riddle, n = 5) => {
   if (!winners) {
     fetchAndStoreGlobalStats(riddle);
   }
-  const weeklyWinners = (getWeeklyWinners() || []).slice(0, n)
+  const weeklyWinners = (getWeeklyWinners() || [])
   const allTimeWinners = (getAllTimeWinners() || [] ).slice(0, n)
   return [weeklyWinners , allTimeWinners];
 };
