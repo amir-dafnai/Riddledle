@@ -1,10 +1,10 @@
 import { WhatsAppShareButton } from "./SocialIcons";
 import "./UserCreditModal.css";
-export const CreditModal = ({ setShowModal }) => {
+export const CreditModal = ({ onClose }) => {
   return (
     <div className="credit-modal">
       <div className="modal-content">
-        <button className="close-button" onClick={() => setShowModal(false)}>
+        <button className="close-button" onClick={onClose}>
           ×
         </button>
         <h2 dir="rtl"> איזה כיף! 🎉</h2>

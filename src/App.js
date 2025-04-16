@@ -69,7 +69,7 @@ const App = () => {
           setViewStatus={setViewStatus}
           viewStatus={viewStatus}
         />
-        {showCreditModal && <CreditModal setShowModal = {setShowCreditModal}/> }
+        {showCreditModal && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
         <Game
           key={`${riddle.id}-${userDetials.email}`}
           riddle={riddle}
