@@ -38,7 +38,7 @@ const App = () => {
   const riddle = useRiddle();
   const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
-  const [showCreditModal , setShowCreditModal] = useState(riddle && userDetials && riddle.credit_email === userDetials.email)
+  const [showCreditModal , setShowCreditModal] = useState(true)
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -69,7 +69,7 @@ const App = () => {
           setViewStatus={setViewStatus}
           viewStatus={viewStatus}
         />
-        {showCreditModal && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
+        {showCreditModal && riddle.credit_email === userDetials.email && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
         <Game
           key={`${riddle.id}-${userDetials.email}`}
           riddle={riddle}
