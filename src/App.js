@@ -8,6 +8,7 @@ import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
 import { ToastContainer } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
+import { CreditModal } from "./UserCreditModal";
 
 const riddlesAreEqual = (r1, r2) => {
   return r1.id === r2.id && r1.definition === r2.definition;
@@ -37,6 +38,7 @@ const App = () => {
   const riddle = useRiddle();
   const [userDetials, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
+  const [showCreditModal , setShowCreditModal] = useState(riddle && userDetials && riddle.credit_email === userDetials.email)
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -67,6 +69,7 @@ const App = () => {
           setViewStatus={setViewStatus}
           viewStatus={viewStatus}
         />
+        {showCreditModal && <CreditModal setShowModal = {setShowCreditModal}/> }
         <Game
           key={`${riddle.id}-${userDetials.email}`}
           riddle={riddle}

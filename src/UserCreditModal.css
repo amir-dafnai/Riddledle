@@ -1,0 +1,48 @@
+.credit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 19, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+
+  
+  .close-button {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+.close-button:hover {
+  color: #ccc;
+  background: none;
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+  .modal-content {
+    position: relative; /* Important for close button positioning */
+    background: #1e1f21;
+    padding: 20px;
+    padding-top: 40px; /* Give some room at top for close button */
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  }
+  
