@@ -45,9 +45,9 @@ const getOrFetchAllTimeWinners = (riddle, n = 5) => {
   if (!winners) {
     fetchAndStoreGlobalStats(riddle);
   }
-  const weeklyWinners = (getWeeklyWinners() || [])
-  const allTimeWinners = (getAllTimeWinners() || [] ).slice(0, n)
-  return [weeklyWinners , allTimeWinners];
+  const weeklyWinners = getWeeklyWinners() || [];
+  const allTimeWinners = (getAllTimeWinners() || []).slice(0, n);
+  return [weeklyWinners, allTimeWinners];
 };
 
 const GuestUserMessage = ({ login }) => {
@@ -61,18 +61,49 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
+const DailyLeaders = ({ players, email }) => {
+  return players.map((player, index) => (
+    <tr key={index} className={player.email === email ? "highlight" : ""}>
+      <td>#{player.position || index + 1}</td>
+      <td>
+        {player.user_name} {index === 0 && player.email === email && "🏆"}
+      </td>
+      <td>{getHMSFormat(player.time)}</td>
+    </tr>
+  ));
+};
+
+const AllTimeLeaders = ({ players, email }) => {
+  return players.map((player, index) => (
+    <tr key={index} className={player.email === email ? "highlight" : ""}>
+      <td>#{player.position || index + 1}</td>
+      <td>
+        {player.user_name} {index === 0 && player.email === email && "🏆"}
+      </td>
+      <td>{player.count}</td>
+    </tr>
+  ));
+};
+
+const WeeklyWinners = ({ players, email }) => {
+  return players.map((player, index) => (
+    <tr key={index} className={player.email === email ? "highlight" : ""}>
+      <td>#{player.position || index + 1}</td>
+      <td>
+        {player.user_name} {index === 0 && player.email === email && "🏆"}
+      </td>
+      <td>{player.date}</td>
+    </tr>
+  ));
+};
+
 function Leaderboard({ riddle, login }) {
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
   const todayWinners = getTodaysPLayers(email);
   const [weeklyWinners, allTimePlayers] = getOrFetchAllTimeWinners(riddle);
-  const players =
-    mode === "today"
-      ? todayWinners
-      : mode === "week"
-      ? weeklyWinners
-      : allTimePlayers;
+
   return (
     <div>
       <div className="leaderboard">
@@ -100,21 +131,13 @@ function Leaderboard({ riddle, login }) {
         <table>
           <thead dir="rtl"></thead>
           <tbody>
-            {players.map((player, index) => (
-              <tr
-                key={index}
-                className={player.email === email ? "highlight" : ""}
-              >
-                <td>#{player.position || index + 1}</td>
-                <td>
-                  {player.user_name}{" "}
-                  {index === 0 && player.email === email && "🏆"}
-                </td>
-                <td>
-                  {mode === "today" ? getHMSFormat(player.time) : player.count}
-                </td>
-              </tr>
-            ))}
+            {mode === "today" ? (
+              <DailyLeaders players={todayWinners} email={email} />
+            ) : mode === "week" ? (
+              <WeeklyWinners players={weeklyWinners} email={email} />
+            ) : (
+              <AllTimeLeaders players={allTimePlayers} email={email} />
+            )}
           </tbody>
         </table>
       </div>
