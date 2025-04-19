@@ -88,11 +88,11 @@ const AllTimeLeaders = ({ players, email }) => {
 const WeeklyWinners = ({ players, email }) => {
   return players.map((player, index) => (
     <tr key={index} className={player.email === email ? "highlight" : ""}>
-      <td>#{player.position || index + 1}</td>
+      <td>{player.date}</td>
       <td>
         {player.user_name} {index === 0 && player.email === email && "🏆"}
       </td>
-      <td>{player.date}</td>
+      <td>{getHMSFormat(player.time)}</td>
     </tr>
   ));
 };
