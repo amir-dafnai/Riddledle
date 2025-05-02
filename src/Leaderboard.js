@@ -21,8 +21,7 @@ const getTopWinners = (stats, n = 5) => {
   return winners;
 };
 
-const getUserPosition = (globalStats, email) => {
-  const winners = getLoggedInWinners(globalStats);
+const getUserPosition = (winners, email) => {
   for (const [position, player] of winners.entries()) {
     if (player.email === email) return [position, player];
   }
@@ -40,13 +39,13 @@ const getTodaysPLayers = (email) => {
   return winners;
 };
 
-const getOrFetchAllTimeWinners = (riddle, n = 5) => {
+const getOrFetchAllTimeWinners = (riddle) => {
   const winners = getAllTimeWinners();
   if (!winners) {
     fetchAndStoreGlobalStats(riddle);
   }
   const weeklyWinners = getWeeklyWinners() || [];
-  const allTimeWinners = (getAllTimeWinners() || []).slice(0, n);
+  const allTimeWinners = (getAllTimeWinners() || []);
   return [weeklyWinners, allTimeWinners];
 };
 
@@ -73,8 +72,14 @@ const DailyLeaders = ({ players, email }) => {
   ));
 };
 
-const AllTimeLeaders = ({ players, email }) => {
-  return players.map((player, index) => (
+const AllTimeLeaders = ({ players, email, n=5 }) => {
+  const nPlayers = players.slice(0, n)
+  const [userPosition, user] = getUserPosition(players, email);
+
+  if (userPosition && userPosition >= n && user) {
+    nPlayers.push({ ...user, position: userPosition + 1 });
+  }
+  return nPlayers.map((player, index) => (
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>#{player.position || index + 1}</td>
       <td>
