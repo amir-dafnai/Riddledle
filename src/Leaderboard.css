@@ -9,15 +9,19 @@
     font-family: "Arial", sans-serif;
   }
   
+
   table {
     width: 100%;
     border-collapse: collapse;
     background: #121213;
     border-radius: 8px;
     overflow: hidden;
+    overflow-y: auto;
+    max-height: 300px; /* Adjust as needed */
+    display: block;
   }
   
-  td {
+  td{
     padding: 10px;
     font-size: 16px;
     color: white;
@@ -64,4 +68,18 @@
 
 .leaderboard-toggle button:hover {
   background: #323335;
+}
+
+
+
+
+tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }

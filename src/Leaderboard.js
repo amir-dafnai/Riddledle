@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Leaderboard.css";
 import {
   getAllTimeWinners,
   getGlobalStats,
+  getPersonalScores,
   getUserData,
   getWeeklyWinners,
 } from "./localStorageUtils";
@@ -45,8 +46,9 @@ const getOrFetchAllTimeWinners = (riddle) => {
     fetchAndStoreGlobalStats(riddle);
   }
   const weeklyWinners = getWeeklyWinners() || [];
-  const allTimeWinners = (getAllTimeWinners() || []);
-  return [weeklyWinners, allTimeWinners];
+  const allTimeWinners = getAllTimeWinners() || [];
+  const persoanlScores = getPersonalScores() || [];
+  return [weeklyWinners, allTimeWinners, persoanlScores];
 };
 
 const GuestUserMessage = ({ login }) => {
@@ -72,8 +74,8 @@ const DailyLeaders = ({ players, email }) => {
   ));
 };
 
-const AllTimeLeaders = ({ players, email, n=5 }) => {
-  const nPlayers = players.slice(0, n)
+const AllTimeLeaders = ({ players, email, n = 5 }) => {
+  const nPlayers = players.slice(0, n);
   const [userPosition, user] = getUserPosition(players, email);
 
   if (userPosition && userPosition >= n && user) {
@@ -102,12 +104,42 @@ const WeeklyWinners = ({ players, email }) => {
   ));
 };
 
+const ScoreLeaders = ({ players, email }) => {
+  const userRowRef = useRef(null);
+
+  useEffect(() => {
+    if (userRowRef.current) {
+      userRowRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, []);
+
+  return (
+    <>
+      {players.map((player, index) => (
+        <tr
+          key={player.email}
+          ref={player.email === email ? userRowRef : null}
+          className={player.email === email ? "highlight" : ""}
+        >
+          <td>{index + 1}</td>
+          <td dir="rtl">{player.user_name}</td>
+          <td>{player.score}</td>
+        </tr>
+      ))}
+    </>
+  );
+};
+
 function Leaderboard({ riddle, login }) {
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
   const todayWinners = getTodaysPLayers(email);
-  const [weeklyWinners, allTimePlayers] = getOrFetchAllTimeWinners(riddle);
+  const [weeklyWinners, allTimePlayers, persoanlScores] =
+    getOrFetchAllTimeWinners(riddle);
 
   return (
     <div>
@@ -131,6 +163,12 @@ function Leaderboard({ riddle, login }) {
           >
             כל הזמנים
           </button>
+          <button
+            className={mode === "score" ? "active" : ""}
+            onClick={() => setMode("score")}
+          >
+            דירוג מצטבר
+          </button>
         </div>
 
         <table>
@@ -140,8 +178,10 @@ function Leaderboard({ riddle, login }) {
               <DailyLeaders players={todayWinners} email={email} />
             ) : mode === "week" ? (
               <WeeklyWinners players={weeklyWinners} email={email} />
-            ) : (
+            ) : mode === "alltime" ? (
               <AllTimeLeaders players={allTimePlayers} email={email} />
+            ) : (
+              <ScoreLeaders players={persoanlScores} email={email} />
             )}
           </tbody>
         </table>

@@ -55,3 +55,13 @@ export const getWeeklyWinners = () => {
     ? JSON.parse(localStorage.getItem("weeklyWinners"))
     : null;
 };
+
+export const storePersonalScores = (scores) =>{
+  localStorage.setItem("personalScores", JSON.stringify(scores))
+}
+
+export const getPersonalScores = () => {
+  return "personalScores" in localStorage && localStorage.getItem("personalScores") !== "{}"
+    ? JSON.parse(localStorage.getItem("personalScores"))
+    : null;
+};
