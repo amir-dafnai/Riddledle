@@ -89,7 +89,7 @@ export const StatisticsModal = ({ isLoggedIn, login, setViewStatus }) => {
           className="close-button"
           onClick={() => setViewStatus(VIEWS.game)}
         >
-          סגור
+           x
         </button>
       </div>
     </div>
