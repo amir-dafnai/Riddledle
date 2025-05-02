@@ -17,11 +17,6 @@ const getLoggedInWinners = (players) => {
   return players.filter((e) => e.status === WIN && e.was_logged_in);
 };
 
-const getTopWinners = (stats, n = 5) => {
-  const winners = getLoggedInWinners(stats).slice(0, n);
-  return winners;
-};
-
 const getUserPosition = (winners, email) => {
   for (const [position, player] of winners.entries()) {
     if (player.email === email) return [position, player];
@@ -29,11 +24,12 @@ const getUserPosition = (winners, email) => {
   return [null, null];
 };
 
-const getTodaysPLayers = (email) => {
+const getTodaysPLayers = (email, n = 5) => {
   const globalStats =
     getGlobalStats() && getGlobalStats()[0] ? getGlobalStats() : [];
-  const winners = getTopWinners(globalStats);
-  const [userPosition, user] = getUserPosition(globalStats, email);
+  const allWinners = getLoggedInWinners(globalStats);
+  const winners = allWinners.slice(0, n);
+  const [userPosition, user] = getUserPosition(allWinners, email);
   if (userPosition && userPosition > 4 && user && user.status === WIN) {
     winners.push({ ...user, position: userPosition + 1 });
   }
