@@ -76,9 +76,9 @@ export function getDefaultStyles(nSquares, nGuesses) {
 export function arraysAreEqual(arr1, arr2) {
   return Boolean(
     arr1 &&
-    arr2 &&
-    arr1.length === arr2.length &&
-    arr1.every((element, index) => element === arr2[index])
+      arr2 &&
+      arr1.length === arr2.length &&
+      arr1.every((element, index) => element === arr2[index])
   );
 }
 
@@ -161,10 +161,6 @@ export const getMaxDelay = (solution) => {
   return maxDelay;
 };
 
-export const getTimeToSolveSeconds = (riddle) => {
-  if (!riddle.endTime || !riddle.startTime) return null;
-  return Math.round((riddle.endTime - riddle.startTime) / 1000);
-};
 export const getHMSFormat = (timeInSeconds_) => {
   if (!isNumeric(timeInSeconds_)) return "00:00";
 
