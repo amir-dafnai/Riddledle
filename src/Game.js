@@ -46,9 +46,9 @@ const getGameStatus = (solution, guesses, numberOfGuesses) => {
   return status;
 };
 
-export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
+export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) {
   const progress = getProgress();
-
+  const isLoggedIn = userDetails.loggedIn
   const solution = riddle.solution;
   const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
@@ -218,7 +218,7 @@ export function Game({ riddle, viewStatus, setViewStatus, isLoggedIn, login }) {
             onClose={() => setTimerWasClosed(true)}
             gameStatus={gameStatus}
             riddle={riddle}
-            isLoggedIn={isLoggedIn}
+            userDetails={userDetails}
             login={login}
           />
         ) : null}

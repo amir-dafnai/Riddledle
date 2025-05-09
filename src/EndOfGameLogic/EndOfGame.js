@@ -8,14 +8,16 @@ import { Top } from "./FromTopSection";
 
 
 
-const EndOfGameForm = ({ onClose, riddle, isLoggedIn, gameStatus, login }) => {
+const EndOfGameForm = ({ onClose, riddle, userDetails, gameStatus, login }) => {
+  const isLoggedIn= userDetails.loggedIn
+  const showRecordBreak = isLoggedIn && gameStatus === GAMESTATUS.win && userDetails.email !== riddle.credit_email
   return (
     <div className="timer-modal-overlay unselectable">
       <div className="timer-modal-content">
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
-        {gameStatus === GAMESTATUS.win && isLoggedIn && (
+        {showRecordBreak && (
           <RecordBreakView riddle={riddle} />
         )}
         <Top word={riddle.solution} gameStatus={gameStatus} />

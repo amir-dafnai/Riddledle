@@ -36,7 +36,7 @@ const useRiddle = () => {
 
 const App = () => {
   const riddle = useRiddle();
-  const [userDetials, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
   const [showCreditModal , setShowCreditModal] = useState(true)
 
@@ -58,24 +58,24 @@ const App = () => {
     }
   }, []);
 
-  if (userDetials && riddle) {
+  if (userDetails && riddle) {
     return (
       <>
         <ToastContainer theme="dark" />
         <Navbar
           login={login}
-          isLoggedIn={userDetials.loggedIn}
+          isLoggedIn={userDetails.loggedIn}
           setUserDetails={setUserDetails}
           setViewStatus={setViewStatus}
           viewStatus={viewStatus}
         />
-        {showCreditModal && riddle.credit_email === userDetials.email && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
+        {showCreditModal && riddle.credit_email === userDetails.email && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
         <Game
-          key={`${riddle.id}-${userDetials.email}`}
+          key={`${riddle.id}-${userDetails.email}`}
           riddle={riddle}
           viewStatus={viewStatus}
           setViewStatus={setViewStatus}
-          isLoggedIn={userDetials.loggedIn}
+          userDetails={userDetails}
           login={login}
         />
       </>
