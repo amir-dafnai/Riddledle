@@ -3,42 +3,34 @@ import { getUrl } from "./appUtils";
 import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
-import Navbar from "./Navbar";
+import Navbar, { HowToPlayRules } from "./Navbar";
 import { onLoginSuccess, setGuestUser } from "./loginPage";
 import { VIEWS } from "./Consts";
-import { ToastContainer } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
 import { CreditModal } from "./UserCreditModal";
+import { WelcomeModal } from "./WelcomeModal";
 
 const riddlesAreEqual = (r1, r2) => {
   return r1.id === r2.id && r1.definition === r2.definition;
 };
 
-const useRiddle = () => {
+const App = () => {
+  const [userDetails, setUserDetails] = useState(null);
+  const [viewStatus, setViewStatus] = useState(VIEWS.game);
+  const [showCreditModal, setShowCreditModal] = useState(true);
   const [riddle, setRiddle] = useState(getProgress().riddle);
   useEffect(() => {
-    const url = getUrl();
     const fetchData = async () => {
+      const url = getUrl();
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
-      if (riddle && riddle.startTime && riddlesAreEqual(riddle, data.riddle))
-        return;
-      data.riddle.startTime = Date.now();
-      data.riddle.endTime = null;
+      if (riddle && riddlesAreEqual(riddle, data.riddle)) return;
       storeProgress({});
       setRiddle(data.riddle);
+      setViewStatus(VIEWS.welcome); // show modal on new riddle
     };
     fetchData();
   }, [riddle]);
-
-  return riddle
-};
-
-const App = () => {
-  const riddle = useRiddle();
-  const [userDetails, setUserDetails] = useState(null);
-  const [viewStatus, setViewStatus] = useState(VIEWS.game);
-  const [showCreditModal , setShowCreditModal] = useState(true)
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -59,25 +51,53 @@ const App = () => {
   }, []);
 
   if (userDetails && riddle) {
+    const passedWelcome =
+      riddle.startTime &&
+      ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
     return (
       <>
-        <ToastContainer theme="dark" />
-        <Navbar
-          login={login}
-          isLoggedIn={userDetails.loggedIn}
-          setUserDetails={setUserDetails}
-          setViewStatus={setViewStatus}
-          viewStatus={viewStatus}
-        />
-        {showCreditModal && riddle.credit_email === userDetails.email && <CreditModal onClose = {() => setShowCreditModal(false)}/> }
-        <Game
-          key={`${riddle.id}-${userDetails.email}`}
-          riddle={riddle}
-          viewStatus={viewStatus}
-          setViewStatus={setViewStatus}
-          userDetails={userDetails}
-          login={login}
-        />
+        {passedWelcome && (
+          <Navbar
+            login={login}
+            isLoggedIn={userDetails.loggedIn}
+            setUserDetails={setUserDetails}
+            setViewStatus={setViewStatus}
+            viewStatus={viewStatus}
+          />
+        )}
+        {riddle.credit_email !== userDetails.email &&
+          viewStatus === VIEWS.welcome && (
+            <WelcomeModal
+              onClose={() => {
+                setViewStatus(VIEWS.game);
+                riddle.startTime = Date.now();
+                riddle.endTime = null;
+              }}
+              login={login}
+              onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
+              isLoggedIn={userDetails.loggedIn}
+            />
+          )}
+        {viewStatus === VIEWS.howToPLayWelcome && (
+          <HowToPlayRules
+            closeModal={() => setViewStatus(VIEWS.welcome)}
+            isLoggedIn={userDetails.loggedIn}
+            login={login}
+          />
+        )}
+        {showCreditModal && riddle.credit_email === userDetails.email && (
+          <CreditModal onClose={() => setShowCreditModal(false)} />
+        )}
+        {passedWelcome && (
+          <Game
+            key={`${riddle.id}-${userDetails.email}`}
+            riddle={riddle}
+            viewStatus={viewStatus}
+            setViewStatus={setViewStatus}
+            userDetails={userDetails}
+            login={login}
+          />
+        )}
       </>
     );
   }

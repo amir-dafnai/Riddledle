@@ -9,12 +9,11 @@ import { logOut } from "./loginPage";
 import { VIEWS } from "./Consts";
 import "./howToPlay.css";
 
-const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
+export const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
   const goToLogin = () => {
     closeModal();
     login();
   };
-
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div

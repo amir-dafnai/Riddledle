@@ -1,0 +1,140 @@
+/* Overlay background */
+.welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Modal card */
+/* Add to position the Riddledle logo */
+.welcome-modal h1 {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .welcome-modal {
+    position: relative;
+    background: #1e1e1e;
+    color: #ffffff;
+    padding: 30px 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: -10vh;
+  }
+  
+  
+  
+  /* Title */
+  .welcome-modal h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  
+  /* Main text */
+  .welcome-modal p {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #bbbbbb;
+  }
+  
+  /* Main button */
+  .welcome-modal button {
+        color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 16px auto 0;
+  }
+  
+  .continue-button:hover {
+    background-color: #7ec678;
+  }
+  
+
+  .how-to-play-button:hover{
+    background-color: #adba4a;
+  }
+  
+/* Inline login hint with link-style button */
+.login-section {
+    
+    margin-top: 12px;
+    font-size: 14px;
+    color: #bbbbbb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+
+.login-hint{
+  font-weight: bold;
+}
+
+.continue-button{
+    background-color: #6aaa64;
+
+}
+
+.how-to-play-button {
+    background-color: rgb(176, 187, 78);
+    color: #bbbbbb;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 480px) {
+    .welcome-modal {
+      width: 95%;
+      padding: 28px 20px;
+      max-width: none;
+      margin-top: -20vh; /* Higher on the screen */
+    }
+  
+    .welcome-modal h2 {
+      font-size: 20px;
+    }
+  
+    .welcome-modal button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+  
+    .how-to-play-button {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+    }
+  }
+  
