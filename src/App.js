@@ -19,12 +19,16 @@ const App = () => {
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
   const [showCreditModal, setShowCreditModal] = useState(true);
   const [riddle, setRiddle] = useState(getProgress().riddle);
+  const isUsersRiddle =
+    riddle && userDetails && riddle.credit_email === userDetails.email;
+
   useEffect(() => {
     const fetchData = async () => {
       const url = getUrl();
       const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
       const data = await response.json();
       if (riddle && riddlesAreEqual(riddle, data.riddle)) return;
+      data.riddle.endTime = null;
       storeProgress({});
       setRiddle(data.riddle);
       setViewStatus(VIEWS.welcome); // show modal on new riddle
@@ -65,19 +69,17 @@ const App = () => {
             viewStatus={viewStatus}
           />
         )}
-        {riddle.credit_email !== userDetails.email &&
-          viewStatus === VIEWS.welcome && (
-            <WelcomeModal
-              onClose={() => {
-                setViewStatus(VIEWS.game);
-                riddle.startTime = Date.now();
-                riddle.endTime = null;
-              }}
-              login={login}
-              onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
-              isLoggedIn={userDetails.loggedIn}
-            />
-          )}
+        {!isUsersRiddle && viewStatus === VIEWS.welcome && (
+          <WelcomeModal
+            onClose={() => {
+              setViewStatus(VIEWS.game);
+              riddle.startTime = Date.now();
+            }}
+            login={login}
+            onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
+            isLoggedIn={userDetails.loggedIn}
+          />
+        )}
         {viewStatus === VIEWS.howToPLayWelcome && (
           <HowToPlayRules
             closeModal={() => setViewStatus(VIEWS.welcome)}
@@ -85,8 +87,14 @@ const App = () => {
             login={login}
           />
         )}
-        {showCreditModal && riddle.credit_email === userDetails.email && (
-          <CreditModal onClose={() => setShowCreditModal(false)} />
+        {showCreditModal && isUsersRiddle && (
+          <CreditModal
+            onClose={() => {
+              riddle.startTime = Date.now();
+              setShowCreditModal(false);
+              setViewStatus(VIEWS.game);
+            }}
+          />
         )}
         {passedWelcome && (
           <Game
