@@ -70,7 +70,7 @@ const App = () => {
     }
   }, []);
 
-  if (userDetails && currentRiddle) {
+  if (userDetails && currentRiddle && riddleGroup) {
     const passedWelcome =
       currentRiddle.startTime &&
       ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
