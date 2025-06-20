@@ -16,26 +16,6 @@ const riddlesAreEqual = (r1, r2) => {
   const r2Definitions = r2.group.map((riddle) => riddle.definition);
   return arraysAreEqual(r1Definitions, r2Definitions);
 };
-// const rr = {
-//   id: 311,
-//   group: [
-//     {
-//       id: 311,
-//       definition: "מבריח לפני בחינת בגרות בשנת הלימודים האחרונה",
-//       solution: ["ב", "י", "נ", "ג", "מ"],
-//       credit: null,
-//       credit_email: null,
-//     },
-//     {
-//       id: 312,
-//       definition: "היי שלום לכם",
-//       solution: ["ן", "ג", "מ"],
-//       credit: null,
-//       credit_email: null,
-//     },
-
-//   ],
-// };
 
 const App = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -57,7 +37,7 @@ const App = () => {
       const url = getUrl();
       const response = await fetch(`${url}get_riddle`);
       if (!response.ok) return;
-      const data = await response.json(); //{riddle_group : rr};
+      const data = await response.json(); 
       if (
         riddleGroup &&
         riddlesAreEqual(riddleGroup, data.riddle_group)

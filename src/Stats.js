@@ -28,14 +28,12 @@ export const fetchStats = async (email) => {
 };
 
 export const fetchGlobalStats = async (riddleGroup) => {
-  console.log("fetching");
   const groupID = riddleGroup.group.length > 1 ? riddleGroup.id : -1;
   const riddleID = groupID !== -1 ? -1 : riddleGroup.id; //the group id is equal to the single riddle id
   const response = await fetch(
     `${getUrl()}get_global_stats?&riddle_id=${riddleID}&group_id=${groupID}`
   );
   const data = await response.json();
-  console.log("got ", data.global_stats);
   return data;
 };
 
@@ -59,10 +57,10 @@ const fetcAndStoreStats = async (email, setStats) => {
 };
 
 export const fetchAndStoreAllStats = (riddleGroup, setStats) => {
+  fetchAndStoreGlobalStats(riddleGroup, setStats);
   const userData = getUserData();
   const email = userData && userData.email;
   if (email && String(email).includes("@")) {
-    fetchAndStoreGlobalStats(riddleGroup, setStats);
     fetcAndStoreStats(email, setStats);
   }
 };

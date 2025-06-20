@@ -256,7 +256,7 @@ export function Game({
             login={login}
           />
         )}
-        {viewStatus === VIEWS.stats && stats.userStats && (
+        {viewStatus === VIEWS.stats && (
           <StatisticsModal
             setViewStatus={setViewStatus}
             isLoggedIn={isLoggedIn}
@@ -315,12 +315,9 @@ export function Game({
             </div>
           )}
         </div>
-        {!gameEnded && (
-          <MyKeyBoard
-            handleKeyDown={handleKeyDown}
-            buttonTheme={keyBoardThem}
-          />
-        )}
+
+        <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
+
         {shouldShowTimer() ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
