@@ -1,5 +1,4 @@
 import "./EndOfGame.css";
-import { GAMESTATUS } from "../Consts";
 import { RecordBreakView } from "../RecordsBreak";
 import { getWhatsAppMessage, WhatsAppShareButton } from "../SocialIcons";
 import Leaderboard from "../Leaderboard";
@@ -8,22 +7,23 @@ import { Top } from "./FromTopSection";
 
 
 
-const EndOfGameForm = ({ onClose, riddle, userDetails, gameStatus, login }) => {
+
+const EndOfGameForm = ({ onClose, riddle, userDetails, login , riddleGroup , isWinner, allStats }) => {
   const isLoggedIn= userDetails.loggedIn
-  const showRecordBreak = isLoggedIn && gameStatus === GAMESTATUS.win && userDetails.email !== riddle.credit_email
-  return (
-    <div className="timer-modal-overlay unselectable">
+  const showRecordBreak = riddleGroup.group.length === 1 && isLoggedIn && isWinner && userDetails.email !== riddle.credit_email
+  return allStats.leaderBoardStats && (
+    <div className="timer-modal-overlay unselectable ">
       <div className="timer-modal-content">
         <button className="timer-close-button" onClick={onClose}>
           ✖
         </button>
         {showRecordBreak && (
-          <RecordBreakView riddle={riddle} />
+          <RecordBreakView riddle={riddle} allStats={allStats} />
         )}
-        <Top word={riddle.solution} gameStatus={gameStatus} />
-        <Leaderboard riddle={riddle} login={login}/>
+        <Top word={riddle.solution} isWinner={isWinner} isMultiRiddle={riddleGroup.group.length>1}/>
+        <Leaderboard  login={login} leaderBoardStats={allStats.leaderBoardStats}/>
         <WhatsAppShareButton
-          message={getWhatsAppMessage(isLoggedIn, gameStatus)}
+          message={getWhatsAppMessage(isLoggedIn, isWinner)}
         />
         <Timer />
       </div>

@@ -24,44 +24,13 @@ export const getUserStats = () => {
     : null;
 };
 
-
-export const storeGlobalStats = (stats) => {
-  localStorage.setItem("globalStats", JSON.stringify(stats));
-}
-
-
-export const getGlobalStats = () => {
-  return "globalStats" in localStorage && localStorage.getItem("globalStats") !== "{}"
-    ? JSON.parse(localStorage.getItem("globalStats"))
-    : null;
+export const getLeaderBoardStats = () => {
+  return "leaderboard" in localStorage && localStorage.getItem("leaderboard") !== "{}"
+  ? JSON.parse(localStorage.getItem("leaderboard"))
+  : null;
 };
 
-export const storeAllTimeWinners = (winners) =>{
-  localStorage.setItem("allTimeWinners", JSON.stringify(winners));
-}
-
-export const getAllTimeWinners = () => {
-  return "allTimeWinners" in localStorage && localStorage.getItem("allTimeWinners") !== "{}"
-    ? JSON.parse(localStorage.getItem("allTimeWinners"))
-    : null;
+export const storeLeaderBoardStats = (leaderBoardStats) => {
+  localStorage.setItem("leaderboard", JSON.stringify(leaderBoardStats));
 };
 
-export const storeWeeklyWinners = (winners) => {
-  localStorage.setItem("weeklyWinners", JSON.stringify(winners))
-}
-
-export const getWeeklyWinners = () => {
-  return "weeklyWinners" in localStorage && localStorage.getItem("weeklyWinners") !== "{}"
-    ? JSON.parse(localStorage.getItem("weeklyWinners"))
-    : null;
-};
-
-export const storePersonalScores = (scores) =>{
-  localStorage.setItem("personalScores", JSON.stringify(scores))
-}
-
-export const getPersonalScores = () => {
-  return "personalScores" in localStorage && localStorage.getItem("personalScores") !== "{}"
-    ? JSON.parse(localStorage.getItem("personalScores"))
-    : null;
-};

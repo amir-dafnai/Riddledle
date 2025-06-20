@@ -15,69 +15,140 @@ import {
   storeProgress,
   getProgress,
   getUserData,
-  storeUserStats,
+  getUserStats,
+  getLeaderBoardStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
-import {
-  fetchAndStoreGlobalStats,
-  fetchStats,
-  insertStats,
-  StatisticsModal,
-} from "./Stats";
+import { fetchAndStoreAllStats, insertStats, StatisticsModal } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 import { areWordsValid } from "./WordValidation";
+import { failedAny, getNextRiddle, wonAll } from "./RiddlesGroupUtils";
+import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
+import { RiddlesResults } from "./RiddlesResults";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
   return timeToSolveSeconds;
 };
 
-const getGameStatus = (solution, guesses, numberOfGuesses) => {
+export const getGameStatus = (riddle, guesses, numberOfGuesses) => {
   const currGuess = guesses.length;
-  const status = arraysAreEqual(solution, guesses[guesses.length - 1])
+
+  const status = arraysAreEqual(riddle.solution, guesses[guesses.length - 1])
     ? GAMESTATUS.win
     : currGuess === numberOfGuesses
     ? GAMESTATUS.lose
     : GAMESTATUS.playing;
+
   return status;
 };
 
-export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) {
+const setNextRiddle = (riddle, riddleGroup, setRiddle) => {
+  const nextRiddle = getNextRiddle(riddle, riddleGroup.group);
+  if (nextRiddle) {
+    nextRiddle.startTime = Date.now();
+    setRiddle(nextRiddle);
+  }
+};
+
+const calcEndOfGameText = (timeEnded, gameEnded, lostAny) => {
+  const LoNora = "🤦‍♀️";
+  const text =
+    lostAny || timeEnded ? LoNora : gameEnded ? "כל הכבוד! 🎉" : null;
+
+  return text;
+};
+
+export function Game({
+  riddle,
+  viewStatus,
+  setViewStatus,
+  userDetails,
+  login,
+  riddleGroup,
+  setRiddle,
+  timerWasClosed,
+  setTimerWasClosed,
+}) {
+  const [stats, setStats] = useState({
+    userStats: getUserStats(),
+    leaderBoardStats: getLeaderBoardStats(),
+  });
   const progress = getProgress();
-  const isLoggedIn = userDetails.loggedIn
+  const currRiddleProgress = getProgress()[riddle.id] || {};
+  const isLoggedIn = userDetails.loggedIn;
   const solution = riddle.solution;
   const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
+
   const [guesses, setGuesses] = useState(
-    progress.guesses ? progress.guesses : []
+    currRiddleProgress.guesses ? currRiddleProgress.guesses : []
   );
-  const gameStatus = getGameStatus(solution, guesses, numberOfGuesses);
+  const gameStatus = getGameStatus(riddle, guesses, numberOfGuesses);
+  const isWinner = wonAll(riddleGroup);
+  const lostAny = failedAny(riddleGroup);
+
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
-  const [timerWasClosed, setTimerWasClosed] = useState(false);
+
   const [animationEnded, setAnimationEnded] = useState(true);
   const [keyBoardThem, setKeyBoardTheme] = useState(
     getKeyboardButtonTheme(guesses, solution, currAnswer)
   );
 
-  const [shoudlFetchStats, setShouldUpdateStats] = useState(true);
   const [invalidWordMessage, setInvalidWordMessage] = useState(false);
+  const [gameEnded, setGameEnded] = useState(Boolean(progress.gameEnded));
+
+  const isMultiRiddle = riddleGroup.group.length > 1;
+  const timerStartTime = parseInt(riddleGroup.group[0].startTime, 10);
+
+  const [CountdownTimerEnded, setCounDownTimerEnded] = useState(
+    Boolean(progress.CountdownTimerEnded)
+  );
+
+  const solutionToShow = "(" + [...riddle.solution].reverse().join("") + ")";
+
+  useEffect(() => {
+    if (
+      [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) &&
+      !gameEnded &&
+      animationEnded
+    ) {
+      setGameEnded(true);
+    }
+    if (
+      isMultiRiddle &&
+      !gameEnded &&
+      (gameStatus === GAMESTATUS.win || gameStatus === GAMESTATUS.lose) &&
+      animationEnded
+    ) {
+      setNextRiddle(riddle, riddleGroup, setRiddle);
+    }
+  }, [
+    riddle,
+    riddleGroup,
+    setRiddle,
+    animationEnded,
+    gameStatus,
+    gameEnded,
+    isMultiRiddle,
+  ]);
 
   const shouldShowTimer = () => {
-    return (
+    const val =
       animationEnded &&
       [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) &&
-      !timerWasClosed
-    );
+      !timerWasClosed;
+    return val;
   };
 
   useEffect(() => {
-    const animationDuration = getMaxDelay(solution) * 3; // Replace this with your animation's duration in milliseconds
+    const animationDuration = getMaxDelay(solution); // Replace this with your animation's duration in milliseconds
     const timer = setTimeout(() => {
       setAnimationEnded(true);
       setKeyBoardTheme(getKeyboardButtonTheme(guesses, solution, currAnswer));
@@ -92,23 +163,17 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
       ...progress,
       riddle: riddle,
       guesses: guesses,
+      riddleGroup: riddleGroup,
+      [riddle.id]: { guesses: guesses },
+      gameEnded: gameEnded,
+      CountdownTimerEnded: CountdownTimerEnded,
     });
-  }, [guesses, riddle]);
+  }, [guesses, riddle, riddleGroup, gameEnded, CountdownTimerEnded]);
 
   useEffect(() => {
-    const fetcAndStorehStats = async (email) => {
-      const stats = await fetchStats(email);
-      storeUserStats(stats);
-    };
-
-    fetchAndStoreGlobalStats(riddle);
-    const userData = getUserData();
-    const email = userData && userData.email;
-    if (email && shoudlFetchStats) {
-      fetcAndStorehStats(email);
-      setShouldUpdateStats(false);
-    }
-  }, [shoudlFetchStats, riddle]);
+    if (gameEnded && !timerWasClosed)
+      fetchAndStoreAllStats(riddleGroup, setStats);
+  }, [riddleGroup, gameEnded, gameStatus, timerWasClosed]);
 
   function setNewAnswer(currSquare, key) {
     const newAns = currAnswer.slice();
@@ -118,8 +183,11 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
 
   function onEnterClicked() {
     const newGuesses = [...guesses, currAnswer];
-    const newStatus = getGameStatus(solution, newGuesses, numberOfGuesses);
+    const newStatus = getGameStatus(riddle, newGuesses, numberOfGuesses);
+
     if (newStatus !== GAMESTATUS.playing) {
+      // single/total - win/lose
+
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
     }
@@ -140,10 +208,13 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
       user_name: userData.name,
       email: userData.email,
       time_to_solve: getTimeToSolve(riddle.startTime, riddle.endTime),
+      group_id: isMultiRiddle ? riddleGroup.id : null,
+      seconds_left_on_timer: isMultiRiddle
+        ? calcTimeLeft(timerStartTime)
+        : null,
     };
     const response = insertStats(body);
     await response;
-    setShouldUpdateStats(true);
   };
 
   async function handleKeyDown(event) {
@@ -185,13 +256,15 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
             login={login}
           />
         )}
-        {viewStatus === VIEWS.stats && (
+        {viewStatus === VIEWS.stats && stats.userStats && (
           <StatisticsModal
             setViewStatus={setViewStatus}
             isLoggedIn={isLoggedIn}
+            userStats={stats.userStats}
             login={login}
           />
         )}
+
         <div data-nosnippet>
           <h1 className="rtl-form unselectable">
             {riddle.definition} {getStringLengths(riddle.solution)}
@@ -204,7 +277,37 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
           numberOfGuesses={numberOfGuesses}
           handleKeyDown={handleKeyDown}
           solution={solution}
+          gameEnded={gameEnded}
         />
+        {isMultiRiddle && (
+          <>
+            <div className="greenText unselectable unclickable">
+              {gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
+            </div>
+            <CountdownTimer
+              key={riddleGroup.id}
+              timerStartTime={timerStartTime}
+              textToShow={calcEndOfGameText(
+                CountdownTimerEnded,
+                gameEnded,
+                lostAny
+              )}
+              setCounDownTimerEnded={setCounDownTimerEnded}
+              gameEnded={gameEnded}
+              timeEnded={CountdownTimerEnded}
+            />
+            <RiddlesResults
+              riddleGroup={riddleGroup}
+              currRiddle={riddle}
+              numberOfGuesses={numberOfGuesses}
+              setRiddle={(riddle) => {
+                setRiddle(riddle);
+                setTimerWasClosed(true);
+              }}
+              gameEnded={gameEnded}
+            />
+          </>
+        )}
         <div className="tooltip-container">
           {invalidWordMessage && (
             <div dir="rtl" className="tooltip">
@@ -212,18 +315,25 @@ export function Game({ riddle, viewStatus, setViewStatus, userDetails, login }) 
             </div>
           )}
         </div>
-        <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
+        {!gameEnded && (
+          <MyKeyBoard
+            handleKeyDown={handleKeyDown}
+            buttonTheme={keyBoardThem}
+          />
+        )}
         {shouldShowTimer() ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
-            gameStatus={gameStatus}
             riddle={riddle}
             userDetails={userDetails}
             login={login}
+            riddleGroup={riddleGroup}
+            isWinner={isWinner}
+            allStats={stats}
           />
         ) : null}
         <SocialIcons
-          watsAppMessage={getWhatsAppMessage(isLoggedIn, gameStatus)}
+          watsAppMessage={getWhatsAppMessage(isLoggedIn, isWinner)}
         />
       </div>
     </>

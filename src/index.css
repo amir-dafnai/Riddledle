@@ -33,17 +33,37 @@ body {
 
 
 /* Correct answer styling */
-.square.green {
+.square.green.animation {
   animation: flip 0.9s ease-in-out forwards , greenColor 0.9s ease-in-out forwards ;
 }
 
-.square.orange {
+.square.orange.animation {
   animation: flip 0.9s ease-in-out forwards, orangeColor 0.9s ease-in-out forwards;
 }
 
-.square.gray {
+.square.gray.animation {
   animation: flip 0.9s ease-in-out forwards, grayColor 0.9s ease-in-out forwards;
 }
+
+
+.square.green.no-animation {
+  background-color: #6aaa64; 
+  border-color: #6aaa64;
+}
+
+.square.orange.no-animation {
+  background-color: #c9b458; 
+  border-color: #c9b458;
+}
+
+.square.gray.no-animation{
+  background-color: #3a3a3c; /* Gray */
+  border-color: #3a3a3c;
+}
+
+
+
+
 
 .invisibleSquare {
   height: 20px; /* Match larger square size */
@@ -109,6 +129,11 @@ body {
   animation: fadeIn 3s ease-in-out forwards; 
 }
 
+.hg-theme-default .hg-button.hg-standardBtn.enter {
+  background: rgb(83, 141, 78);
+  animation: fadeIn 3s ease-in-out forwards; 
+}
+
 .hg-theme-default .hg-button.hg-standardBtn.gray  {
   background: rgb(58, 58, 60);
   animation: fadeIn 3s ease-in-out forwards; 
@@ -162,7 +187,7 @@ body {
   }
 
   .riddle-container {
-    gap: 8px;
+    gap: 4px;
   }
 
 
@@ -264,6 +289,10 @@ body {
   }
 }
 
+
+.greenText{
+  color: green;
+}
 
 
 

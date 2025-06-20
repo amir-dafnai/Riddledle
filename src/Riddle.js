@@ -8,6 +8,7 @@ export function Riddle({
   numberOfGuesses,
   handleKeyDown,
   solution,
+  gameEnded
 }) {
   const allStyles = calcStyles(guesses, solution, numberOfGuesses);
   const riddleSquares = [];
@@ -26,6 +27,7 @@ export function Riddle({
           nSquares={solution.length}
           styles={allStyles[i]}
           handleKeyDown={i === guesses.length ? handleKeyDown : null}
+          gameEnded={gameEnded}
         />
       </div>
     );

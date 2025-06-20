@@ -1,6 +1,4 @@
 import {
-  getUserStats,
-  getGlobalStats,
   getProgress,
   storeProgress,
 } from "./localStorageUtils";
@@ -9,17 +7,17 @@ const brokeBothText = `שברת שיא אישי וגם את השיא היומי!
 const brokePersonalText = `שברת שיא אישי!🎉`;
 const brokeGlobalText = `שברת את השיא היומי!🎉`;
 
-const getBestTimeGlobal=()=>{
-  const globalStats = getGlobalStats();
+const getBestTimeGlobal=(globalStats)=>{
   const bestWinner = globalStats ? globalStats.find((e)=>e.status === 'win' && e.was_logged_in) : null
   return bestWinner && Number(bestWinner.time)
 }
 
-const didBreakRecords = (riddle) => {
-  const personalStats = getUserStats();
+const didBreakRecords = (riddle , allStats) => {
+  const personalStats = allStats.userStats 
+
   const progress = getProgress();
   const currPersonalRecord = personalStats && Number(personalStats.best_time);
-  const currGlobalRecord = getBestTimeGlobal()
+  const currGlobalRecord = getBestTimeGlobal(allStats.leaderBoardStats.globalStats)
   const currTimeSeconds = Math.round(
     (riddle.endTime - riddle.startTime) / 1000
   );
@@ -37,14 +35,15 @@ const didBreakRecords = (riddle) => {
       progress.recordBreak.global);
   return [brokePersonalRecord, brokeGloballRecord];
 };
-export const updateRecordsBreak = (riddle) => {
-  const [brokePersonalRecord, brokeGloballRecord] = didBreakRecords(riddle);
+export const updateRecordsBreak = (riddle , allStats) => {
+  const [brokePersonalRecord, brokeGloballRecord] = didBreakRecords(riddle , allStats);
   const recordBreak = {
     personal: brokePersonalRecord,
     global: brokeGloballRecord,
   };
   const newProgress = { ...getProgress(), recordBreak: recordBreak };
   storeProgress(newProgress);
+  return recordBreak
 };
 
 const getRecordsBreakText = (personal, global) => {
@@ -54,10 +53,8 @@ const getRecordsBreakText = (personal, global) => {
   if (global) return brokeGlobalText;
 };
 
-export const RecordBreakView = ({ riddle }) => {
-  updateRecordsBreak(riddle);
-
-  const recordBreak = getProgress().recordBreak;
+export const RecordBreakView = ({ riddle , allStats }) => {
+  const recordBreak = updateRecordsBreak(riddle , allStats);
   const textToShow = recordBreak
     ? getRecordsBreakText(recordBreak.personal, recordBreak.global)
     : null;
