@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUrl } from "./appUtils";
+import { arraysAreEqual, getUrl } from "./appUtils";
 import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
@@ -11,30 +11,46 @@ import { CreditModal } from "./UserCreditModal";
 import { WelcomeModal } from "./WelcomeModal";
 
 const riddlesAreEqual = (r1, r2) => {
-  return r1.id === r2.id && r1.definition === r2.definition;
+  if (r1.id !== r2.id) return false;
+  const r1Definitions = r1.group.map((riddle) => riddle.definition);
+  const r2Definitions = r2.group.map((riddle) => riddle.definition);
+  return arraysAreEqual(r1Definitions, r2Definitions);
 };
 
 const App = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
   const [showCreditModal, setShowCreditModal] = useState(true);
-  const [riddle, setRiddle] = useState(getProgress().riddle);
+  const [currentRiddle, setRiddle] = useState(getProgress().riddle);
+  const [riddleGroup, setRiddleGroup] = useState(getProgress().riddleGroup);
   const isUsersRiddle =
-    riddle && userDetails && riddle.credit_email === userDetails.email;
+    currentRiddle &&
+    userDetails &&
+    currentRiddle.credit_email === userDetails.email;
+  const [timerWasClosed, setTimerWasClosed] = useState(false);
 
+  const isMultiRiddle = riddleGroup && riddleGroup.group.length > 1;
+  // if(userDetails)
+  //   userDetails.loggedIn = true;
   useEffect(() => {
     const fetchData = async () => {
       const url = getUrl();
-      const response = await fetch(`${url}get_riddle?&new=${riddle === null}`);
-      const data = await response.json();
-      if (riddle && riddlesAreEqual(riddle, data.riddle)) return;
-      data.riddle.endTime = null;
+      const response = await fetch(`${url}get_riddle`);
+      if (!response.ok) return;
+      const data = await response.json(); 
+      if (
+        riddleGroup &&
+        riddlesAreEqual(riddleGroup, data.riddle_group)
+      )
+        return;
+      data.riddle_group.group[0].endTime = null;
       storeProgress({});
-      setRiddle(data.riddle);
+      setRiddle(data.riddle_group.group[0]);
       setViewStatus(VIEWS.welcome); // show modal on new riddle
+      setRiddleGroup(data.riddle_group);
     };
     fetchData();
-  }, [riddle]);
+  }, [riddleGroup]);
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -54,9 +70,9 @@ const App = () => {
     }
   }, []);
 
-  if (userDetails && riddle) {
+  if (userDetails && currentRiddle) {
     const passedWelcome =
-      riddle.startTime &&
+      currentRiddle.startTime &&
       ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
     return (
       <>
@@ -69,15 +85,16 @@ const App = () => {
             viewStatus={viewStatus}
           />
         )}
-        {!isUsersRiddle && viewStatus === VIEWS.welcome && (
+        {(!isUsersRiddle || isMultiRiddle) && viewStatus === VIEWS.welcome && (
           <WelcomeModal
             onClose={() => {
               setViewStatus(VIEWS.game);
-              riddle.startTime = Date.now();
+              currentRiddle.startTime = Date.now();
             }}
             login={login}
             onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
             isLoggedIn={userDetails.loggedIn}
+            isMultiRiddle={isMultiRiddle}
           />
         )}
         {viewStatus === VIEWS.howToPLayWelcome && (
@@ -87,24 +104,30 @@ const App = () => {
             login={login}
           />
         )}
-        {showCreditModal && isUsersRiddle && (
+        {!isMultiRiddle && showCreditModal && isUsersRiddle && (
           <CreditModal
             onClose={() => {
-              riddle.startTime = Date.now();
+              currentRiddle.startTime = Date.now();
               setShowCreditModal(false);
               setViewStatus(VIEWS.game);
             }}
           />
         )}
         {passedWelcome && (
-          <Game
-            key={`${riddle.id}-${userDetails.email}`}
-            riddle={riddle}
-            viewStatus={viewStatus}
-            setViewStatus={setViewStatus}
-            userDetails={userDetails}
-            login={login}
-          />
+          <>
+            <Game
+              key={`${currentRiddle.id}-${userDetails.email}`}
+              riddle={currentRiddle}
+              viewStatus={viewStatus}
+              setViewStatus={setViewStatus}
+              userDetails={userDetails}
+              login={login}
+              riddleGroup={riddleGroup}
+              setRiddle={setRiddle}
+              timerWasClosed={timerWasClosed}
+              setTimerWasClosed={setTimerWasClosed}
+            />
+          </>
         )}
       </>
     );

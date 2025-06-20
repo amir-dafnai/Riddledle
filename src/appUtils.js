@@ -74,6 +74,7 @@ export function getDefaultStyles(nSquares, nGuesses) {
   return styles;
 }
 export function arraysAreEqual(arr1, arr2) {
+
   return Boolean(
     arr1 &&
       arr2 &&
@@ -112,8 +113,8 @@ export const getStringLengths = (arr) => {
   return `(${lengths.join(",")})`;
 };
 export const getUrl = () => {
-  //return "http://localhost:5000/";
-  return process.env.REACT_APP_URL;
+  return "http://10.0.0.9:5000/";
+  //return process.env.REACT_APP_URL;
 };
 export const isValidLetter = (value, isLastLetter) => {
   return (
@@ -157,7 +158,8 @@ export const convertFromLastLetter = (val) => {
 };
 
 export const getMaxDelay = (solution) => {
-  const maxDelay = AnimationDelay * solution.length;
+  const delay = solution.length > 2 ? solution.length : 3
+  const maxDelay = AnimationDelay * delay * 3;
   return maxDelay;
 };
 

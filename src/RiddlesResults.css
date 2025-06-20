@@ -1,0 +1,69 @@
+/* Wrapper: Fixed space for arrows and results */
+.riddle-results-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 12px 0;
+  }
+  
+  /* Keeps arrow buttons the same width, even when hidden */
+  .nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+    padding: 4px;
+    width: 36px; /* Fixed width to preserve layout */
+    text-align: center;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-button:disabled,
+  .nav-button.hidden {
+    visibility: hidden; /* Keeps space but hides visually */
+  }
+  
+  .nav-button:hover:not(:disabled):not(.hidden) {
+    color: #007bff;
+  }
+  
+  /* Container for the result circles */
+  .riddle-results-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Base circle styling */
+  .result-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ccc;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Outcome coloring */
+  .result-circle.win {
+    background-color: #4caf50; /* green */
+  }
+  
+  .result-circle.lose {
+    background-color: #f44336; /* red */
+  }
+  
+  .result-circle.pending {
+    background-color: #bbb;
+  }
+  
+  /* Highlight the current riddle */
+  .result-circle.current {
+    width: 50px;
+    height: 50px;
+    outline: 2px solid #000;
+    outline-offset: 2px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  }
+  

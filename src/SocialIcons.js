@@ -1,14 +1,13 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import "./SocialIcons.css";
-import { GAMESTATUS } from "./Consts";
 import { getProgress } from "./localStorageUtils";
 
 const url = "https://riddledle.com";
 
-export const getWhatsAppMessage = (isLoggedIn, gameStatus) => {
+export const getWhatsAppMessage = (isLoggedIn, isWinner) => {
   const recordBreak = getProgress().recordBreak;
-  if (!isLoggedIn || gameStatus !== GAMESTATUS.win)
+  if (!isLoggedIn || !isWinner)
     return "🔥 מצאתי משחק בדיוק בשבילך! ";
   if (recordBreak && recordBreak.global)
     return "שברתי את השיא היומי! 🥇 בוא נראה אותך";

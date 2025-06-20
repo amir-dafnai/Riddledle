@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { AnimationDelay } from "./Consts";
 
 
-function Square({ value, style, delay }) {
-  const color = style && style.backgroundColor;
+function Square({ value, color, delay }) {
+
+  
   return (
     <div
-      className={`square ${color} unselectable unclickable`}
+      className={`square ${color}  unselectable unclickable`}
       style={{ animationDelay: `${AnimationDelay * delay}ms` }}
     >
       {value}
@@ -17,13 +18,14 @@ function InvisibleSquare() {
   return <div className="invisibleSquare"> </div>;
 }
 
-export function RowOfSquares({ nSquares, currGuess, styles, handleKeyDown }) {
+export function RowOfSquares({ nSquares, currGuess, styles, handleKeyDown , gameEnded }) {
   useEffect(() => {
     if (handleKeyDown == null) return;
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
-
+  const animationClass = gameEnded? ' no-animation' : ' animation'
+  const styleClass = (i) => styles[i].backgroundColor + animationClass
   const squaresRow = [];
   for (let i = 0; i < nSquares; i++) {
     if (currGuess[i] !== " ") {
@@ -31,7 +33,7 @@ export function RowOfSquares({ nSquares, currGuess, styles, handleKeyDown }) {
         <Square
           key={i}
           value={currGuess[i]}
-          style={styles[i]}
+          color={styleClass(i)}
           delay={nSquares - i}
         ></Square>
       );

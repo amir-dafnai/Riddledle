@@ -1,14 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Leaderboard.css";
-import {
-  getAllTimeWinners,
-  getGlobalStats,
-  getPersonalScores,
-  getUserData,
-  getWeeklyWinners,
-} from "./localStorageUtils";
+import { getUserData } from "./localStorageUtils";
 import { getHMSFormat } from "./appUtils";
-import { fetchAndStoreGlobalStats } from "./Stats";
 
 const WIN = "win";
 
@@ -17,7 +10,6 @@ const getLoggedInWinners = (players) => {
   return players.filter((e) => e.status === WIN && e.was_logged_in);
 };
 
-
 const getUserPosition = (winners, email) => {
   for (const [position, player] of winners.entries()) {
     if (player.email === email) return [position, player];
@@ -25,27 +17,14 @@ const getUserPosition = (winners, email) => {
   return [null, null];
 };
 
-const getTodaysPLayers = (email, n=5) => {
-  const globalStats =
-    getGlobalStats() && getGlobalStats()[0] ? getGlobalStats() : [];
-  const allWinners = getLoggedInWinners(globalStats)
+const getTodaysPLayers = (email, globalStats, n = 5) => {
+  const allWinners = getLoggedInWinners(globalStats);
   const winners = allWinners.slice(0, n);
   const [userPosition, user] = getUserPosition(allWinners, email);
   if (userPosition && userPosition > 4 && user && user.status === WIN) {
     winners.push({ ...user, position: userPosition + 1 });
   }
   return winners;
-};
-
-const getOrFetchAllTimeWinners = (riddle) => {
-  const winners = getAllTimeWinners();
-  if (!winners) {
-    fetchAndStoreGlobalStats(riddle);
-  }
-  const weeklyWinners = getWeeklyWinners() || [];
-  const allTimeWinners = getAllTimeWinners() || [];
-  const persoanlScores = getPersonalScores() || [];
-  return [weeklyWinners, allTimeWinners, persoanlScores];
 };
 
 const GuestUserMessage = ({ login }) => {
@@ -60,6 +39,14 @@ const GuestUserMessage = ({ login }) => {
 };
 
 const DailyLeaders = ({ players, email }) => {
+  if (players.length === 0) {
+    return (
+      <tr>
+        <td dir="rtl">אין עדיין מנצחים היום...</td>
+      </tr>
+    );
+  }
+
   return players.map((player, index) => (
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>#{player.position || index + 1}</td>
@@ -130,13 +117,11 @@ const ScoreLeaders = ({ players, email }) => {
   );
 };
 
-function Leaderboard({ riddle, login }) {
+function Leaderboard({ login, leaderBoardStats }) {
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
-  const todayWinners = getTodaysPLayers(email);
-  const [weeklyWinners, allTimePlayers, persoanlScores] =
-    getOrFetchAllTimeWinners(riddle);
+  const todayWinners = getTodaysPLayers(email, leaderBoardStats.globalStats);
 
   return (
     <div>
@@ -174,11 +159,20 @@ function Leaderboard({ riddle, login }) {
             {mode === "today" ? (
               <DailyLeaders players={todayWinners} email={email} />
             ) : mode === "week" ? (
-              <WeeklyWinners players={weeklyWinners} email={email} />
+              <WeeklyWinners
+                players={leaderBoardStats.weeklyWinners}
+                email={email}
+              />
             ) : mode === "alltime" ? (
-              <AllTimeLeaders players={allTimePlayers} email={email} />
+              <AllTimeLeaders
+                players={leaderBoardStats.allTimeWinners}
+                email={email}
+              />
             ) : (
-              <ScoreLeaders players={persoanlScores} email={email} />
+              <ScoreLeaders
+                players={leaderBoardStats.personalScores}
+                email={email}
+              />
             )}
           </tbody>
         </table>

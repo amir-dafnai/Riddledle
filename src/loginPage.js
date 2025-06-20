@@ -26,7 +26,8 @@ const fetchUserInfo = async (accessToken) => {
 
 export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   const userInfo = await fetchUserInfo(tokenResponse.access_token);
-  const stats = await fetchStats(userInfo.email);
+  
+  const statsPrem = fetchStats(userInfo.email)
   const currStoredUser = getUserData();
   if (
     currStoredUser &&
@@ -37,6 +38,7 @@ export const onLoginSuccess = async (setUserInfo, tokenResponse) => {
   userInfo.loggedIn = true;
   storeUserData(userInfo);
   setUserInfo(userInfo);
+  const stats = await statsPrem;
   storeUserStats(stats);
 };
 

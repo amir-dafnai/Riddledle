@@ -13,6 +13,7 @@
 }
 
 .timer-modal-content {
+  position: relative;
   background: #121212;
   border-radius: 15px;
   width: 90%;
@@ -114,6 +115,7 @@
 /* Mobile Optimization for Google Pixel 6a */
 @media {
   .timer-modal-content {
+    position: relative;
     width: 90%;
     padding: 15px;
     max-width: 420px;
@@ -152,5 +154,11 @@
 }
 
 
+.end-of-game-form {
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid red;
+  position: relative;
+}
 
 
