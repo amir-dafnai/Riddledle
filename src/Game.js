@@ -26,7 +26,12 @@ import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 import { areWordsValid } from "./WordValidation";
-import { failedAny, getNextRiddle, wonAll } from "./RiddlesGroupUtils";
+import {
+  failedAny,
+  getNextRiddle,
+  isLastRiddle,
+  wonAll,
+} from "./RiddlesGroupUtils";
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
 
@@ -111,7 +116,7 @@ export function Game({
     Boolean(progress.CountdownTimerEnded)
   );
 
-  const solutionToShow = "(" + [...riddle.solution].reverse().join("") + ")";
+  const solutionToShow = "פתרון: " + [...riddle.solution].reverse().join("");
 
   useEffect(() => {
     if (
@@ -119,15 +124,8 @@ export function Game({
       !gameEnded &&
       animationEnded
     ) {
-      setGameEnded(true);
-    }
-    if (
-      isMultiRiddle &&
-      !gameEnded &&
-      (gameStatus === GAMESTATUS.win || gameStatus === GAMESTATUS.lose) &&
-      animationEnded
-    ) {
-      setNextRiddle(riddle, riddleGroup, setRiddle);
+      if (isLastRiddle(riddle, riddleGroup.group)) setGameEnded(true);
+      if (isMultiRiddle) setNextRiddle(riddle, riddleGroup, setRiddle);
     }
   }, [
     riddle,
@@ -270,6 +268,9 @@ export function Game({
             {riddle.definition} {getStringLengths(riddle.solution)}
           </h1>
         </div>
+        <div dir="rtl" className="solutionText unselectable unclickable">
+          {gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
+        </div>
         {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
         <Riddle
           currAnswer={currAnswer}
@@ -281,9 +282,6 @@ export function Game({
         />
         {isMultiRiddle && (
           <>
-            <div className="greenText unselectable unclickable">
-              {gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
-            </div>
             <CountdownTimer
               key={riddleGroup.id}
               timerStartTime={timerStartTime}

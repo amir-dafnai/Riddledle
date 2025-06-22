@@ -41,7 +41,7 @@ export const CountdownTimer = ({
         !textToShow && currtime <= 5 && currtime > 0 ? "dramatic" : ""
       } `}
     >
-      {textToShow || currtime}
+      {!gameEnded && (textToShow || currtime)}
     </div>
   );
 };
