@@ -1,6 +1,19 @@
 import React from "react";
 import "./WelcomeModal.css";
 
+const WelcomeHeadline = ({isMultiRiddle}) => {
+  const multiRiddleheadline1 = "האתגר השבועי!";
+  const multiReadleHeadline2 = "נראה אם תצליחו לפתור חמש חידות בדקה";
+  const headLineText = !isMultiRiddle ? "יאללה חידה חדשה! 🎉" : multiRiddleheadline1;
+
+  return (
+    <>
+      <h2 dir="rtl"> {headLineText} </h2>
+      {isMultiRiddle && <h3>{multiReadleHeadline2}</h3>}
+    </>
+  );
+};
+
 export const WelcomeModal = ({
   onClose,
   isLoggedIn,
@@ -19,8 +32,7 @@ export const WelcomeModal = ({
     <div className="welcome-modal-overlay">
       <div className="welcome-modal">
         <h1 className="unclickable">Riddledle</h1>
-        <h2 dir="rtl"> יאללה חידה חדשה! 🎉</h2>
-
+        <WelcomeHeadline isMultiRiddle={isMultiRiddle}/>
         <button dir="rtl" className="how-to-play-button" onClick={onHowToPLay}>
           איך משחקים?
         </button>
