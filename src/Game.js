@@ -34,6 +34,7 @@ import {
 } from "./RiddlesGroupUtils";
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
+import { CrownWithTooltip } from "./CrownWithTooltip";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -265,7 +266,8 @@ export function Game({
 
         <div data-nosnippet>
           <h1 className="rtl-form unselectable">
-            {riddle.definition} {getStringLengths(riddle.solution)}
+            {riddle.special && <CrownWithTooltip />}
+            {" " + riddle.definition} {getStringLengths(riddle.solution)}
           </h1>
         </div>
         <div dir="rtl" className="solutionText unselectable unclickable">
