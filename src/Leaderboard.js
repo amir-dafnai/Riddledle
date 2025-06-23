@@ -81,7 +81,7 @@ const WeeklyWinners = ({ players, email }) => {
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>{player.date}</td>
       <td>
-        {player.user_name} {index === 0 && player.email === email && "🏆"}
+        {player.user_name || '😔'} {index === 0 && player.email === email && "🏆"}
       </td>
       <td>{getHMSFormat(player.time)}</td>
     </tr>

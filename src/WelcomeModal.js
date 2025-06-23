@@ -3,7 +3,7 @@ import "./WelcomeModal.css";
 
 const WelcomeHeadline = ({isMultiRiddle}) => {
   const multiRiddleheadline1 = "האתגר השבועי!";
-  const multiReadleHeadline2 = "נראה אם תצליחו לפתור חמש חידות בדקה";
+  const multiReadleHeadline2 = "נסו לפתור חמש חידות בדקה";
   const headLineText = !isMultiRiddle ? "יאללה חידה חדשה! 🎉" : multiRiddleheadline1;
 
   return (
