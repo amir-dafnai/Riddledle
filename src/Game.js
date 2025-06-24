@@ -211,6 +211,7 @@ export function Game({
       seconds_left_on_timer: isMultiRiddle
         ? calcTimeLeft(timerStartTime)
         : null,
+      was_logged_in : isLoggedIn
     };
     const response = insertStats(body);
     await response;
