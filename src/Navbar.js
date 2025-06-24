@@ -73,16 +73,15 @@ export const HowToPlayRules = ({ closeModal, isLoggedIn, login }) => {
   );
 };
 
-const StatsButton = ({onclick})=>{
-  return (          <li>
-    <button
-      onClick={onclick}
-    >
-      <FiBarChart2 size={24} /> {/* Statistics Icon */}
-    </button>
-  </li>)
-  
-}
+const StatsButton = ({ onclick }) => {
+  return (
+    <li>
+      <button onClick={onclick}>
+        <FiBarChart2 size={24} /> {/* Statistics Icon */}
+      </button>
+    </li>
+  );
+};
 
 const Navbar = ({
   isLoggedIn,
@@ -90,6 +89,7 @@ const Navbar = ({
   setUserDetails,
   setViewStatus,
   viewStatus,
+  isMultiRiddle,
 }) => {
   const closeModal = () => setViewStatus(VIEWS.game);
 
@@ -110,9 +110,8 @@ const Navbar = ({
                 <TfiWrite size={24} /> {/* Suggest riddle */}
               </button>
             </li>
-            <StatsButton onclick={() => setViewStatus(VIEWS.stats)}/>
-        
-            
+            <StatsButton onclick={() => setViewStatus(VIEWS.stats)} />
+
             <li>
               <button
                 onClick={() =>
@@ -135,15 +134,17 @@ const Navbar = ({
                 התחבר
               </button>
             ) : (
-              <button
-                className="unselectable"
-                disabled={viewStatus !== VIEWS.game}
-                onClick={() => {
-                  logOut(setUserDetails);
-                }}
-              >
-                התנתק
-              </button>
+              !isMultiRiddle && (
+                <button
+                  className="unselectable"
+                  disabled={viewStatus !== VIEWS.game}
+                  onClick={() => {
+                    logOut(setUserDetails);
+                  }}
+                >
+                  התנתק
+                </button>
+              )
             )}
           </ul>
         </nav>

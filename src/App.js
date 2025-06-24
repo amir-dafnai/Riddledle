@@ -83,6 +83,7 @@ const App = () => {
             setUserDetails={setUserDetails}
             setViewStatus={setViewStatus}
             viewStatus={viewStatus}
+            isMultiRiddle={isMultiRiddle}
           />
         )}
         {(!isUsersRiddle || isMultiRiddle) && viewStatus === VIEWS.welcome && (

@@ -34,7 +34,6 @@ import {
 } from "./RiddlesGroupUtils";
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
-import { CrownWithTooltip } from "./CrownWithTooltip";
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -211,7 +210,7 @@ export function Game({
       seconds_left_on_timer: isMultiRiddle
         ? calcTimeLeft(timerStartTime)
         : null,
-      was_logged_in : isLoggedIn
+      was_logged_in: isLoggedIn,
     };
     const response = insertStats(body);
     await response;
@@ -267,7 +266,6 @@ export function Game({
 
         <div data-nosnippet>
           <h1 className="rtl-form unselectable">
-            {riddle.special && <CrownWithTooltip />}
             {" " + riddle.definition} {getStringLengths(riddle.solution)}
           </h1>
         </div>
