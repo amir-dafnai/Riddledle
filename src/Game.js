@@ -94,7 +94,7 @@ export function Game({
     currRiddleProgress.guesses ? currRiddleProgress.guesses : []
   );
   const gameStatus = getGameStatus(riddle, guesses, numberOfGuesses);
-  const isWinner = wonAll(riddleGroup);
+  
   const lostAny = failedAny(riddleGroup);
 
   const isLastLetter = getLastLetterIndices(solution).includes(
@@ -115,7 +115,7 @@ export function Game({
   const [CountdownTimerEnded, setCounDownTimerEnded] = useState(
     Boolean(progress.CountdownTimerEnded)
   );
-
+  const isWinner = wonAll(riddleGroup) && !CountdownTimerEnded;
   const solutionToShow = "פתרון: " + [...riddle.solution].reverse().join("");
 
   useEffect(() => {
@@ -184,7 +184,6 @@ export function Game({
     const newStatus = getGameStatus(riddle, newGuesses, numberOfGuesses);
 
     if (newStatus !== GAMESTATUS.playing) {
-      // single/total - win/lose
 
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
