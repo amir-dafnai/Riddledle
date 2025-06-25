@@ -113,7 +113,11 @@ export const getStringLengths = (arr) => {
   return `(${lengths.join(",")})`;
 };
 export const getUrl = () => {
-  //return "http://10.0.0.9:5000/";
+  const useLocalServer = false
+  if (window.location.hostname === 'localhost' && useLocalServer) {
+    console.log('usingLocalServer')
+    return "http://10.0.0.9:5000/";
+  }
   return process.env.REACT_APP_URL;
 };
 export const isValidLetter = (value, isLastLetter) => {
