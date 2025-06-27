@@ -38,7 +38,7 @@ const GuestUserMessage = ({ login }) => {
   );
 };
 
-const DailyLeaders = ({ players, email }) => {
+const DailyLeaders = ({ players, email, isMultiRiddle }) => {
   if (players.length === 0) {
     return (
       <tr>
@@ -53,6 +53,7 @@ const DailyLeaders = ({ players, email }) => {
       <td>
         {player.user_name} {index === 0 && player.email === email && "🏆"}
       </td>
+      {isMultiRiddle && <td>{player.score + '/5'}</td>}
       <td>{getHMSFormat(player.time)}</td>
     </tr>
   ));
@@ -117,7 +118,7 @@ const ScoreLeaders = ({ players, email }) => {
   );
 };
 
-function Leaderboard({ login, leaderBoardStats }) {
+function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
@@ -157,7 +158,7 @@ function Leaderboard({ login, leaderBoardStats }) {
           <thead dir="rtl"></thead>
           <tbody>
             {mode === "today" ? (
-              <DailyLeaders players={todayWinners} email={email} />
+              <DailyLeaders players={todayWinners} email={email} isMultiRiddle={isMultiRiddle} />
             ) : mode === "week" ? (
               <WeeklyWinners
                 players={leaderBoardStats.weeklyWinners}
