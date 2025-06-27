@@ -207,7 +207,7 @@ function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
           isMultiRiddle={isMultiRiddle}
           leaderBoardStats={leaderBoardStats}
           email={email}
-        />
+        /> 
       </div>
       {!userData.loggedIn && <GuestUserMessage login={login} />}
     </div>
