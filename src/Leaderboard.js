@@ -51,9 +51,9 @@ const DailyLeaders = ({ players, email, isMultiRiddle }) => {
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>#{player.position || index + 1}</td>
       <td>
-        {player.user_name} {index === 0 && player.email === email && "🏆"}
+        {player.user_name} {index === 0 && player.email === email && "🥇"}
       </td>
-      {isMultiRiddle && <td>{player.score + "/5"}</td>}
+      {isMultiRiddle && <td>{player.score !== 5 ? player.score + "/5" : "🏆"}</td>}
       <td>{getHMSFormat(player.time)}</td>
     </tr>
   ));
@@ -70,7 +70,7 @@ const AllTimeLeaders = ({ players, email, n = 5 }) => {
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>#{player.position || index + 1}</td>
       <td>
-        {player.user_name} {index === 0 && player.email === email && "🏆"}
+        {player.user_name} {index === 0 && player.email === email && "🥇"}
       </td>
       <td>{player.count}</td>
     </tr>
@@ -83,7 +83,7 @@ const WeeklyWinners = ({ players, email }) => {
       <td>{player.date}</td>
       <td>
         {player.user_name || "😔"}{" "}
-        {index === 0 && player.email === email && "🏆"}
+        {index === 0 && player.email === email && "🥇"}
       </td>
       <td>{getHMSFormat(player.time)}</td>
     </tr>
