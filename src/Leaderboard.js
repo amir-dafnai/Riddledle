@@ -53,7 +53,7 @@ const DailyLeaders = ({ players, email, isMultiRiddle }) => {
       <td>
         {player.user_name} {index === 0 && player.email === email && "🏆"}
       </td>
-      {isMultiRiddle && <td>{player.score + '/5'}</td>}
+      {isMultiRiddle && <td>{player.score + "/5"}</td>}
       <td>{getHMSFormat(player.time)}</td>
     </tr>
   ));
@@ -82,7 +82,8 @@ const WeeklyWinners = ({ players, email }) => {
     <tr key={index} className={player.email === email ? "highlight" : ""}>
       <td>{player.date}</td>
       <td>
-        {player.user_name || '😔'} {index === 0 && player.email === email && "🏆"}
+        {player.user_name || "😔"}{" "}
+        {index === 0 && player.email === email && "🏆"}
       </td>
       <td>{getHMSFormat(player.time)}</td>
     </tr>
@@ -118,6 +119,78 @@ const ScoreLeaders = ({ players, email }) => {
   );
 };
 
+const TableNavigation = ({ mode, setMode }) => {
+  const modes = ["today", "week", "alltime", "score"];
+  const modeLabels = {
+    today: "היום",
+    week: "מנצחי השבוע",
+    alltime: "כל הזמנים",
+    score: "דירוג מצטבר",
+  };
+
+  const handleArrowClick = (direction) => {
+    const currentIndex = modes.indexOf(mode);
+    const newIndex =
+      direction === "left"
+        ? (currentIndex - 1 + modes.length) % modes.length
+        : (currentIndex + 1) % modes.length;
+    setMode(modes[newIndex]);
+  };
+
+  return (
+    <div className="leaderboard-nav">
+      <button className="arrow-button" onClick={() => handleArrowClick("left")}>
+        ◀
+      </button>
+      <div className="mode-label">{modeLabels[mode]}</div>
+      <button
+        className="arrow-button"
+        onClick={() => handleArrowClick("right")}
+      >
+        ▶
+      </button>
+    </div>
+  );
+};
+
+const TableView = ({
+  mode,
+  todayWinners,
+  isMultiRiddle,
+  leaderBoardStats,
+  email,
+}) => {
+  return (
+    <table>
+      <thead dir="rtl"></thead>
+      <tbody>
+        {mode === "today" ? (
+          <DailyLeaders
+            players={todayWinners}
+            email={email}
+            isMultiRiddle={isMultiRiddle}
+          />
+        ) : mode === "week" ? (
+          <WeeklyWinners
+            players={leaderBoardStats.weeklyWinners}
+            email={email}
+          />
+        ) : mode === "alltime" ? (
+          <AllTimeLeaders
+            players={leaderBoardStats.allTimeWinners}
+            email={email}
+          />
+        ) : (
+          <ScoreLeaders
+            players={leaderBoardStats.personalScores}
+            email={email}
+          />
+        )}
+      </tbody>
+    </table>
+  );
+};
+
 function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
   const [mode, setMode] = useState("today");
   const userData = getUserData();
@@ -127,56 +200,14 @@ function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
   return (
     <div>
       <div className="leaderboard">
-        <div className="leaderboard-toggle">
-          <button
-            className={mode === "today" ? "active" : ""}
-            onClick={() => setMode("today")}
-          >
-            היום
-          </button>
-          <button
-            className={mode === "week" ? "active" : ""}
-            onClick={() => setMode("week")}
-          >
-            מנצחי השבוע
-          </button>
-          <button
-            className={mode === "alltime" ? "active" : ""}
-            onClick={() => setMode("alltime")}
-          >
-            כל הזמנים
-          </button>
-          <button
-            className={mode === "score" ? "active" : ""}
-            onClick={() => setMode("score")}
-          >
-            דירוג מצטבר
-          </button>
-        </div>
-
-        <table>
-          <thead dir="rtl"></thead>
-          <tbody>
-            {mode === "today" ? (
-              <DailyLeaders players={todayWinners} email={email} isMultiRiddle={isMultiRiddle} />
-            ) : mode === "week" ? (
-              <WeeklyWinners
-                players={leaderBoardStats.weeklyWinners}
-                email={email}
-              />
-            ) : mode === "alltime" ? (
-              <AllTimeLeaders
-                players={leaderBoardStats.allTimeWinners}
-                email={email}
-              />
-            ) : (
-              <ScoreLeaders
-                players={leaderBoardStats.personalScores}
-                email={email}
-              />
-            )}
-          </tbody>
-        </table>
+        <TableNavigation mode={mode} setMode={setMode} />
+        <TableView
+          mode={mode}
+          todayWinners={todayWinners}
+          isMultiRiddle={isMultiRiddle}
+          leaderBoardStats={leaderBoardStats}
+          email={email}
+        />
       </div>
       {!userData.loggedIn && <GuestUserMessage login={login} />}
     </div>
