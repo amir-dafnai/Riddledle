@@ -30,8 +30,7 @@ const App = () => {
   const [timerWasClosed, setTimerWasClosed] = useState(false);
 
   const isMultiRiddle = riddleGroup && riddleGroup.group.length > 1;
-  // if(userDetails)
-  //   userDetails.loggedIn = true;
+
   useEffect(() => {
     const fetchData = async () => {
       const url = getUrl();
