@@ -531,6 +531,9 @@ button:hover {
 
 .rtl-form {
   direction: rtl;
-  margin-bottom: -30px;
 }
 
+h4{
+  margin-top: -30px;
+
+}
