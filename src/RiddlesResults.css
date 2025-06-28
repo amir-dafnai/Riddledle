@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    margin: 12px 0;
+    margin-bottom: -20px;
   }
   
   /* Keeps arrow buttons the same width, even when hidden */
