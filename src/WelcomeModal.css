@@ -1,140 +1,118 @@
 /* Overlay background */
 .welcome-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Modal card */
-/* Add to position the Riddledle logo */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Modal container */
+.welcome-modal {
+  position: relative;
+  background: #1f1f1f;
+  padding: 32px 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo */
 .welcome-modal h1 {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    font-size: 20px;
-    color: #ffffff;
-    margin: 0;
-  }
-
-  .welcome-modal {
-    position: relative;
-    background: #1e1e1e;
-    color: #ffffff;
-    padding: 30px 25px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    margin-top: -10vh;
-  }
-  
-  
-  
-  /* Title */
-  .welcome-modal h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #ffffff;
-  }
-  
-  /* Main text */
-  .welcome-modal p {
-    font-size: 16px;
-    margin-bottom: 16px;
-    color: #bbbbbb;
-  }
-  
-  /* Main button */
-  .welcome-modal button {
-        color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: 16px auto 0;
-  }
-  
-  .continue-button:hover {
-    background-color: #7ec678;
-  }
-  
-
-  .how-to-play-button:hover{
-    background-color: #adba4a;
-  }
-  
-/* Inline login hint with link-style button */
-.login-section {
-    
-    margin-top: 12px;
-    font-size: 14px;
-    color: #bbbbbb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-
-.login-hint{
-  font-weight: bold;
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0;
 }
 
-.continue-button{
-    background-color: #6aaa64;
-
+/* Main headline */
+.welcome-modal h2 h3{
+  font-size: 24px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  color: #ffffff;
 }
 
+/* Unified button style */
+.action-button {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 14px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #6aaa64;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #7ec678;
+}
+
+/* "How to play" button (smaller secondary style) */
 .how-to-play-button {
-    background-color: rgb(176, 187, 78);
-    color: #bbbbbb;
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    border: 1px solid #bbbbbb;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
-  
+  margin-top: 20px;
+  margin-bottom: -20px;
+  background-color: transparent;
+  border: 1px solid #aaa;
+  color: #bbb;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-  
-  /* Responsive adjustments */
-  @media screen and (max-width: 480px) {
-    .welcome-modal {
-      width: 95%;
-      padding: 28px 20px;
-      max-width: none;
-      margin-top: -20vh; /* Higher on the screen */
-    }
-  
-    .welcome-modal h2 {
-      font-size: 20px;
-    }
-  
-    .welcome-modal button {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
-  
-    .how-to-play-button {
-      font-size: 0.85rem;
-      padding: 6px 12px;
-    }
+.how-to-play-button:hover {
+  background-color: #2e2e2e;
+  color: #fff;
+  border-color: #ccc;
+}
+
+/* Container for buttons */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 480px) {
+  .welcome-modal {
+    width: 95%;
+    padding: 24px 20px;
+    max-width: none;
   }
-  
+
+  .welcome-modal h2 {
+    font-size: 20px;
+  }
+
+  .welcome-modal h3 {
+    font-size: 16px;
+  }
+
+  .action-button {
+    font-size: 0.95rem;
+    padding: 12px 0;
+  }
+
+  .how-to-play-button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}
