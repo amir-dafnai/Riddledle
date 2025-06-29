@@ -27,7 +27,7 @@ import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 import { areWordsValid } from "./WordValidation";
 import {
-  failedAny,
+  calcCurrentScore,
   getNextRiddle,
   isLastRiddle,
   wonAll,
@@ -60,10 +60,14 @@ const setNextRiddle = (riddle, riddleGroup, setRiddle) => {
   }
 };
 
-const calcEndOfGameText = (timeEnded, gameEnded, lostAny) => {
-  const LoNora = "🤦‍♀️";
+const calcEndOfGameText = (timeEnded, gameEnded, score) => {
+  const scoreText = score === 1 ? "חידה אחת" : `${score} חידות`;
   const text =
-    lostAny || timeEnded ? LoNora : gameEnded ? "כל הכבוד! 🎉" : null;
+    timeEnded && score != null && score !== 5
+      ? ` נגמר זמן - הספקת לפתור ${scoreText}`
+      : gameEnded
+      ? "כל הכבוד! 🎉"
+      : null;
 
   return text;
 };
@@ -78,6 +82,8 @@ export function Game({
   setRiddle,
   timerWasClosed,
   setTimerWasClosed,
+  score,
+  setScore,
 }) {
   const [stats, setStats] = useState({
     userStats: getUserStats(),
@@ -94,13 +100,14 @@ export function Game({
     currRiddleProgress.guesses ? currRiddleProgress.guesses : []
   );
   const gameStatus = getGameStatus(riddle, guesses, numberOfGuesses);
-  
-  const lostAny = failedAny(riddleGroup);
 
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
-
+  const setCurrentScore = () => {
+    const score_ = calcCurrentScore(riddleGroup, numberOfGuesses);
+    setScore(score_);
+  };
   const [animationEnded, setAnimationEnded] = useState(true);
   const [keyBoardThem, setKeyBoardTheme] = useState(
     getKeyboardButtonTheme(guesses, solution, currAnswer)
@@ -184,7 +191,6 @@ export function Game({
     const newStatus = getGameStatus(riddle, newGuesses, numberOfGuesses);
 
     if (newStatus !== GAMESTATUS.playing) {
-
       riddle.endTime = Date.now();
       sendStats(newGuesses, newStatus);
     }
@@ -288,9 +294,10 @@ export function Game({
               textToShow={calcEndOfGameText(
                 CountdownTimerEnded,
                 gameEnded,
-                lostAny
+                score
               )}
               setCounDownTimerEnded={setCounDownTimerEnded}
+              setScore={setCurrentScore}
               gameEnded={gameEnded}
               timeEnded={CountdownTimerEnded}
             />

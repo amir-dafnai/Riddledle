@@ -9,6 +9,7 @@ import { VIEWS } from "./Consts";
 import { useGoogleLogin } from "@react-oauth/google";
 import { CreditModal } from "./UserCreditModal";
 import { WelcomeModal } from "./WelcomeModal";
+import { ToastContainer } from "react-toastify";
 
 const riddlesAreEqual = (r1, r2) => {
   if (r1.id !== r2.id) return false;
@@ -28,6 +29,7 @@ const App = () => {
     userDetails &&
     currentRiddle.credit_email === userDetails.email;
   const [timerWasClosed, setTimerWasClosed] = useState(false);
+  const [score, setScore] = useState(null);
 
   const isMultiRiddle = riddleGroup && riddleGroup.group.length > 1;
 
@@ -36,11 +38,8 @@ const App = () => {
       const url = getUrl();
       const response = await fetch(`${url}get_riddle`);
       if (!response.ok) return;
-      const data = await response.json(); 
-      if (
-        riddleGroup &&
-        riddlesAreEqual(riddleGroup, data.riddle_group)
-      )
+      const data = await response.json();
+      if (riddleGroup && riddlesAreEqual(riddleGroup, data.riddle_group))
         return;
       data.riddle_group.group[0].endTime = null;
       storeProgress({});
@@ -69,12 +68,26 @@ const App = () => {
     }
   }, []);
 
+
   if (userDetails && currentRiddle && riddleGroup) {
     const passedWelcome =
       currentRiddle.startTime &&
       ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
     return (
       <>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={true}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+
         {passedWelcome && (
           <Navbar
             login={login}
@@ -126,6 +139,8 @@ const App = () => {
               setRiddle={setRiddle}
               timerWasClosed={timerWasClosed}
               setTimerWasClosed={setTimerWasClosed}
+              score={score}
+              setScore={setScore}
             />
           </>
         )}
