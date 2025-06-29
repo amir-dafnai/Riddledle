@@ -13,9 +13,9 @@ export const CountdownTimer = ({
   setCounDownTimerEnded,
   gameEnded,
   timeEnded,
+  setScore,
 }) => {
   const [currtime, setCurrTime] = useState(calcTimeLeft(timerStartTime));
-
   useEffect(() => {
     const interval = setInterval(() => {
       if (gameEnded || timeEnded) {
@@ -28,21 +28,21 @@ export const CountdownTimer = ({
       if (timeLeft === 0) {
         clearInterval(interval);
         setCounDownTimerEnded(true);
+        setScore();
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timerStartTime, setCounDownTimerEnded, gameEnded, timeEnded]);
+  }, [timerStartTime, setCounDownTimerEnded, gameEnded, timeEnded, setScore]);
 
   return (
     <div
       dir="rtl"
       className={`countdown-container unselectable unclickable ${
-        !textToShow && currtime <= 5 && currtime > 0 ? "dramatic" : ""
-      } `}
+        !textToShow && currtime <= 5 && currtime > 1 ? "dramatic" : ""
+      }  ${timeEnded && "time-ended"} `}
     >
       {!gameEnded && (textToShow || currtime)}
     </div>
   );
 };
-

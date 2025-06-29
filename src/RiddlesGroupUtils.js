@@ -23,33 +23,45 @@ export const isLastRiddle = (currRiddle, riddles) => {
   return isLast;
 };
 
-export const wonAll = (riddleGroup, numberOfGuesses=4) => {
-  for (const riddle of riddleGroup.group){
-    const riddleProgress= getProgress()[riddle.id]
-    if(!riddleProgress) return false
+export const wonAll = (riddleGroup, numberOfGuesses = 4) => {
+  for (const riddle of riddleGroup.group) {
+    const riddleProgress = getProgress()[riddle.id];
+    if (!riddleProgress) return false;
     if (
-      getGameStatus(riddle,  riddleProgress.guesses, numberOfGuesses) !==
+      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) !==
       GAMESTATUS.win
-    ){
-      
+    ) {
       return false;
     }
   }
   return true;
-  
 };
 
-export const failedAny = (riddleGroup, numberOfGuesses=4) => {
-  for (const riddle of riddleGroup.group){
-    const riddleProgress= getProgress()[riddle.id]
-    if(!riddleProgress) return false
+export const failedAny = (riddleGroup, numberOfGuesses = 4) => {
+  for (const riddle of riddleGroup.group) {
+    const riddleProgress = getProgress()[riddle.id];
+    if (!riddleProgress) return false;
     if (
-      getGameStatus(riddle,  riddleProgress.guesses, numberOfGuesses) ===
+      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) ===
       GAMESTATUS.lose
-    ){
+    ) {
       return true;
     }
   }
   return false;
-  
+};
+
+export const calcCurrentScore = (riddleGroup, numberOfGuesses) => {
+  let score = 0;
+  for (const riddle of riddleGroup.group) {
+    const riddleProgress = getProgress()[riddle.id];
+    if (!riddleProgress) break;
+    if (
+      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) ===
+      GAMESTATUS.win
+    ) {
+      score++;
+    }
+  }
+  return score;
 };

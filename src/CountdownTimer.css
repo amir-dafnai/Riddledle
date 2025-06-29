@@ -7,8 +7,9 @@
     transition: all 0.3s ease;
   }
 
-  .countdown-container.time-ended {
-    color: #ff5555;
+  .time-ended {
+    color: rgb(194, 194, 194);
+    font-size: 2vh;
   }
   
   

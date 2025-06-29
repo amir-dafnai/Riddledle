@@ -113,8 +113,8 @@ export const getStringLengths = (arr) => {
   return `(${lengths.join(",")})`;
 };
 export const getUrl = () => {
-  const useLocalServer = false
-  if (window.location.hostname === 'localhost' && useLocalServer) {
+  const useLocalServer = true
+  if (['10.0.0.9' ,'localhost'].includes(window.location.hostname) && useLocalServer) {
     console.log('usingLocalServer')
     return "http://10.0.0.9:5000/";
   }
