@@ -3,7 +3,7 @@ import "./WelcomeModal.css";
 
 const WelcomeHeadline = ({ isMultiRiddle }) => {
   const multiRiddleheadline1 = "האתגר השבועי!";
-  const multiReadleHeadline2 = "נסו לפתור חמש חידות בדקה";
+  const multiReadleHeadline2 = "!נסו לפתור חמש חידות בדקה";
   const headLineText = !isMultiRiddle
     ? "יאללה חידה חדשה! 🎉"
     : multiRiddleheadline1;
@@ -49,9 +49,8 @@ export const WelcomeModal = ({
   isLoggedIn,
   login,
   onHowToPLay,
-  isMultiRiddl_e,
+  isMultiRiddle,
 }) => {
-  const isMultiRiddle = true;
   return (
     <div className="welcome-modal-overlay">
       <div className="welcome-modal">

@@ -39,7 +39,7 @@ export const CountdownTimer = ({
     <div
       dir="rtl"
       className={`countdown-container unselectable unclickable ${
-        !textToShow && currtime <= 5 && currtime > 1 ? "dramatic" : ""
+        !textToShow && currtime <= 5 && currtime > 0 ? "dramatic" : ""
       }  ${timeEnded && "time-ended"} `}
     >
       {!gameEnded && (textToShow || currtime)}
