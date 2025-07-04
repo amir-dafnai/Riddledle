@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { arraysAreEqual, getUrl } from "./appUtils";
-import {
-  storeProgress,
-  getProgress,
-  getUserData,
-  getScore,
-} from "./localStorageUtils";
+import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
 
 import { Game } from "./Game";
 import Navbar, { HowToPlayRules } from "./Navbar";
@@ -34,7 +29,6 @@ const App = () => {
     userDetails &&
     currentRiddle.credit_email === userDetails.email;
   const [timerWasClosed, setTimerWasClosed] = useState(false);
-  const [score, setScore] = useState(getScore());
 
   const isMultiRiddle = riddleGroup && riddleGroup.group.length > 1;
 
@@ -143,8 +137,6 @@ const App = () => {
             setRiddle={setRiddle}
             timerWasClosed={timerWasClosed}
             setTimerWasClosed={setTimerWasClosed}
-            score={score}
-            setScore={setScore}
           />
         )}
       </div>

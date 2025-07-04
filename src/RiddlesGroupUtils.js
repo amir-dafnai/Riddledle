@@ -6,6 +6,11 @@ const getCurrRiddleIndex = (riddleID, riddles) => {
   return riddles.map((elem) => elem.id).indexOf(riddleID);
 };
 
+export const getNumRiddlesLeft = (riddleID , riddles) =>{
+  const val =  5-getCurrRiddleIndex(riddleID , riddles)
+  return val
+}
+
 export const getNextRiddle = (currRiddle, riddles) => {
   const currIndex = getCurrRiddleIndex(currRiddle.id, riddles);
   const nextIndex = currIndex + 1 < riddles.length ? currIndex + 1 : null;

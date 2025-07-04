@@ -17,7 +17,6 @@ import {
   getUserData,
   getUserStats,
   getLeaderBoardStats,
-  storeScore,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
@@ -28,8 +27,8 @@ import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
 import { areWordsValid } from "./WordValidation";
 import {
-  calcCurrentScore,
   getNextRiddle,
+  getNumRiddlesLeft,
   isLastRiddle,
   wonAll,
 } from "./RiddlesGroupUtils";
@@ -61,14 +60,17 @@ const setNextRiddle = (riddle, riddleGroup, setRiddle) => {
   }
 };
 
-const calcEndOfGameText = (timeEnded, gameEnded, score) => {
-  const scoreText = score === 1 ? "חידה אחת" : `${score} חידות`;
-  const text =
-    timeEnded && score != null && score !== 5
-      ? ` נגמר זמן - הספקת לפתור ${scoreText}`
-      : gameEnded
-      ? "כל הכבוד! 🎉"
-      : null;
+const calcEndOfGameText = (timeEnded, gameEnded, nRiddlesLeft) => {
+  const t1 = "נגמר זמן";
+  const t2 = "(נשארו עוד";
+  const t3 = `${nRiddlesLeft}`;
+  const t4 = "חידות)";
+  const lastRiddleText = "(חידה אחרונה)";
+  const isLastRiddle = nRiddlesLeft === 1;
+  const words = isLastRiddle ? [t1, lastRiddleText] : [t1, t2, t3, t4];
+
+  const textToShow = words.join(" ");
+  const text = timeEnded ? textToShow : gameEnded ? "כל הכבוד! 🎉" : null;
 
   return text;
 };
@@ -83,8 +85,6 @@ export function Game({
   setRiddle,
   timerWasClosed,
   setTimerWasClosed,
-  score,
-  setScore,
 }) {
   const [stats, setStats] = useState({
     userStats: getUserStats(),
@@ -105,12 +105,7 @@ export function Game({
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
   );
-  const setCurrentScore = () => {
-    const score_ = calcCurrentScore(riddleGroup, numberOfGuesses);
-    setScore(score_);
-    storeScore(score_)
 
-  };
   const [animationEnded, setAnimationEnded] = useState(true);
   const [keyBoardThem, setKeyBoardTheme] = useState(
     getKeyboardButtonTheme(guesses, solution, currAnswer)
@@ -252,7 +247,6 @@ export function Game({
       } else onEnterClicked();
     }
   }
-
   return (
     <>
       <div className="riddle-container">
@@ -297,10 +291,9 @@ export function Game({
               textToShow={calcEndOfGameText(
                 CountdownTimerEnded,
                 gameEnded,
-                score
+                getNumRiddlesLeft(riddle.id, riddleGroup.group)
               )}
               setCounDownTimerEnded={setCounDownTimerEnded}
-              setScore={setCurrentScore}
               gameEnded={gameEnded}
               timeEnded={CountdownTimerEnded}
             />

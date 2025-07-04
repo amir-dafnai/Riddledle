@@ -13,7 +13,6 @@ export const CountdownTimer = ({
   setCounDownTimerEnded,
   gameEnded,
   timeEnded,
-  setScore,
 }) => {
   const [currtime, setCurrTime] = useState(calcTimeLeft(timerStartTime));
   useEffect(() => {
@@ -28,12 +27,12 @@ export const CountdownTimer = ({
       if (timeLeft === 0) {
         clearInterval(interval);
         setCounDownTimerEnded(true);
-        setScore();
+        
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timerStartTime, setCounDownTimerEnded, gameEnded, timeEnded, setScore]);
+  }, [timerStartTime, setCounDownTimerEnded, gameEnded, timeEnded]);
 
   return (
     <div
