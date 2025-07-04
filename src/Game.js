@@ -61,7 +61,7 @@ const setNextRiddle = (riddle, riddleGroup, setRiddle) => {
 };
 
 const calcEndOfGameText = (timeEnded, gameEnded, nRiddlesLeft) => {
-  const t1 = "נגמר זמן";
+  const t1 = "נגמר הזמן";
   const t2 = "(נשארו עוד";
   const t3 = `${nRiddlesLeft}`;
   const t4 = "חידות)";
