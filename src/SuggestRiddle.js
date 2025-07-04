@@ -3,7 +3,6 @@ import { getUrl } from "./appUtils";
 import { VIEWS } from "./Consts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useRef } from "react";
 
 const showSuccessToast = () => {
   toast.success("תודה! אולי החידה שלך תופיע כאן בקרוב ", {
@@ -17,14 +16,6 @@ const showSuccessToast = () => {
 };
 
 export const SuggestRiddleForm = ({ setViewStatus, isLoggedIn, login }) => {
-  const definitionInputRef = useRef(null);
-
-  useEffect(() => {
-    if (definitionInputRef.current) {
-      definitionInputRef.current.focus();
-    }
-  }, []);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -57,7 +48,7 @@ export const SuggestRiddleForm = ({ setViewStatus, isLoggedIn, login }) => {
           </h2>
           {!isLoggedIn && (
             <p className="warning-text">
-              {" יש להתחבר למערכת כדי לשלוח חידה  "    }
+              {" יש להתחבר למערכת כדי לשלוח חידה  "}
               <span className="login-link" onClick={login}>
                 להתחברות
               </span>
@@ -72,7 +63,6 @@ export const SuggestRiddleForm = ({ setViewStatus, isLoggedIn, login }) => {
               maxLength="100"
               placeholder="הקלד את ההגדרה כאן"
               required
-              ref={definitionInputRef}
             />
           </label>
           <label>
