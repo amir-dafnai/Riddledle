@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { arraysAreEqual, getUrl } from "./appUtils";
-import { storeProgress, getProgress, getUserData } from "./localStorageUtils";
+import {
+  storeProgress,
+  getProgress,
+  getUserData,
+  getScore,
+} from "./localStorageUtils";
 
 import { Game } from "./Game";
 import Navbar, { HowToPlayRules } from "./Navbar";
@@ -29,7 +34,7 @@ const App = () => {
     userDetails &&
     currentRiddle.credit_email === userDetails.email;
   const [timerWasClosed, setTimerWasClosed] = useState(false);
-  const [score, setScore] = useState(null);
+  const [score, setScore] = useState(getScore());
 
   const isMultiRiddle = riddleGroup && riddleGroup.group.length > 1;
 
@@ -68,13 +73,13 @@ const App = () => {
     }
   }, []);
 
-
   if (userDetails && currentRiddle && riddleGroup) {
+    //userDetails.loggedIn = true;
     const passedWelcome =
       currentRiddle.startTime &&
       ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
     return (
-      <>
+      <div>
         <ToastContainer
           position="top-center"
           autoClose={2000}
@@ -127,24 +132,22 @@ const App = () => {
           />
         )}
         {passedWelcome && (
-          <>
-            <Game
-              key={`${currentRiddle.id}-${userDetails.email}`}
-              riddle={currentRiddle}
-              viewStatus={viewStatus}
-              setViewStatus={setViewStatus}
-              userDetails={userDetails}
-              login={login}
-              riddleGroup={riddleGroup}
-              setRiddle={setRiddle}
-              timerWasClosed={timerWasClosed}
-              setTimerWasClosed={setTimerWasClosed}
-              score={score}
-              setScore={setScore}
-            />
-          </>
+          <Game
+            key={`${currentRiddle.id}-${userDetails.email}`}
+            riddle={currentRiddle}
+            viewStatus={viewStatus}
+            setViewStatus={setViewStatus}
+            userDetails={userDetails}
+            login={login}
+            riddleGroup={riddleGroup}
+            setRiddle={setRiddle}
+            timerWasClosed={timerWasClosed}
+            setTimerWasClosed={setTimerWasClosed}
+            score={score}
+            setScore={setScore}
+          />
         )}
-      </>
+      </div>
     );
   }
 };

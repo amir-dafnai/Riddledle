@@ -17,6 +17,7 @@ import {
   getUserData,
   getUserStats,
   getLeaderBoardStats,
+  storeScore,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { Riddle } from "./Riddle";
@@ -107,6 +108,8 @@ export function Game({
   const setCurrentScore = () => {
     const score_ = calcCurrentScore(riddleGroup, numberOfGuesses);
     setScore(score_);
+    storeScore(score_)
+
   };
   const [animationEnded, setAnimationEnded] = useState(true);
   const [keyBoardThem, setKeyBoardTheme] = useState(

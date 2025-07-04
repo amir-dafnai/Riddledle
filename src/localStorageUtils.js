@@ -25,12 +25,20 @@ export const getUserStats = () => {
 };
 
 export const getLeaderBoardStats = () => {
-  return "leaderboard" in localStorage && localStorage.getItem("leaderboard") !== "{}"
-  ? JSON.parse(localStorage.getItem("leaderboard"))
-  : null;
+  return "leaderboard" in localStorage &&
+    localStorage.getItem("leaderboard") !== "{}"
+    ? JSON.parse(localStorage.getItem("leaderboard"))
+    : null;
 };
 
 export const storeLeaderBoardStats = (leaderBoardStats) => {
   localStorage.setItem("leaderboard", JSON.stringify(leaderBoardStats));
 };
 
+export const getScore = () => {
+  return "score" in localStorage ? localStorage.getItem("score") : null;
+};
+
+export const storeScore = (score) => {
+  localStorage.setItem("score", score);
+};
