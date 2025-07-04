@@ -235,14 +235,17 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px; /* Adds space between input fields */
-  width: 300px;
+  max-height: 600px;
+  width: 90%;
+  max-width: 500px;
 }
 
 /* Buttons at the Bottom */
-.button-container {
+form.form-container .button-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  margin-top: 20px;
+  gap: 10px;
 }
 
 .simple-keyboard.myTheme {
@@ -417,11 +420,7 @@ input::placeholder {
 }
 
 /* Buttons */
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+
 
 button {
   flex: 1;
