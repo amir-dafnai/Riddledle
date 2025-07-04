@@ -131,6 +131,6 @@ tr {
 
 @media (max-width: 480px) {
   .leaderboard {
-    height: 40.5vh;
+    height: 100vw;
   }
 }
