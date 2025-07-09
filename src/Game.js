@@ -272,9 +272,9 @@ export function Game({
           </h1>
         </div>
         <div dir="rtl" className="solutionText unselectable unclickable">
-          {gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
+          {isMultiRiddle && gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
         </div>
-        {riddle.credit ? <h4>By {riddle.credit}</h4> : null}
+        {(!isMultiRiddle && riddle.credit) ? <h4>By {riddle.credit}</h4> : null}
         <Riddle
           currAnswer={currAnswer}
           guesses={guesses}
