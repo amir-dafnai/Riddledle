@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SuggestRiddleForm } from "./SuggestRiddle";
+import "./Game.css"
 
 import {
   getEmptyAnswer,
@@ -33,6 +34,8 @@ import {
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
 import { RiddleAndSquares } from "./RiddleAndSquares";
+import HowToPlayRules from "./HowToPlay";
+
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -263,6 +266,13 @@ export function Game({
             login={login}
           />
         )}
+      {viewStatus === VIEWS.howToPlayRules && (
+        <HowToPlayRules
+          closeModal={() => setViewStatus(VIEWS.game)}
+          isLoggedIn={isLoggedIn}
+          login={login}
+        />
+      )}
 
         <RiddleAndSquares
           riddle={riddle}
@@ -272,6 +282,7 @@ export function Game({
           guesses={guesses}
           numberOfGuesses={numberOfGuesses}
           handleKeyDown={handleKeyDown}
+          isMultiRiddle={isMultiRiddle}
         />
         {isMultiRiddle && (
           <>

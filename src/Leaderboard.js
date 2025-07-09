@@ -27,16 +27,7 @@ const getTodaysPLayers = (email, globalStats, n = 5) => {
   return winners;
 };
 
-const GuestUserMessage = ({ login }) => {
-  return (
-    <div className="guest-user-message">
-      <h3 dir="rtl"> רוצה גם להופיע כאן?</h3>
-      <span className="login-link" onClick={login}>
-        להתחברות
-      </span>
-    </div>
-  );
-};
+
 
 const DailyLeaders = ({ players, email, isMultiRiddle }) => {
   if (players.length === 0) {
@@ -209,7 +200,6 @@ function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
           email={email}
         /> 
       </div>
-      {!userData.loggedIn && <GuestUserMessage login={login} />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 
 export const Top = ({ word, isWinner, isMultiRiddle }) => {
-  const text = isWinner ? "הצלחת! 🎉" : "";
+  const text = isWinner ? "הצלחת! 🎉" : "לא הצלחת הפעם...";
   return (
     <>
       {" "}

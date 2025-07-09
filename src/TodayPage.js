@@ -3,7 +3,8 @@ import { arraysAreEqual, getUrl } from "./appUtils";
 import { storeProgress, getProgress } from "./localStorageUtils";
 
 import { Game } from "./Game";
-import Navbar, { HowToPlayRules } from "./Navbar";
+import HowToPlayRules  from "./HowToPlay.js";
+import  Navbar from "./Navbar.js"
 
 import { VIEWS } from "./Consts";
 
@@ -54,7 +55,7 @@ const TodayPage = () => {
   if (!(userDetails && currentRiddle && riddleGroup))
     return <div>Loading...</div>;
 
-  //userDetails.loggedIn = true;
+  userDetails.loggedIn = true;
   const passedWelcome =
     currentRiddle.startTime &&
     ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);

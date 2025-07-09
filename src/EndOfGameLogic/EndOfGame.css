@@ -20,6 +20,10 @@
   max-width: 500px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  max-width: 420px;
+  
+  
 }
 
 /* Close Button */
@@ -32,16 +36,10 @@
   color: #fff;
   font-size: 22px;
   cursor: pointer;
+  font-size: 20px;
 }
 
-/* Win Message */
-.win-message {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
 
-/* Word Display */
 .word-display {
   display: flex;
   justify-content: center;
@@ -112,23 +110,17 @@
   
 }
 
-/* Mobile Optimization for Google Pixel 6a */
-@media {
-  .timer-modal-content {
-    position: relative;
-    width: 90%;
-    padding: 15px;
-    max-width: 420px;
-    border-radius: 12px;
-  }
 
-  /* Win Message */
+
+
+
+  
   .win-message {
     font-size: 1.6rem;
     margin-bottom: 10px;
   }
 
-  /* Letter Tiles */
+  
 
 
 
@@ -140,18 +132,7 @@
   }
 
 
-  /* Close Button */
-  .timer-close-button {
-    font-size: 20px;
-    top: 8px;
-    right: 8px;
-  }
-}
 
-
-.guest-user-message{
-  margin-bottom: 20px;
-}
 
 
 .end-of-game-form {
