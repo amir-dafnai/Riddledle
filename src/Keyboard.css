@@ -27,3 +27,85 @@
     font-weight: bold;
   }
   
+
+
+.hg-button {
+  height: 70px; /* Larger button height */
+  font-size: 20px; /* Increased font size */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Center text in the button */
+  border: 1px solid black; /* Border around buttons */
+  background-color: gray; /* Default button background color */
+  color: black; /* Button text color */
+  box-sizing: border-box; /* Include padding in button size */
+  transition: all 0.3s ease; /* Smooth resizing */;
+}
+.hg-theme-default .hg-button.hg-standardBtn.orange {
+  background: #b59f3b;
+  animation: fadeIn 3s ease-in-out forwards; 
+}
+
+.hg-theme-default .hg-button.hg-standardBtn.green {
+  background: rgb(83, 141, 78);
+  animation: fadeIn 3s ease-in-out forwards; 
+}
+
+.hg-theme-default .hg-button.hg-standardBtn.enter {
+  background: rgb(83, 141, 78);
+  animation: fadeIn 3s ease-in-out forwards; 
+}
+
+.hg-theme-default .hg-button.hg-standardBtn.gray  {
+  background: rgb(58, 58, 60);
+  animation: fadeIn 3s ease-in-out forwards; 
+}
+
+.hg-theme-default .hg-button.hg-standardBtn, .hg-theme-default .hg-button.hg-functionBtn {
+  background-color: rgb(129, 131, 132);
+  color: white;
+  border: unset;
+  height: 58px;
+  font-size: 1.5em;
+}
+
+.hg-theme-default.myTheme .hg-row .hg-button-container, .hg-theme-default .hg-row .hg-button:not(:last-child) {
+  margin-right: 8px;
+}
+
+.hg-theme-default.myTheme .hg-row:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+
+.simple-keyboard.myTheme {
+  background-color: unset;
+  width:500px;
+  
+
+  @media (max-width: 480px) {
+    width: 370px;
+    
+  }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+
+ 
+  .hg-button {
+    height: 60px;
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+
+  .hg-button {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  
+}

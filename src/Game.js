@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { SuggestRiddleForm } from "./SuggestRiddle";
+import "./Game.css"
 
 import {
   getEmptyAnswer,
   arraysAreEqual,
   getLastLetterIndices,
-  getStringLengths,
   getNextSquare,
   getPrevSquare,
   getMaxDelay,
@@ -19,7 +19,6 @@ import {
   getLeaderBoardStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
-import { Riddle } from "./Riddle";
 import { fetchAndStoreAllStats, insertStats, StatisticsModal } from "./Stats";
 import { GAMESTATUS, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
@@ -34,6 +33,9 @@ import {
 } from "./RiddlesGroupUtils";
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
+import { RiddleAndSquares } from "./RiddleAndSquares";
+import HowToPlayRules from "./HowToPlay";
+
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -121,7 +123,6 @@ export function Game({
     Boolean(progress.CountdownTimerEnded)
   );
   const isWinner = wonAll(riddleGroup) && !CountdownTimerEnded;
-  const solutionToShow = "פתרון: " + [...riddle.solution].reverse().join("");
 
   useEffect(() => {
     if (
@@ -265,23 +266,23 @@ export function Game({
             login={login}
           />
         )}
+      {viewStatus === VIEWS.howToPlayRules && (
+        <HowToPlayRules
+          closeModal={() => setViewStatus(VIEWS.game)}
+          isLoggedIn={isLoggedIn}
+          login={login}
+        />
+      )}
 
-        <div data-nosnippet>
-          <h1 className="rtl-form unselectable">
-            {" " + riddle.definition} {getStringLengths(riddle.solution)}
-          </h1>
-        </div>
-        <div dir="rtl" className="solutionText unselectable unclickable">
-          {isMultiRiddle && gameEnded && gameStatus === GAMESTATUS.lose && solutionToShow}
-        </div>
-        {(!isMultiRiddle && riddle.credit) ? <h4>By {riddle.credit}</h4> : null}
-        <Riddle
+        <RiddleAndSquares
+          riddle={riddle}
+          gameEnded={gameEnded}
+          gameStatus={gameStatus}
           currAnswer={currAnswer}
           guesses={guesses}
           numberOfGuesses={numberOfGuesses}
           handleKeyDown={handleKeyDown}
-          solution={solution}
-          gameEnded={gameEnded}
+          isMultiRiddle={isMultiRiddle}
         />
         {isMultiRiddle && (
           <>

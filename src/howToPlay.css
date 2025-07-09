@@ -1,11 +1,15 @@
 
  
   .modal-overlay {
+    position: fixed;
     background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
     justify-content: center;
     align-items: center;
     z-index: 999;
+
   }
+
+
   
   .modal-content {
     background: #333;
@@ -22,6 +26,10 @@
     
     font-family: Arial, sans-serif;
   }
+
+
+
+
   
   .modal-close-button {
     position: absolute;
@@ -126,10 +134,7 @@
     color: #008c9e; /* Darker blue for hover effect */
   }
   
-  @media screen {
-    .modal-content{
-      margin-top: 80px;
-    }
+
     
     
-  }
+  

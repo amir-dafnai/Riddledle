@@ -3,6 +3,7 @@ import { getUrl } from "./appUtils";
 import { VIEWS } from "./Consts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./SuggestRiddle.css"
 
 const showSuccessToast = () => {
   toast.success("תודה! אולי החידה שלך תופיע כאן בקרוב ", {
@@ -40,7 +41,7 @@ export const SuggestRiddleForm = ({ setViewStatus, isLoggedIn, login }) => {
       <div className="overlay">
         <form
           onSubmit={handleSubmit}
-          className="form-container rtl-form dark-mode"
+          className="form-container rtl-form"
         >
           <h2 className="form-title">
             הצעת חידה חדשה <br></br>

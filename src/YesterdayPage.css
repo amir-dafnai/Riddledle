@@ -1,0 +1,35 @@
+.riddledle-logo{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.header{
+direction: rtl;
+text-align: center;
+margin-top: 0;
+}
+
+
+
+.back-button {
+    margin: 30px auto;
+    padding: 10px 20px;
+    background-color: #283a29;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+  }
+  
+  .back-button:hover {
+    background-color: #3a3a3a;
+  }
+  
+  .back-button:active {
+    transform: scale(0.98);
+  }
+  

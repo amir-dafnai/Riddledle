@@ -1,0 +1,60 @@
+.riddle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center; /* Ensures all text is centered */
+  }
+
+
+  .tooltip {
+    position: absolute;
+    top: -30px; /* Adjust so it appears above the input area */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(244, 235, 235);
+    margin-top: 25px;
+    border-radius: 5px;
+    font-size: 20px;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    font-weight: bold;
+    animation: shake 0.4s ease-in-out;
+  }
+  
+  /* Ensure the tooltip container is correctly positioned */
+  .tooltip-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  
+
+  
+
+  @media (max-width: 768px) {
+    .riddle-container {
+      gap: 15px;
+    }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+  .riddle-container {
+    gap: 4px;
+  }
+}

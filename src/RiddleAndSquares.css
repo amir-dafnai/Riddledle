@@ -1,0 +1,103 @@
+
+
+  .solutionText{
+    display: block;
+    font-size: 20px;
+    margin: 8px;
+    color: #e0e0e0;
+  }
+
+  .credit{
+    margin-top: 0;
+    text-align: center;
+  
+  }
+
+
+  .word-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px; /* Increased gap */
+    margin-bottom: 10px;
+  }
+
+
+  .square.green.animation {
+    animation: flip 0.9s ease-in-out forwards , greenColor 0.9s ease-in-out forwards ;
+  }
+  
+  .square.orange.animation {
+    animation: flip 0.9s ease-in-out forwards, orangeColor 0.9s ease-in-out forwards;
+  }
+  
+  .square.gray.animation {
+    animation: flip 0.9s ease-in-out forwards, grayColor 0.9s ease-in-out forwards;
+  }
+  
+  
+  .square.green.no-animation {
+    background-color: #6aaa64; 
+    border-color: #6aaa64;
+  }
+  
+  .square.orange.no-animation {
+    background-color: #c9b458; 
+    border-color: #c9b458;
+  }
+  
+  .square.gray.no-animation{
+    background-color: #3a3a3c; /* Gray */
+    border-color: #3a3a3c;
+  }
+  
+  
+  
+  
+  
+  .invisibleSquare {
+    height: 20px; /* Match larger square size */
+    width: 20px;
+    background: transparent;
+    border: none;
+  }
+
+
+
+
+
+
+
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+@keyframes orangeColor {
+  100%{
+  background-color: #c9b458; 
+  border-color: #c9b458;
+  }
+}
+
+@keyframes greenColor {
+  100%{
+    background-color: #6aaa64; 
+    border-color: #6aaa64;
+  }
+}
+
+@keyframes grayColor {
+  100%{
+    background-color: #3a3a3c; /* Gray */
+    border-color: #3a3a3c;
+  }
+}
+  

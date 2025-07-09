@@ -1,0 +1,99 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-container {
+    background: #1e1e1e; /* Dark background */
+    border-radius: 10px;
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Darker shadow */
+    text-align: center;
+    color: #f0f0f0; /* Light text color */
+
+  }
+
+  .submit-button.disabled-button {
+    background-color: #888 ;
+    cursor: not-allowed ;
+    opacity: 0.6; /* Make it look faded */
+  }
+
+
+  form.form-container .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+
+  .form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ffffff; /* Bright text for titles */
+  }
+  
+  
+  .label-text {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+  }
+  
+  
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #444; /* Darker border for inputs */
+    background-color: #2a2a2a; /* Dark background for inputs */
+    color: #ffffff;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  input::placeholder {
+    font-size: 14px;
+    color: #bbb; /* Subtle placeholder color */
+  }
+
+  button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  button:hover {
+    opacity: 0.9;
+  }
+
+  .cancel-button {
+    background-color: #d9534f; /* Dark red for cancel */
+    color: white;
+  }
+  
+  .submit-button {
+    background-color: #5cb85c; /* Dark green for submit */
+    color: white;
+  }
+  
