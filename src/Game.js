@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SuggestRiddleForm } from "./SuggestRiddle";
-import "./Game.css"
+import "./Game.css";
 
 import {
   getEmptyAnswer,
@@ -35,7 +35,6 @@ import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
 import { RiddlesResults } from "./RiddlesResults";
 import { RiddleAndSquares } from "./RiddleAndSquares";
 import HowToPlayRules from "./HowToPlay";
-
 
 const getTimeToSolve = (start, end) => {
   const timeToSolveSeconds = ((end - start) / 1000).toFixed(2);
@@ -143,11 +142,8 @@ export function Game({
     isMultiRiddle,
   ]);
 
-  const shouldShowTimer = () => {
-    const val =
-      animationEnded &&
-      [GAMESTATUS.win, GAMESTATUS.lose].includes(gameStatus) &&
-      !timerWasClosed;
+  const showEndOfGameForm = () => {
+    const val = gameEnded && !timerWasClosed;
     return val;
   };
 
@@ -266,13 +262,13 @@ export function Game({
             login={login}
           />
         )}
-      {viewStatus === VIEWS.howToPlayRules && (
-        <HowToPlayRules
-          closeModal={() => setViewStatus(VIEWS.game)}
-          isLoggedIn={isLoggedIn}
-          login={login}
-        />
-      )}
+        {viewStatus === VIEWS.howToPlayRules && (
+          <HowToPlayRules
+            closeModal={() => setViewStatus(VIEWS.game)}
+            isLoggedIn={isLoggedIn}
+            login={login}
+          />
+        )}
 
         <RiddleAndSquares
           riddle={riddle}
@@ -320,7 +316,7 @@ export function Game({
 
         <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
 
-        {shouldShowTimer() ? (
+        {showEndOfGameForm() ? (
           <EndOfGameForm
             onClose={() => setTimerWasClosed(true)}
             riddle={riddle}
