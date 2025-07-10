@@ -22,7 +22,6 @@ export const getRiddlesResults = (riddleGroup) => {
   return riddleGroup.group.map((r) => getRiddleStatus(r));
 };
 
-
 const getCircles = (results, currentIndex, onClick) => {
   return results
     .map((status, index) => {
@@ -33,7 +32,6 @@ const getCircles = (results, currentIndex, onClick) => {
           className={`result-circle ${status} ${
             index === currentIndex ? "current" : ""
           }`}
-          title={`Riddle ${index + 1}`}
         ></div>
       );
     })
@@ -45,7 +43,7 @@ export const RiddlesResults = ({
   currRiddle,
   setRiddle,
   gameEnded,
-  results
+  results,
 }) => {
   const currentIndex = riddleGroup.group
     .map((r) => r.id)
