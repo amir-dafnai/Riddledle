@@ -1,18 +1,18 @@
 import { getEmptyAnswer, calcStyles } from "./appUtils";
+import { NumberOfGuesses } from "./Consts";
 import { RowOfSquares } from "./Squares";
 
 
 export function Riddle({
   currAnswer,
   guesses,
-  numberOfGuesses,
   handleKeyDown,
   solution,
   gameEnded
 }) {
-  const allStyles = calcStyles(guesses, solution, numberOfGuesses);
+  const allStyles = calcStyles(guesses, solution);
   const riddleSquares = [];
-  for (let i = 0; i < numberOfGuesses; i++) {
+  for (let i = 0; i < NumberOfGuesses; i++) {
     const currGuess =
       i < guesses.length
         ? guesses[i]

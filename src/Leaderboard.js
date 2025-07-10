@@ -29,8 +29,6 @@ const getTodaysPLayers = (email, globalStats, n = 5) => {
   return winners;
 };
 
-
-
 const DailyLeaders = ({ players, email, isMultiRiddle }) => {
   if (players.length === 0) {
     return (
@@ -46,7 +44,9 @@ const DailyLeaders = ({ players, email, isMultiRiddle }) => {
       <td>
         {player.user_name} {index === 0 && player.email === email && "🥇"}
       </td>
-      {isMultiRiddle && <td>{player.score !== 5 ? player.score + "/5" : "🏆"}</td>}
+      {isMultiRiddle && (
+        <td>{player.score !== 5 ? player.score + "/5" : "🏆"}</td>
+      )}
       <td>{getHMSFormat(player.time)}</td>
     </tr>
   ));
@@ -184,8 +184,8 @@ const TableView = ({
   );
 };
 
-function Leaderboard({  leaderBoardStats, isMultiRiddle }) {
-  const navigate = useNavigate()
+function Leaderboard({ leaderBoardStats, isMultiRiddle }) {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
@@ -201,9 +201,16 @@ function Leaderboard({  leaderBoardStats, isMultiRiddle }) {
           isMultiRiddle={isMultiRiddle}
           leaderBoardStats={leaderBoardStats}
           email={email}
-        /> 
-        {mode==='today' && <button className="yesterday-button" onClick={()=>navigate(YESTERDAY)}>מה היה אתמול?</button>}
+        />
       </div>
+      {mode === "today" && (
+        <button
+          className="yesterday-button"
+          onClick={() => navigate(YESTERDAY)}
+        >
+          מה היה אתמול?
+        </button>
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ import {
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
 import { fetchAndStoreAllStats, insertStats, StatisticsModal } from "./Stats";
-import { GAMESTATUS, VIEWS } from "./Consts";
+import { GAMESTATUS, NumberOfGuesses, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
 import { MyKeyBoard } from "./KeyBoard";
 import { SocialIcons, getWhatsAppMessage } from "./SocialIcons";
@@ -29,10 +29,11 @@ import {
   getNextRiddle,
   getNumRiddlesLeft,
   isLastRiddle,
+  isSingleRiddle,
   wonAll,
 } from "./RiddlesGroupUtils";
 import { calcTimeLeft, CountdownTimer } from "./MultiRiddleCountDownTimer";
-import { RiddlesResults } from "./RiddlesResults";
+import { getRiddlesResults, RiddlesResults } from "./RiddlesResults";
 import { RiddleAndSquares } from "./RiddleAndSquares";
 import HowToPlayRules from "./HowToPlay";
 
@@ -41,12 +42,12 @@ const getTimeToSolve = (start, end) => {
   return timeToSolveSeconds;
 };
 
-export const getGameStatus = (riddle, guesses, numberOfGuesses) => {
+export const getGameStatus = (riddle, guesses) => {
   const currGuess = guesses.length;
 
   const status = arraysAreEqual(riddle.solution, guesses[guesses.length - 1])
     ? GAMESTATUS.win
-    : currGuess === numberOfGuesses
+    : currGuess === NumberOfGuesses
     ? GAMESTATUS.lose
     : GAMESTATUS.playing;
 
@@ -95,13 +96,12 @@ export function Game({
   const currRiddleProgress = getProgress()[riddle.id] || {};
   const isLoggedIn = userDetails.loggedIn;
   const solution = riddle.solution;
-  const numberOfGuesses = 4;
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
 
   const [guesses, setGuesses] = useState(
     currRiddleProgress.guesses ? currRiddleProgress.guesses : []
   );
-  const gameStatus = getGameStatus(riddle, guesses, numberOfGuesses);
+  const gameStatus = getGameStatus(riddle, guesses);
 
   const isLastLetter = getLastLetterIndices(solution).includes(
     getNextSquare(currAnswer)
@@ -115,7 +115,7 @@ export function Game({
   const [invalidWordMessage, setInvalidWordMessage] = useState(false);
   const [gameEnded, setGameEnded] = useState(Boolean(progress.gameEnded));
 
-  const isMultiRiddle = riddleGroup.group.length > 1;
+  const isMultiRiddle = !isSingleRiddle(riddleGroup);
   const timerStartTime = parseInt(riddleGroup.group[0].startTime, 10);
 
   const [CountdownTimerEnded, setCounDownTimerEnded] = useState(
@@ -183,7 +183,7 @@ export function Game({
 
   function onEnterClicked() {
     const newGuesses = [...guesses, currAnswer];
-    const newStatus = getGameStatus(riddle, newGuesses, numberOfGuesses);
+    const newStatus = getGameStatus(riddle, newGuesses);
 
     if (newStatus !== GAMESTATUS.playing) {
       riddle.endTime = Date.now();
@@ -276,7 +276,6 @@ export function Game({
           gameStatus={gameStatus}
           currAnswer={currAnswer}
           guesses={guesses}
-          numberOfGuesses={numberOfGuesses}
           handleKeyDown={handleKeyDown}
           isMultiRiddle={isMultiRiddle}
         />
@@ -297,12 +296,12 @@ export function Game({
             <RiddlesResults
               riddleGroup={riddleGroup}
               currRiddle={riddle}
-              numberOfGuesses={numberOfGuesses}
               setRiddle={(riddle) => {
                 setRiddle(riddle);
                 setTimerWasClosed(true);
               }}
               gameEnded={gameEnded}
+              results = {getRiddlesResults(riddleGroup)}
             />
           </>
         )}
