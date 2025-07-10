@@ -55,7 +55,7 @@ const TodayPage = () => {
   if (!(userDetails && currentRiddle && riddleGroup))
     return <div>Loading...</div>;
 
-  // userDetails.loggedIn = true;
+  //userDetails.loggedIn = true;
   const passedWelcome =
     currentRiddle.startTime &&
     ![VIEWS.welcome, VIEWS.howToPLayWelcome].includes(viewStatus);
