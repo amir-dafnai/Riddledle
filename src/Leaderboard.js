@@ -202,7 +202,7 @@ function Leaderboard({  leaderBoardStats, isMultiRiddle }) {
           leaderBoardStats={leaderBoardStats}
           email={email}
         /> 
-        <button className="yesterday-button" onClick={()=>navigate(YESTERDAY)}>מה היה אתמול?</button>
+        {mode==='today' && <button className="yesterday-button" onClick={()=>navigate(YESTERDAY)}>מה היה אתמול?</button>}
       </div>
     </div>
   );
