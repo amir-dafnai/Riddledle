@@ -321,7 +321,6 @@ export function Game({
             onClose={() => setTimerWasClosed(true)}
             riddle={riddle}
             userDetails={userDetails}
-            login={login}
             riddleGroup={riddleGroup}
             isWinner={isWinner}
             allStats={stats}

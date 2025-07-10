@@ -3,6 +3,8 @@ import TodayPage from "./TodayPage";
 import YesterdayPage from "./YesterdayPage";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+export const ROOT = "/"
+export const YESTERDAY = '/yesterday'
 
 function App() {
   const navigate = useNavigate();
@@ -18,8 +20,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<TodayPage />} />
-      <Route path="/yesterday" element={<YesterdayPage />} />
+      <Route path={ROOT} element={<TodayPage />} />
+      <Route path={YESTERDAY} element={<YesterdayPage />} />
     </Routes>
   );
 }

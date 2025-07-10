@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Leaderboard.css";
 import { getUserData } from "./localStorageUtils";
 import { getHMSFormat } from "./appUtils";
+import { useNavigate } from "react-router-dom";
+import { YESTERDAY } from "./App";
 
 const WIN = "win";
 
@@ -182,7 +184,8 @@ const TableView = ({
   );
 };
 
-function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
+function Leaderboard({  leaderBoardStats, isMultiRiddle }) {
+  const navigate = useNavigate()
   const [mode, setMode] = useState("today");
   const userData = getUserData();
   const email = userData && userData.loggedIn ? userData.email : "";
@@ -199,6 +202,7 @@ function Leaderboard({ login, leaderBoardStats, isMultiRiddle }) {
           leaderBoardStats={leaderBoardStats}
           email={email}
         /> 
+        <button className="yesterday-button" onClick={()=>navigate(YESTERDAY)}>מה היה אתמול?</button>
       </div>
     </div>
   );

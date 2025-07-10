@@ -8,7 +8,7 @@ import { Top } from "./FromTopSection";
 
 
 
-const EndOfGameForm = ({ onClose, riddle, userDetails, login , riddleGroup , isWinner, allStats }) => {
+const EndOfGameForm = ({ onClose, riddle, userDetails , riddleGroup , isWinner, allStats }) => {
   const isLoggedIn= userDetails.loggedIn
   const showRecordBreak = riddleGroup.group.length === 1 && isLoggedIn && isWinner && userDetails.email !== riddle.credit_email
   const isMultiRiddle= riddleGroup.group.length>1
@@ -22,7 +22,7 @@ const EndOfGameForm = ({ onClose, riddle, userDetails, login , riddleGroup , isW
           <RecordBreakView riddle={riddle} allStats={allStats} />
         )}
         <Top word={riddle.solution} isWinner={isWinner} isMultiRiddle={isMultiRiddle}/>
-        <Leaderboard  login={login} leaderBoardStats={allStats.leaderBoardStats} isMultiRiddle={isMultiRiddle}/>
+        <Leaderboard leaderBoardStats={allStats.leaderBoardStats} isMultiRiddle={isMultiRiddle}/>
         <WhatsAppShareButton
           message={getWhatsAppMessage(isLoggedIn, isWinner)}
         />
