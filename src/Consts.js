@@ -12,3 +12,5 @@ export const GAMESTATUS = {
   playing: "playing",
 };
 export const AnimationDelay = 150;
+
+export const NumberOfGuesses = 4

@@ -1,7 +1,7 @@
 import { getStringLengths } from "./appUtils";
 import { GAMESTATUS } from "./Consts";
 import { Riddle } from "./Riddle";
-import "./RiddleAndSquares.css"
+import "./RiddleAndSquares.css";
 
 export const RiddleAndSquares = ({
   riddle,
@@ -9,9 +9,9 @@ export const RiddleAndSquares = ({
   gameStatus,
   currAnswer,
   guesses,
-  numberOfGuesses,
+
   handleKeyDown,
-  isMultiRiddle
+  isMultiRiddle,
 }) => {
   const solutionToShow = "פתרון: " + [...riddle.solution].reverse().join("");
   return (
@@ -33,7 +33,6 @@ export const RiddleAndSquares = ({
       <Riddle
         currAnswer={currAnswer}
         guesses={guesses}
-        numberOfGuesses={numberOfGuesses}
         handleKeyDown={handleKeyDown}
         solution={riddle.solution}
         gameEnded={gameEnded}

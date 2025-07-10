@@ -35,4 +35,8 @@ margin-top: 0;
   .back-button:active {
     transform: scale(0.98);
   }
+
+  .riddle-results-wrapper {
+    margin: 20px;
+  }
   

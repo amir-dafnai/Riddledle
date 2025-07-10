@@ -2,14 +2,16 @@ import { GAMESTATUS } from "./Consts";
 import { getGameStatus } from "./Game";
 import { getProgress } from "./localStorageUtils";
 
+export const isSingleRiddle = (riddleGrroup) => riddleGrroup.group.length <= 1;
+
 const getCurrRiddleIndex = (riddleID, riddles) => {
   return riddles.map((elem) => elem.id).indexOf(riddleID);
 };
 
-export const getNumRiddlesLeft = (riddleID , riddles) =>{
-  const val =  5-getCurrRiddleIndex(riddleID , riddles)
-  return val
-}
+export const getNumRiddlesLeft = (riddleID, riddles) => {
+  const val = 5 - getCurrRiddleIndex(riddleID, riddles);
+  return val;
+};
 
 export const getNextRiddle = (currRiddle, riddles) => {
   const currIndex = getCurrRiddleIndex(currRiddle.id, riddles);
@@ -28,12 +30,12 @@ export const isLastRiddle = (currRiddle, riddles) => {
   return isLast;
 };
 
-export const wonAll = (riddleGroup, numberOfGuesses = 4) => {
+export const wonAll = (riddleGroup) => {
   for (const riddle of riddleGroup.group) {
     const riddleProgress = getProgress()[riddle.id];
     if (!riddleProgress) return false;
     if (
-      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) !==
+      getGameStatus(riddle, riddleProgress.guesses) !==
       GAMESTATUS.win
     ) {
       return false;
@@ -42,12 +44,12 @@ export const wonAll = (riddleGroup, numberOfGuesses = 4) => {
   return true;
 };
 
-export const failedAny = (riddleGroup, numberOfGuesses = 4) => {
+export const failedAny = (riddleGroup) => {
   for (const riddle of riddleGroup.group) {
     const riddleProgress = getProgress()[riddle.id];
     if (!riddleProgress) return false;
     if (
-      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) ===
+      getGameStatus(riddle, riddleProgress.guesses) ===
       GAMESTATUS.lose
     ) {
       return true;
@@ -56,13 +58,13 @@ export const failedAny = (riddleGroup, numberOfGuesses = 4) => {
   return false;
 };
 
-export const calcCurrentScore = (riddleGroup, numberOfGuesses) => {
+export const calcCurrentScore = (riddleGroup) => {
   let score = 0;
   for (const riddle of riddleGroup.group) {
     const riddleProgress = getProgress()[riddle.id];
     if (!riddleProgress) break;
     if (
-      getGameStatus(riddle, riddleProgress.guesses, numberOfGuesses) ===
+      getGameStatus(riddle, riddleProgress.guesses) ===
       GAMESTATUS.win
     ) {
       score++;

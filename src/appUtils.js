@@ -1,4 +1,4 @@
-import { AnimationDelay } from "./Consts";
+import { AnimationDelay, NumberOfGuesses } from "./Consts";
 
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
@@ -48,8 +48,8 @@ export function getEmptyAnswer(solution) {
   return answer;
 }
 
-export function calcStyles(guesses, solution, nGuesses) {
-  const allStyles = getDefaultStyles(solution.length, nGuesses);
+export function calcStyles(guesses, solution) {
+  const allStyles = getDefaultStyles(solution.length);
   for (let i = 0; i < guesses.length; i++) {
     const currStyle = allStyles[i];
     const colors = getColors(solution, guesses[i]);
@@ -59,9 +59,9 @@ export function calcStyles(guesses, solution, nGuesses) {
   return allStyles;
 }
 
-export function getDefaultStyles(nSquares, nGuesses) {
+export function getDefaultStyles(nSquares) {
   const styles = [];
-  for (let i = 0; i < nGuesses; i++) {
+  for (let i = 0; i < NumberOfGuesses; i++) {
     const rowStyles = [];
     for (let j = 0; j < nSquares; j++) {
       rowStyles.push({

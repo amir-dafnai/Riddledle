@@ -3,8 +3,9 @@ import React from "react";
 import "./RiddlesResults.css";
 import { arraysAreEqual } from "./appUtils";
 import { getProgress } from "./localStorageUtils";
+import { NumberOfGuesses } from "./Consts";
 
-const getRiddleStatus = (riddle, numberOfGuesses) => {
+const getRiddleStatus = (riddle) => {
   const progress = getProgress()[riddle.id];
   if (!progress || !progress.guesses) return "pending";
 
@@ -12,14 +13,15 @@ const getRiddleStatus = (riddle, numberOfGuesses) => {
 
   return arraysAreEqual(riddle.solution, guessed[guessed.length - 1])
     ? "win"
-    : guessed.length === numberOfGuesses
+    : guessed.length === NumberOfGuesses
     ? "lose"
     : "pending";
 };
 
-export const getRiddlesResults = (riddleGroup, numberOfGuesses) => {
-  return riddleGroup.group.map((r) => getRiddleStatus(r, numberOfGuesses));
+export const getRiddlesResults = (riddleGroup) => {
+  return riddleGroup.group.map((r) => getRiddleStatus(r));
 };
+
 
 const getCircles = (results, currentIndex, onClick) => {
   return results
@@ -41,14 +43,13 @@ const getCircles = (results, currentIndex, onClick) => {
 export const RiddlesResults = ({
   riddleGroup,
   currRiddle,
-  numberOfGuesses,
   setRiddle,
   gameEnded,
+  results
 }) => {
   const currentIndex = riddleGroup.group
     .map((r) => r.id)
     .indexOf(currRiddle.id);
-  const results = getRiddlesResults(riddleGroup, numberOfGuesses);
   const onCircleClick = gameEnded
     ? (index) => setRiddle(riddleGroup.group[index])
     : null;
