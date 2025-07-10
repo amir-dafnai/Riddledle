@@ -1,0 +1,14 @@
+<!-- public/404.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      const pathname = window.location.pathname;
+      console.log(pathname)
+      sessionStorage.redirect = pathname;
+      window.location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>
