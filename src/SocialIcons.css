@@ -3,7 +3,7 @@
     justify-content: center; /* Centers icons horizontally */
     align-items: center; /* Centers icons vertically */
     gap: 15px; /* Spacing between icons */
-    
+    margin-top: 10px;
   }
 
   
