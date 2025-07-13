@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center; /* Centers icons horizontally */
     align-items: center; /* Centers icons vertically */
-    gap: 15px; /* Spacing between icons */
-    margin-top: 10px;
+    gap: var(--spacing-md); /* Spacing between icons */
+    margin-top: var(--spacing-sm);
   }
 
   

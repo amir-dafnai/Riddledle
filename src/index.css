@@ -1,4 +1,14 @@
 
+:root {
+  /* Standardized spacing system */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #121213;
@@ -6,7 +16,7 @@ body {
   display: flex;
   justify-content: center;
   margin: 0;
-  padding: 20px;
+  padding: var(--spacing-lg);
 }
 
 .unselectable {

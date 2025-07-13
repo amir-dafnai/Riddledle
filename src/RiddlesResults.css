@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: var(--spacing-lg);
     
   }
 
@@ -11,7 +11,7 @@
   /* Container for the result circles */
   .riddle-results-container {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-sm);
   }
   
   /* Base circle styling */

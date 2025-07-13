@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center; /* Ensures vertical alignment */
-  padding: 10px 20px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   background-color: #1e1e1e; /* Dark background */
   color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
@@ -28,7 +28,7 @@
 .navbar-links {
   display: flex;
   align-items: center; /* Ensures buttons align with the logo vertically */
-  gap: 15px;
+  gap: var(--spacing-md);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -45,7 +45,7 @@
   color: #ffffff;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: var(--spacing-sm);
   border-radius: 50%;
   transition: all 0.3s ease;
 }

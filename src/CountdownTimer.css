@@ -3,7 +3,7 @@
     font-weight: bold;
     color: #6aaa64; /* green color */
     text-align: center;
-    margin: 10px auto;
+    margin: var(--spacing-sm) auto;
 
   }
 

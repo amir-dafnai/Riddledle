@@ -15,8 +15,8 @@
   
   .close-button {
     position: absolute;
-    top: 8px;
-    right: 12px;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
     background: none;
     border: none;
     font-size: 22px;
@@ -35,8 +35,8 @@
   .modal-content {
     position: relative; /* Important for close button positioning */
     background: #1e1f21;
-    padding: 20px;
-    padding-top: 40px; /* Give some room at top for close button */
+    padding: var(--spacing-lg);
+    padding-top: var(--spacing-xl); /* Give some room at top for close button */
     border-radius: 10px;
     color: white;
     text-align: center;

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: var(--spacing-sm);
     max-width: 600px;
     width: 100%;
     text-align: center; /* Ensures all text is centered */
@@ -14,7 +14,7 @@
     top: -30px; /* Adjust so it appears above the input area */
     background-color: rgba(0, 0, 0, 0.8);
     color: rgb(244, 235, 235);
-    margin-top: 25px;
+    margin-top: var(--spacing-lg);
     border-radius: 5px;
     font-size: 20px;
     white-space: nowrap;
@@ -45,7 +45,7 @@
 
   @media (max-width: 768px) {
     .riddle-container {
-      gap: 15px;
+      gap: var(--spacing-md);
     }
 
 }
@@ -55,6 +55,6 @@
 @media (max-width: 480px) {
 
   .riddle-container {
-    gap: 4px;
+    gap: var(--spacing-xs);
   }
 }

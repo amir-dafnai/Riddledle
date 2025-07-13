@@ -14,8 +14,8 @@
   .modal-content {
     background: #333;
     color: #fff;
-    padding: 20px;
-    margin-top: 10px;
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
     border-radius: 20px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
     
@@ -33,8 +33,8 @@
   
   .modal-close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
     background: none;
     border: none;
     color: #fff;
@@ -44,13 +44,13 @@
   
    h2 {
     font-size: 1.8rem;
-    margin: 20px;
+    margin: var(--spacing-lg);
     line-height: 1.6;
 
   }
 
   .how-to-play-modal{
-    margin: 30px;
+    margin: var(--spacing-xl);
     position: relative;
     line-height: 100%;
     list-style: disc;
@@ -61,25 +61,25 @@
   
    ul {
     list-style: disc;
-    padding-right: 20px;
-    margin-bottom: 20px;
+    padding-right: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
   }
   
 
   .examples {
-    margin-top: 20px;
+    margin-top: var(--spacing-lg);
     text-align: right; /* Aligns all examples to the right */
     direction: rtl;    /* Ensures proper alignment for Hebrew text */
   }
   
   .example-row {
-    margin-bottom: 15px; /* Reduces the vertical space between rows */
+    margin-bottom: var(--spacing-md); /* Reduces the vertical space between rows */
   }
   
   .example-tiles {
     display: inline-flex;
     justify-content: flex-end; /* Aligns tiles to the right */
-    margin-bottom: 2px; /* Brings tiles closer to the description */
+    margin-bottom: var(--spacing-xs); /* Brings tiles closer to the description */
     
   }
   .tile {
@@ -116,14 +116,14 @@
   .example-description {
     font-size: 1rem; /* Smaller font size */
     color: #d9d9d9;    /* Subtle color for the description */
-    margin-top: 2px;   /* Closer to the tiles */
+    margin-top: var(--spacing-xs);   /* Closer to the tiles */
     line-height: 1.2;  /* Compact line spacing */
   }
   
 
 
   .login-redirect {
-    margin-top: 20px;
+    margin-top: var(--spacing-lg);
     color: #00bcd4; /* Light blue */
     cursor: pointer;
     font-size: 1rem;

@@ -3,7 +3,7 @@
   .solutionText{
     display: block;
     font-size: 20px;
-    margin: 8px;
+    margin: var(--spacing-sm);
     color: #e0e0e0;
   }
 
@@ -17,8 +17,8 @@
   .word-container {
     display: flex;
     justify-content: center;
-    gap: 8px; /* Increased gap */
-    margin-bottom: 10px;
+    gap: var(--spacing-sm); /* Increased gap */
+    margin-bottom: var(--spacing-sm);
   }
 
 

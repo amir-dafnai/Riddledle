@@ -1,8 +1,8 @@
 .leaderboard {
   max-width: 400px;
   height: 50vh;
-  margin: 20px auto;
-  padding: 15px;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-md);
   border-radius: 8px;
   background: #121213;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -45,7 +45,7 @@ tr {
 
   
   td{
-    padding: 10px;
+    padding: var(--spacing-sm);
     font-size: 16px;
     color: white;
 
@@ -69,12 +69,12 @@ tr {
   .leaderboard-toggle {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-sm);
   }
   
   .leaderboard-toggle button {
     flex: 1 1 33%;
-    padding: 10px;
+    padding: var(--spacing-sm);
     font-size: 14px;
     border: none;
     background: #131212;
@@ -103,8 +103,8 @@ tr {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .arrow-button {
@@ -130,8 +130,8 @@ tr {
 
 
 .yesterday-button {
-  margin-bottom: 10px;
-  padding: 10px 20px;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
   background-color: #2a2a2a;
   color: #ffffff;
   border: 1px solid #444;
@@ -153,7 +153,7 @@ tr {
 
 .leaderboard .yesterday-button {
   display: block;
-  margin: 20px auto 0 auto;
+  margin: var(--spacing-lg) auto 0 auto;
   width: fit-content; /* or use: 100% for full width */
 }
 
