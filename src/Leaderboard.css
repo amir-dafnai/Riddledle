@@ -1,5 +1,4 @@
 .leaderboard {
-  
   max-width: 400px;
   height: 50vh;
   margin: 20px auto;
@@ -161,6 +160,7 @@ tr {
 
 @media (max-width: 480px) {
   .leaderboard {
-    height: 100vw;
+    height: 70vw;
   }
 }
+
