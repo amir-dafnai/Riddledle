@@ -1,7 +1,7 @@
 .leaderboard {
   max-width: 400px;
-  height: 90vh;
-  margin: 5vh auto;
+  height: 40vh;
+  margin: 10px auto;
   padding: 15px;
   border-radius: 8px;
   background: #121213;
@@ -10,6 +10,7 @@
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 table {
