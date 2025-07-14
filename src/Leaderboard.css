@@ -1,7 +1,7 @@
 .leaderboard {
   max-width: 400px;
   height: 50vh;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 15px;
   border-radius: 8px;
   background: #121213;
@@ -10,6 +10,7 @@
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 table {
@@ -18,9 +19,9 @@ table {
   background: #121213;
   border-radius: 8px;
   overflow: hidden;
-  flex-grow: 1; /* 📌 fills remaining height */
   display: flex;
   flex-direction: column;
+  height: 60vh;
 }
 
 /* Keep header at top */
@@ -160,7 +161,11 @@ tr {
 
 @media (max-width: 480px) {
   .leaderboard {
-    height: 70vw;
+    height: 80vw;
+  }
+  
+  table {
+    height: 70vh;
   }
 }
 
