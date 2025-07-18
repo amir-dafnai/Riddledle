@@ -161,7 +161,7 @@ tr {
 
 @media (max-width: 480px) {
   .leaderboard {
-    height: 80vw;
+    height: 100vw;
   }
   
   table {
