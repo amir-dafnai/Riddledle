@@ -69,11 +69,11 @@
 }
 
 .hg-theme-default.myTheme .hg-row .hg-button-container, .hg-theme-default .hg-row .hg-button:not(:last-child) {
-  margin-right: 8px;
+  margin-right: 2px;
 }
 
 .hg-theme-default.myTheme .hg-row:not(:last-child) {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 
