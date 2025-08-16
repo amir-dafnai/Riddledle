@@ -9,6 +9,8 @@ import { getWhatsAppMessage, SocialIcons } from "./SocialIcons";
 import { isSingleRiddle } from "./RiddlesGroupUtils";
 import { RiddlesResults } from "./RiddlesResults";
 
+
+
 function YesterdayPage() {
   const [riddleGroup, setRiddleGroup] = useState(null);
   const [currRiddle, setCurrRiddle] = useState(null);
@@ -29,6 +31,7 @@ function YesterdayPage() {
   }, [riddleGroup]);
 
   if (!riddleGroup || !currRiddle) return <div>Loading...</div>;
+  
 
   const isMultiRiddle = !isSingleRiddle(riddleGroup);
   return (
@@ -37,12 +40,10 @@ function YesterdayPage() {
         <h1 className="unclickable">Riddledle</h1>
       </div>
 
-      <button className="back-button" onClick={() => navigate("/")}>
-        פתור את החידה של היום
-      </button>
-      <h4 className="header">
+      <h3 className="header">
         {isMultiRiddle ? "החידות של אתמול:" : " החידה של אתמול:"}
-      </h4>
+      </h3>
+      <h5 dir="rlt" className="winner"> 🏆  מקום ראשון:  {riddleGroup.winner.user_name} </h5>
       <RiddleAndSquares
         riddle={currRiddle}
         gameStatus={GAMESTATUS.win}
@@ -59,6 +60,9 @@ function YesterdayPage() {
           results={riddleGroup.group.map(_=>"win")}
         />
       )}
+      <button className="back-button" onClick={() => navigate("/")}>
+        פתור את החידה של היום
+      </button>
       <SocialIcons watsAppMessage={getWhatsAppMessage(false, false)} />
     </div>
   );
