@@ -43,7 +43,7 @@ function YesterdayPage() {
       <h3 className="header">
         {isMultiRiddle ? "החידות של אתמול:" : " החידה של אתמול:"}
       </h3>
-      <h5 dir="rtl" className="winner"> 🏆  מקום ראשון:  {riddleGroup.winner.user_name} </h5>
+      <h5 dir="rtl" className="winner">   מקום ראשון: {riddleGroup.winner.user_name} 🏆</h5>
       <RiddleAndSquares
         riddle={currRiddle}
         gameStatus={GAMESTATUS.win}
