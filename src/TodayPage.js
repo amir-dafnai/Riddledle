@@ -12,6 +12,7 @@ import { CreditModal } from "./UserCreditModal";
 import { WelcomeModal } from "./WelcomeModal";
 import { ToastContainer } from "react-toastify";
 import { UseLogin, UseUserDetails } from "./Common";
+import { useParams } from "react-router-dom";
 
 const riddlesAreEqual = (r1, r2) => {
   if (r1.id !== r2.id) return false;
@@ -21,6 +22,7 @@ const riddlesAreEqual = (r1, r2) => {
 };
 
 const TodayPage = () => {
+  const { riddleIds } = useParams(); 
   const [userDetails, setUserDetails] = UseUserDetails();
   const [viewStatus, setViewStatus] = useState(VIEWS.game);
   const [showCreditModal, setShowCreditModal] = useState(true);
@@ -37,8 +39,11 @@ const TodayPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = getUrl();
-      const response = await fetch(`${url}get_riddle`);
+      const baseUrl = getUrl();
+      let url = `${baseUrl}get_riddle`
+      if(riddleIds)
+        url += `?riddle_ids=${riddleIds}`
+      const response = await fetch(url);
       if (!response.ok) return;
       const data = await response.json();
       if (riddleGroup && riddlesAreEqual(riddleGroup, data.riddle_group))
@@ -50,7 +55,7 @@ const TodayPage = () => {
       setRiddleGroup(data.riddle_group);
     };
     fetchData();
-  }, [riddleGroup]);
+  }, [riddleGroup, riddleIds]);
 
   if (!(userDetails && currentRiddle && riddleGroup))
     return <div>Loading...</div>;

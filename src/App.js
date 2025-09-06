@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 export const ROOT = "/"
 export const YESTERDAY = '/yesterday'
+export const SPECIFICRIDDLES = ':riddleIds'
 
 function App() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function App() {
   return (
     <Routes>
       <Route path={ROOT} element={<TodayPage />} />
+      <Route path={SPECIFICRIDDLES} element={<TodayPage />} />
       <Route path={YESTERDAY} element={<YesterdayPage />} />
     </Routes>
   );
