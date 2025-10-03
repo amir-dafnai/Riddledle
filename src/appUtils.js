@@ -162,8 +162,7 @@ export const convertFromLastLetter = (val) => {
 };
 
 export const getMaxDelay = (solution) => {
-  const delay = solution.length > 2 ? solution.length : 3
-  const maxDelay = AnimationDelay * delay * 3;
+  const maxDelay = AnimationDelay * solution.length * 1.5;
   return maxDelay;
 };
 

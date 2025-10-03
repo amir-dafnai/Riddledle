@@ -11,6 +11,6 @@ export const GAMESTATUS = {
   lose: "lose",
   playing: "playing",
 };
-export const AnimationDelay = 150;
+export const AnimationDelay = 80;
 
 export const NumberOfGuesses = 4
