@@ -162,7 +162,10 @@ export const convertFromLastLetter = (val) => {
 };
 
 export const getMaxDelay = (solution) => {
-  const maxDelay = AnimationDelay * solution.length * 1.5;
+  const n = solution.length;
+  // Each squares gets n-i delay where i is the index of the square
+  const delay = (n * (n + 1)) / 2;      
+  const maxDelay = AnimationDelay * delay;
   return maxDelay;
 };
 
