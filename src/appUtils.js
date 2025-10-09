@@ -161,11 +161,12 @@ export const convertFromLastLetter = (val) => {
   }
 };
 
-export const getMaxDelay = (solution) => {
+export const getMaxDelay = (solution,isMultiRiddle) => {
   const n = solution.length;
   // Each squares gets n-i delay where i is the index of the square
-  const delay = (n * (n + 1)) / 2;      
-  const maxDelay = AnimationDelay * delay;
+  const multiplier = isMultiRiddle ? 2 : 1;
+  const delay = (n * (n + 1)) / 2;
+  const maxDelay = AnimationDelay * delay * multiplier;
   return maxDelay;
 };
 

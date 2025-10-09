@@ -148,14 +148,14 @@ export function Game({
   };
 
   useEffect(() => {
-    const animationDuration = getMaxDelay(solution); // Replace this with your animation's duration in milliseconds
+    const animationDuration = getMaxDelay(solution, isMultiRiddle); // Replace this with your animation's duration in milliseconds
     const timer = setTimeout(() => {
       setAnimationEnded(true);
       setKeyBoardTheme(getKeyboardButtonTheme(guesses, solution, currAnswer));
     }, animationDuration);
 
     return () => clearTimeout(timer);
-  }, [guesses, solution, currAnswer]);
+  }, [guesses, solution, currAnswer, isMultiRiddle]);
 
   useEffect(() => {
     const progress = getProgress();
