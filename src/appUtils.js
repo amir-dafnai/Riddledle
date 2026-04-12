@@ -165,11 +165,10 @@ export const convertFromLastLetter = (val) => {
 
 export const getMaxDelay = (solution, isMultiRiddle) => {
   const n = solution.length;
-  // Each squares gets n-i delay where i is the index of the square
-  const multiplier = isMultiRiddle ? 2 : 1;
-  const delay = (n * (n + 1)) / 2;
+  // Max stagger delay: first square starts at AnimationDelay * n (e.g., 80ms * 5 = 400ms for 5-letter word)
+  // Total time = max stagger + animation duration
   const animationDuration = 900; // Duration of flip animation in milliseconds (0.9s)
-  const maxDelay = AnimationDelay * delay * multiplier + animationDuration;
+  const maxDelay = AnimationDelay * n + animationDuration;
   return maxDelay;
 };
 
