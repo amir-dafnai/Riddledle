@@ -17,5 +17,37 @@
   .dramatic {
     color: #ff5555; /* red for urgency */
   }
-  
 
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .countdown-container {
+    font-size: 28px;
+    margin: 8px auto;
+  }
+
+  .time-ended {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdown-container {
+    font-size: 24px;
+    margin: 6px auto;
+  }
+
+  .time-ended {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .countdown-container {
+    font-size: 20px;
+    margin: 4px auto;
+  }
+
+  .time-ended {
+    font-size: 12px;
+  }
+}

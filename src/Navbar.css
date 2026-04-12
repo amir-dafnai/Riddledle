@@ -57,3 +57,60 @@
 .navbar-links button:active {
   transform: scale(0.95); /* Slight shrink effect */
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 8px 15px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 20px;
+  }
+
+  .navbar-links {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 6px 10px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 18px;
+  }
+
+  .navbar-links button {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  .navbar-links {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 5px 8px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 16px;
+  }
+
+  .navbar-links button {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    font-size: 12px;
+  }
+
+  .navbar-links {
+    gap: 5px;
+  }
+}
