@@ -1,4 +1,24 @@
 
+  /* Base square styles - responsive */
+  .square {
+    background-color: #3a3a3c;
+    border: 2px solid #565758;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.6s ease-in-out, background-color 0.6s ease-in-out;
+    transform-origin: center;
+    
+    /* Responsive sizing */
+    height: 50px;
+    width: 50px;
+    font-size: 32px;
+    line-height: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
 
   .solutionText{
     display: block;
@@ -19,6 +39,7 @@
     justify-content: center;
     gap: 8px; /* Increased gap */
     margin-bottom: 10px;
+    flex-wrap: wrap;
   }
 
 
@@ -98,6 +119,86 @@
   100%{
     background-color: #3a3a3c; /* Gray */
     border-color: #3a3a3c;
+  }
+}
+
+/* Tablet screens (768px and below) */
+@media (max-width: 768px) {
+  .square {
+    height: 45px;
+    width: 45px;
+    font-size: 28px;
+    line-height: 45px;
+  }
+
+  .word-container {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .invisibleSquare {
+    height: 18px;
+    width: 18px;
+  }
+
+  .solutionText {
+    font-size: 16px;
+  }
+}
+
+/* Small mobile screens (480px and below) */
+@media (max-width: 480px) {
+  .square {
+    height: 40px;
+    width: 40px;
+    font-size: 24px;
+    line-height: 40px;
+    border: 1px solid #565758;
+  }
+
+  .word-container {
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+
+  .invisibleSquare {
+    height: 16px;
+    width: 16px;
+  }
+
+  .solutionText {
+    font-size: 14px;
+    margin: 5px;
+  }
+
+  .credit {
+    font-size: 12px;
+  }
+}
+
+/* Extra small screens (iPhone SE, small phones - 360px and below) */
+@media (max-width: 360px) {
+  .square {
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
+    line-height: 35px;
+    border: 1px solid #565758;
+  }
+
+  .word-container {
+    gap: 4px;
+    margin-bottom: 5px;
+  }
+
+  .invisibleSquare {
+    height: 14px;
+    width: 14px;
+  }
+
+  .solutionText {
+    font-size: 12px;
+    margin: 3px;
   }
 }
   

@@ -74,12 +74,11 @@ export function getDefaultStyles(nSquares) {
   return styles;
 }
 export function arraysAreEqual(arr1, arr2) {
-
   return Boolean(
     arr1 &&
-      arr2 &&
-      arr1.length === arr2.length &&
-      arr1.every((element, index) => element === arr2[index])
+    arr2 &&
+    arr1.length === arr2.length &&
+    arr1.every((element, index) => element === arr2[index]),
   );
 }
 
@@ -113,9 +112,12 @@ export const getStringLengths = (arr) => {
   return `(${lengths.join(",")})`;
 };
 export const getUrl = () => {
-  const useLocalServer = false
-  if (['10.0.0.9' ,'localhost'].includes(window.location.hostname) && useLocalServer) {
-    console.log('usingLocalServer')
+  const useLocalServer = false;
+  if (
+    ["10.0.0.9", "localhost"].includes(window.location.hostname) &&
+    useLocalServer
+  ) {
+    console.log("usingLocalServer");
     return "http://10.0.0.9:5000/";
   }
   return process.env.REACT_APP_URL;
@@ -161,12 +163,13 @@ export const convertFromLastLetter = (val) => {
   }
 };
 
-export const getMaxDelay = (solution,isMultiRiddle) => {
+export const getMaxDelay = (solution, isMultiRiddle) => {
   const n = solution.length;
   // Each squares gets n-i delay where i is the index of the square
   const multiplier = isMultiRiddle ? 2 : 1;
   const delay = (n * (n + 1)) / 2;
-  const maxDelay = AnimationDelay * delay * multiplier;
+  const animationDuration = 900; // Duration of flip animation in milliseconds (0.9s)
+  const maxDelay = AnimationDelay * delay * multiplier + animationDuration;
   return maxDelay;
 };
 
@@ -181,11 +184,11 @@ export const getHMSFormat = (timeInSeconds_) => {
     hours > 0
       ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
           2,
-          "0"
+          "0",
         )}:${String(seconds).padStart(2, "0")}`
       : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
           2,
-          "0"
+          "0",
         )}`;
   return formattedTime;
 };

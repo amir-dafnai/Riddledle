@@ -79,19 +79,18 @@
 
 .simple-keyboard.myTheme {
   background-color: unset;
-  width:500px;
-  
-
-  @media (max-width: 480px) {
-    width: 370px;
-    
-  }
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
+  .simple-keyboard.myTheme {
+    max-width: 90vw;
+  }
 
- 
   .hg-button {
     height: 60px;
     font-size: 18px;
@@ -100,12 +99,35 @@
 }
 
 @media (max-width: 480px) {
-
+  .simple-keyboard.myTheme {
+    max-width: 95vw;
+    padding: 0 5px;
+  }
 
   .hg-button {
     height: 50px;
-    font-size: 16px;
+    font-size: 15px;
   }
 
-  
+  .hg-theme-default .hg-button.hg-standardBtn, .hg-theme-default .hg-button.hg-functionBtn {
+    height: 50px;
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 360px) {
+  .simple-keyboard.myTheme {
+    max-width: 100%;
+    padding: 0 2px;
+  }
+
+  .hg-button {
+    height: 45px;
+    font-size: 13px;
+  }
+
+  .hg-theme-default .hg-button.hg-standardBtn, .hg-theme-default .hg-button.hg-functionBtn {
+    height: 45px;
+    font-size: 1.1em;
+  }
 }
