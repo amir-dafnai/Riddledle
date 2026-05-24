@@ -20,7 +20,11 @@ export function Riddle({
         ? currAnswer
         : getEmptyAnswer(solution);
     riddleSquares.push(
-      <div key={i} className="word-container">
+      <div
+        key={i}
+        className="word-container"
+        style={{ "--n-squares": solution.length }}
+      >
         <RowOfSquares
           key={i}
           currGuess={currGuess}

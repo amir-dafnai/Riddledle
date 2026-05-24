@@ -11,12 +11,13 @@
     justify-content: center;
     transition: transform 0.6s ease-in-out, background-color 0.6s ease-in-out;
     transform-origin: center;
-    
-    /* Responsive sizing */
-    height: 50px;
-    width: 50px;
-    font-size: 32px;
-    line-height: 50px;
+
+    /* Size is computed by .word-container based on answer length so even
+       long answers fit on a single row down to ~320px wide phones. */
+    height: var(--square-size);
+    width: var(--square-size);
+    font-size: calc(var(--square-size) * 0.65);
+    line-height: var(--square-size);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   }
 
@@ -35,9 +36,20 @@
 
 
   .word-container {
+    /* --n-squares is set inline from React (= answer length).
+       Square size = min(50px, available-width / n-squares), so 5-letter
+       answers stay generous on big screens and 12-letter ones still fit
+       on a 320px-wide phone. 24px subtractor leaves a small breathing
+       margin even when body padding shrinks at small breakpoints. */
+    --gap: clamp(2px, 0.7vw, 8px);
+    --square-size: min(
+      50px,
+      calc((100vw - 24px - (var(--n-squares, 5) - 1) * var(--gap)) / var(--n-squares, 5))
+    );
+
     display: flex;
     justify-content: center;
-    gap: 8px; /* Increased gap */
+    gap: var(--gap);
     margin-bottom: 10px;
     flex-wrap: wrap;
   }
@@ -122,17 +134,10 @@
   }
 }
 
-/* Tablet screens (768px and below) */
+/* Tablet screens (768px and below) — square sizing is handled by the
+   clamp() formula on .word-container; only non-size styles below. */
 @media (max-width: 768px) {
-  .square {
-    height: 45px;
-    width: 45px;
-    font-size: 28px;
-    line-height: 45px;
-  }
-
   .word-container {
-    gap: 6px;
     margin-bottom: 8px;
   }
 
@@ -149,15 +154,10 @@
 /* Small mobile screens (480px and below) */
 @media (max-width: 480px) {
   .square {
-    height: 40px;
-    width: 40px;
-    font-size: 24px;
-    line-height: 40px;
     border: 1px solid #565758;
   }
 
   .word-container {
-    gap: 5px;
     margin-bottom: 6px;
   }
 
@@ -178,16 +178,7 @@
 
 /* Extra small screens (iPhone SE, small phones - 360px and below) */
 @media (max-width: 360px) {
-  .square {
-    height: 35px;
-    width: 35px;
-    font-size: 20px;
-    line-height: 35px;
-    border: 1px solid #565758;
-  }
-
   .word-container {
-    gap: 4px;
     margin-bottom: 5px;
   }
 
