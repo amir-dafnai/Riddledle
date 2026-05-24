@@ -1,6 +1,7 @@
 .leaderboard {
   max-width: 400px;
   height: 50vh;
+  height: 50dvh;
   margin: 10px auto;
   padding: 15px;
   border-radius: 8px;
@@ -22,6 +23,7 @@ table {
   display: flex;
   flex-direction: column;
   height: 60vh;
+  height: 60dvh;
 }
 
 /* Keep header at top */
@@ -161,11 +163,13 @@ tr {
 
 @media (max-width: 480px) {
   .leaderboard {
-    height: 100vw;
+    height: 100vh;
+    height: 100dvh;
   }
-  
+
   table {
     height: 70vh;
+    height: 70dvh;
   }
 }
 

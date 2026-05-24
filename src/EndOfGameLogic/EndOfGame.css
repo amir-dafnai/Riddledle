@@ -19,6 +19,7 @@
   width: 90%;
   max-width: 420px;
   height: 90vh;
+  height: 90dvh;
   margin: 5vh auto;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -150,6 +151,7 @@
 @media (max-width: 480px) {
   .timer-modal-content {
     height: 85vh;
+    height: 85dvh;
     margin: 7.5vh auto;
     padding: 15px;
     justify-content: flex-start;
@@ -164,6 +166,7 @@
   
   .leaderboard {
     height: 35vh;
+    height: 35dvh;
     margin: 5px auto;
   }
 }
