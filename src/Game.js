@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SuggestRiddleForm } from "./SuggestRiddle";
 import "./Game.css";
 
@@ -216,34 +216,38 @@ export function Game({
     await response;
   };
 
-  async function handleKeyDown(event) {
-    if (
-      gameStatus !== "playing" ||
-      viewStatus !== VIEWS.game ||
-      !animationEnded
-    )
-      return;
-    const value = event.key || event;
-    if (value === "Backspace" || value === "{Backspace}")
-      setNewAnswer(getPrevSquare(currAnswer, solution), "");
-    else if (isValidLetter(value, isLastLetter)) {
-      setNewAnswer(
-        getNextSquare(currAnswer),
-        isLastLetter ? convertToLastLetter(value) : value
-      );
-    } else if (
-      (value === "Enter" || value === "{Enter}") &&
-      currAnswer.every((element) => element !== "")
-    ) {
-      const isValidHebrew =
-        arraysAreEqual(currAnswer, solution) ||
-        (await areWordsValid([...currAnswer].reverse()));
-      if (!isValidHebrew) {
-        setInvalidWordMessage(true);
-        setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
-      } else onEnterClicked();
-    }
-  }
+  const handleKeyDown = useCallback(
+    async (event) => {
+      if (
+        gameStatus !== "playing" ||
+        viewStatus !== VIEWS.game ||
+        !animationEnded
+      )
+        return;
+      const value = event.key || event;
+      if (value === "Backspace" || value === "{Backspace}")
+        setNewAnswer(getPrevSquare(currAnswer, solution), "");
+      else if (isValidLetter(value, isLastLetter)) {
+        setNewAnswer(
+          getNextSquare(currAnswer),
+          isLastLetter ? convertToLastLetter(value) : value
+        );
+      } else if (
+        (value === "Enter" || value === "{Enter}") &&
+        currAnswer.every((element) => element !== "")
+      ) {
+        const isValidHebrew =
+          arraysAreEqual(currAnswer, solution) ||
+          (await areWordsValid([...currAnswer].reverse()));
+        if (!isValidHebrew) {
+          setInvalidWordMessage(true);
+          setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
+        } else onEnterClicked();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [gameStatus, viewStatus, animationEnded, currAnswer, solution, isLastLetter]
+  );
   return (
     <>
       <div className="riddle-container">
