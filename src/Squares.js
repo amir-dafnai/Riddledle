@@ -23,7 +23,7 @@ export function RowOfSquares({ nSquares, currGuess, styles, handleKeyDown , game
     if (handleKeyDown == null) return;
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [handleKeyDown]);
   const animationClass = gameEnded? ' no-animation' : ' animation'
   const styleClass = (i) => styles[i].backgroundColor + animationClass
   const squaresRow = [];

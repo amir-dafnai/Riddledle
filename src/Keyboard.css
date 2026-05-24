@@ -39,6 +39,9 @@
   color: black; /* Button text color */
   box-sizing: border-box; /* Include padding in button size */
   transition: all 0.3s ease; /* Smooth resizing */;
+  touch-action: manipulation; /* Disable iOS 300ms tap delay + double-tap zoom on keys */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .hg-theme-default .hg-button.hg-standardBtn.orange {
   background: #b59f3b;
