@@ -14,6 +14,7 @@
 
     /* Size is computed by .word-container based on answer length so even
        long answers fit on a single row down to ~320px wide phones. */
+    box-sizing: border-box; /* keep border inside the computed size */
     height: var(--square-size);
     width: var(--square-size);
     font-size: calc(var(--square-size) * 0.65);
@@ -39,12 +40,13 @@
     /* --n-squares is set inline from React (= answer length).
        Square size = min(50px, available-width / n-squares), so 5-letter
        answers stay generous on big screens and 12-letter ones still fit
-       on a 320px-wide phone. 24px subtractor leaves a small breathing
-       margin even when body padding shrinks at small breakpoints. */
+       on a 320px-wide phone. 32px subtractor covers body padding (~10-40px
+       depending on breakpoint) + .riddle-container's own horizontal padding
+       (4-20px) with a small safety margin. */
     --gap: clamp(2px, 0.7vw, 8px);
     --square-size: min(
       50px,
-      calc((100vw - 24px - (var(--n-squares, 5) - 1) * var(--gap)) / var(--n-squares, 5))
+      calc((100vw - 32px - (var(--n-squares, 5) - 1) * var(--gap)) / var(--n-squares, 5))
     );
 
     display: flex;
