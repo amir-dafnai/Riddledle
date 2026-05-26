@@ -26,9 +26,15 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-start;
   gap: 10px;
   overflow: hidden;
+}
+
+.timer-modal-content > .icon {
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 /* Close Button */

@@ -1,31 +1,32 @@
 .leaderboard-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
+  align-items: center;
+  flex-shrink: 0;
   width: 100%;
+  max-width: 320px;
 }
 
 .leaderboard {
-  max-width: 400px;
   width: 100%;
-  margin: 10px auto;
-  padding: 15px;
+  margin: 0 auto;
+  padding: 12px 15px;
   border-radius: 8px;
-  background: #121213;
+  background: #1a1a1c;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
+  max-height: 50vh;
+  max-height: 50dvh;
+  box-sizing: border-box;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: #121213;
+  background: transparent;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -163,9 +164,12 @@ tr {
 }
 
 .leaderboard-wrapper .yesterday-button {
-  display: block;
-  margin: 10px auto 0 auto;
-  width: fit-content;
+  display: inline-block;
+  margin: 8px auto 0 auto;
+  padding: 6px 16px;
+  font-size: 14px;
+  width: auto;
+  align-self: center;
   flex-shrink: 0;
 }
 
