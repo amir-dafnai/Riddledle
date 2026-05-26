@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(heroku --version)",
+      "Bash(heroku auth:whoami)"
+    ]
+  }
+}
