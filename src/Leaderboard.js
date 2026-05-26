@@ -192,7 +192,7 @@ function Leaderboard({ leaderBoardStats, isMultiRiddle }) {
   const todayWinners = getTodaysPLayers(email, leaderBoardStats.globalStats);
 
   return (
-    <div>
+    <div className="leaderboard-wrapper">
       <div className="leaderboard">
         <TableNavigation mode={mode} setMode={setMode} />
         <TableView

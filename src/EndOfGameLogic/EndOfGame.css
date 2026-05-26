@@ -26,8 +26,9 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  overflow-y: auto;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: hidden;
 }
 
 /* Close Button */
@@ -150,24 +151,30 @@
 /* Mobile responsive adjustments */
 @media (max-width: 480px) {
   .timer-modal-content {
-    height: 85vh;
-    height: 85dvh;
-    margin: 7.5vh auto;
-    padding: 15px;
-    justify-content: flex-start;
-    gap: 15px;
+    height: 94vh;
+    height: 94dvh;
+    margin: 3vh auto;
+    padding: 12px;
+    gap: 8px;
   }
-  
+
   .stats-container {
     margin: 10px 0;
     padding: 15px;
     min-height: 120px;
   }
-  
+
   .leaderboard {
-    height: 35vh;
-    height: 35dvh;
-    margin: 5px auto;
+    margin: 4px auto;
+    padding: 10px;
+  }
+
+  .win-message {
+    margin-bottom: 6px;
+  }
+
+  .word-display {
+    margin-bottom: 6px;
   }
 }
 

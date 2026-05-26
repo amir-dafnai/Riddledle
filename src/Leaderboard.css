@@ -1,7 +1,14 @@
+.leaderboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
 .leaderboard {
   max-width: 400px;
-  height: 50vh;
-  height: 50dvh;
+  width: 100%;
   margin: 10px auto;
   padding: 15px;
   border-radius: 8px;
@@ -11,7 +18,8 @@
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 table {
@@ -22,8 +30,8 @@ table {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 60vh;
-  height: 60dvh;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 /* Keep header at top */
@@ -154,22 +162,10 @@ tr {
   transform: scale(0.98);
 }
 
-.leaderboard .yesterday-button {
+.leaderboard-wrapper .yesterday-button {
   display: block;
-  margin: 20px auto 0 auto;
-  width: fit-content; /* or use: 100% for full width */
-}
-
-
-@media (max-width: 480px) {
-  .leaderboard {
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  table {
-    height: 70vh;
-    height: 70dvh;
-  }
+  margin: 10px auto 0 auto;
+  width: fit-content;
+  flex-shrink: 0;
 }
 
