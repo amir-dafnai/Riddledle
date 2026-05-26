@@ -54,29 +54,30 @@
 .word-display {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: clamp(2px, 1vw, 6px);
   margin-bottom: 12px;
   flex-shrink: 0;
+  flex-wrap: nowrap;
+  max-width: 100%;
 }
 
 .green-tile{
   background-color: #6aaa64;
 }
+.letter-tile,
+.invisible-tile {
+  width: clamp(24px, 8vw, 44px);
+  height: clamp(24px, 8vw, 44px);
+  flex: 0 1 auto;
+  min-width: 0;
+}
 .letter-tile {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: clamp(0.85rem, 4vw, 1.4rem);
   border-radius: 4px;
-  width: 42px;
-  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
-.invisible-tile{
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
 }
 
 /* Stats Section */
