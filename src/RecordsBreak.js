@@ -4,7 +4,7 @@ import {
 } from "./localStorageUtils";
 
 const brokeBothText = `שברת שיא אישי וגם את השיא היומי!🎉`;
-const brokePersonalText = `שברת שיא אישי!🎉`;
+const brokePersonalText = `שברת שיא אישששי!🎉`;
 const brokeGlobalText = `שברת את השיא היומי!🎉`;
 
 const getBestTimeGlobal=(globalStats)=>{
