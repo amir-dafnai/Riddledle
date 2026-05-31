@@ -7,7 +7,7 @@ export const CreditModal = ({ onClose }) => {
         <button className="close-button" onClick={onClose}>
           ×
         </button>
-        <h2 dir="rtl"> איזה כיף! 🎉</h2>
+        <h2 dir="rtl">איזה כיף!</h2>
         <p>
           החידה של היום היא חידה שלך! קדימה להשוויץ לחברים!
         </p>

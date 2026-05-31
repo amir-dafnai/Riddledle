@@ -3,9 +3,9 @@ import {
   storeProgress,
 } from "./localStorageUtils";
 
-const brokeBothText = `שברת שיא אישי וגם את השיא היומי!🎉`;
-const brokePersonalText = `שברת שיא אישי!🎉`;
-const brokeGlobalText = `שברת את השיא היומי!🎉`;
+const brokeBothText = `שברת שיא אישי וגם את השיא היומי!`;
+const brokePersonalText = `שברת שיא אישי!`;
+const brokeGlobalText = `שברת את השיא היומי!`;
 
 const getBestTimeGlobal=(globalStats)=>{
   const bestWinner = globalStats ? globalStats.find((e)=>e.status === 'win' && e.was_logged_in) : null

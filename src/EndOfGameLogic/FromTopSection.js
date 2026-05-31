@@ -1,5 +1,5 @@
 export const Top = ({ word, isWinner, isMultiRiddle }) => {
-  const text = isWinner ? "הצלחת! 🎉" : isMultiRiddle ? "" : "לא הצלחת הפעם...";
+  const text = isWinner ? "הצלחת!" : isMultiRiddle ? "" : "לא הצלחת הפעם...";
   return (
     <>
       {" "}

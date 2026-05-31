@@ -72,7 +72,7 @@ const calcEndOfGameText = (timeEnded, gameEnded, nRiddlesLeft) => {
   const words = isLastRiddle ? [t1, lastRiddleText] : [t1, t2, t3, t4];
 
   const textToShow = words.join(" ");
-  const text = timeEnded ? textToShow : gameEnded ? "כל הכבוד! 🎉" : null;
+  const text = timeEnded ? textToShow : gameEnded ? "כל הכבוד!" : null;
 
   return text;
 };
