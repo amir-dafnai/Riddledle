@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { RiddleAndSquares } from "./RiddleAndSquares";
 import { MyKeyBoard } from "./KeyBoard";
+import { WelcomeModal } from "./WelcomeModal";
 import { getEmptyAnswer } from "./appUtils";
 import { GAMESTATUS, LANGUAGES } from "./Consts";
 
@@ -90,5 +91,36 @@ describe("keyboard", () => {
     );
     expect(keys[0]).toBe("ק");
     expect(keys).not.toContain("Q");
+  });
+});
+
+describe("welcome modal", () => {
+  const renderWelcome = (language) =>
+    render(
+      <WelcomeModal
+        onClose={() => {}}
+        isLoggedIn={true}
+        login={() => {}}
+        onHowToPLay={() => {}}
+        isMultiRiddle={false}
+        language={language}
+      />
+    );
+
+  test("english flags that the riddle is in english", () => {
+    renderWelcome(LANGUAGES.english);
+    expect(
+      screen.getByText("יאללה חידה חדשה! (והפעם באנגלית 😎)")
+    ).toBeInTheDocument();
+  });
+
+  test("hebrew keeps the plain headline", () => {
+    renderWelcome(LANGUAGES.hebrew);
+    expect(screen.getByText("יאללה חידה חדשה!")).toBeInTheDocument();
+  });
+
+  test("a riddle with no language keeps the plain headline", () => {
+    renderWelcome(undefined);
+    expect(screen.getByText("יאללה חידה חדשה!")).toBeInTheDocument();
   });
 });

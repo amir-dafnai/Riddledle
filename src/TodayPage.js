@@ -12,7 +12,7 @@ import { CreditModal } from "./UserCreditModal";
 import { WelcomeModal } from "./WelcomeModal";
 import { ToastContainer } from "react-toastify";
 import { UseLogin, UseUserDetails } from "./Common";
-import { normalizeRiddleGroup } from "./language";
+import { getLanguage, normalizeRiddleGroup } from "./language";
 import { useParams } from "react-router-dom";
 
 const riddlesAreEqual = (r1, r2) => {
@@ -106,6 +106,7 @@ const TodayPage = () => {
           onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
           isLoggedIn={userDetails.loggedIn || allowGuestPlay}
           isMultiRiddle={isMultiRiddle}
+          language={getLanguage(currentRiddle)}
         />
       )}
       {viewStatus === VIEWS.howToPLayWelcome && (
