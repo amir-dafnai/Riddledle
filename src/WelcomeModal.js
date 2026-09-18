@@ -1,11 +1,17 @@
 import React from "react";
+import { isEnglish } from "./language";
 import "./WelcomeModal.css";
 
-const WelcomeHeadline = ({ isMultiRiddle }) => {
+const WelcomeHeadline = ({ isMultiRiddle, language }) => {
   const multiRiddleheadline1 = "האתגר השבועי!";
   const multiReadleHeadline2 = "!נסו לפתור חמש חידות בדקה";
+  // English riddles are rare enough to be worth calling out up front, so the
+  // player isn't surprised by a Latin keyboard.
+  const singleRiddleHeadline = isEnglish(language)
+    ? "יאללה חידה חדשה! (והפעם באנגלית 😎)"
+    : "יאללה חידה חדשה!";
   const headLineText = !isMultiRiddle
-    ? "יאללה חידה חדשה!"
+    ? singleRiddleHeadline
     : multiRiddleheadline1;
 
   return (
@@ -50,12 +56,13 @@ export const WelcomeModal = ({
   login,
   onHowToPLay,
   isMultiRiddle,
+  language,
 }) => {
   return (
     <div className="welcome-modal-overlay">
       <div className="welcome-modal">
         <h1 className="unclickable">Riddledle</h1>
-        <WelcomeHeadline isMultiRiddle={isMultiRiddle} />
+        <WelcomeHeadline isMultiRiddle={isMultiRiddle} language={language} />
         {isLoggedIn ? (
           <ContinueButton onClose={onClose} />
         ) : (

@@ -49,3 +49,7 @@ body {
   direction: rtl;
 }
 
+.ltr-form {
+  direction: ltr;
+}
+

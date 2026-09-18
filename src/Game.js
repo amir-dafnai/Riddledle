@@ -19,6 +19,7 @@ import {
   getLeaderBoardStats,
 } from "./localStorageUtils";
 import { isValidLetter, convertToLastLetter } from "./appUtils";
+import { getLanguage, isEnglish, normalizeLetter } from "./language";
 import { fetchAndStoreAllStats, insertStats, StatisticsModal } from "./Stats";
 import { GAMESTATUS, NumberOfGuesses, VIEWS } from "./Consts";
 import EndOfGameForm from "./EndOfGameLogic/EndOfGame";
@@ -96,6 +97,7 @@ export function Game({
   const currRiddleProgress = getProgress()[riddle.id] || {};
   const isLoggedIn = userDetails.loggedIn;
   const solution = riddle.solution;
+  const language = getLanguage(riddle);
   const [currAnswer, setCurrAnswer] = useState(getEmptyAnswer(solution));
 
   const [guesses, setGuesses] = useState(
@@ -103,8 +105,8 @@ export function Game({
   );
   const gameStatus = getGameStatus(riddle, guesses);
 
-  const isLastLetter = getLastLetterIndices(solution).includes(
-    getNextSquare(currAnswer)
+  const isLastLetter = getLastLetterIndices(solution, language).includes(
+    getNextSquare(currAnswer, language)
   );
 
   const [animationEnded, setAnimationEnded] = useState(true);
@@ -195,8 +197,10 @@ export function Game({
   }
 
   const sendStats = async (newGuesses, newStatus) => {
+    // The squares hold the guess in display order, which for Hebrew is the
+    // reverse of how it reads. Store it the way it reads, in either language.
     const guessesAsStrings = newGuesses.map((ans) =>
-      [...ans].reverse().join("")
+      isEnglish(language) ? ans.join("") : [...ans].reverse().join("")
     );
     const userData = getUserData();
     const body = {
@@ -226,27 +230,31 @@ export function Game({
         return;
       const value = event.key || event;
       if (value === "Backspace" || value === "{Backspace}")
-        setNewAnswer(getPrevSquare(currAnswer, solution), "");
-      else if (isValidLetter(value, isLastLetter)) {
+        setNewAnswer(getPrevSquare(currAnswer, solution, language), "");
+      else if (isValidLetter(value, isLastLetter, language)) {
+        const letter = normalizeLetter(value, language);
         setNewAnswer(
-          getNextSquare(currAnswer),
-          isLastLetter ? convertToLastLetter(value) : value
+          getNextSquare(currAnswer, language),
+          isLastLetter ? convertToLastLetter(letter) : letter
         );
       } else if (
         (value === "Enter" || value === "{Enter}") &&
         currAnswer.every((element) => element !== "")
       ) {
-        const isValidHebrew =
+        // English guesses aren't checked against a dictionary — there is no
+        // English word list — so any complete guess goes straight through.
+        const isValidWord =
+          isEnglish(language) ||
           arraysAreEqual(currAnswer, solution) ||
           (await areWordsValid([...currAnswer].reverse()));
-        if (!isValidHebrew) {
+        if (!isValidWord) {
           setInvalidWordMessage(true);
           setTimeout(() => setInvalidWordMessage(false), 2000); // Hide after 2s
         } else onEnterClicked();
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gameStatus, viewStatus, animationEnded, currAnswer, solution, isLastLetter]
+    [gameStatus, viewStatus, animationEnded, currAnswer, solution, isLastLetter, language]
   );
   return (
     <>
@@ -317,7 +325,11 @@ export function Game({
           )}
         </div>
 
-        <MyKeyBoard handleKeyDown={handleKeyDown} buttonTheme={keyBoardThem} />
+        <MyKeyBoard
+          handleKeyDown={handleKeyDown}
+          buttonTheme={keyBoardThem}
+          language={language}
+        />
 
         {showEndOfGameForm() ? (
           <EndOfGameForm
