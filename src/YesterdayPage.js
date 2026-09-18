@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./YesterdayPage.css";
 import { getWhatsAppMessage, SocialIcons } from "./SocialIcons";
+import { normalizeRiddleGroup } from "./language";
 import { isSingleRiddle } from "./RiddlesGroupUtils";
 import { RiddlesResults } from "./RiddlesResults";
 
@@ -24,8 +25,9 @@ function YesterdayPage() {
       const data = await response.json();
       console.log(data);
       if (riddleGroup && riddleGroup.id === data.riddle_group.id) return;
-      setRiddleGroup(data.riddle_group);
-      setCurrRiddle(data.riddle_group.group[0]);
+      const newRiddleGroup = normalizeRiddleGroup(data.riddle_group);
+      setRiddleGroup(newRiddleGroup);
+      setCurrRiddle(newRiddleGroup.group[0]);
     };
     getYesterDaysRiddle();
   }, [riddleGroup]);

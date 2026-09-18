@@ -2,15 +2,31 @@ import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { getColors, convertFromLastLetter } from "./appUtils";
 import { useState } from "react";
+import { LANGUAGES } from "./Consts";
+import { isEnglish } from "./language";
 import "./Keyboard.css"; // Add custom CSS here
 
-const layout = {
-  default: [
-    "ק ר א ט ו פ ל {Backspace}",
-    "ש ד ג כ ע י ח {Enter}",
-    "ז ס ב ה נ מ צ ת",
-  ],
+const LAYOUTS = {
+  [LANGUAGES.hebrew]: {
+    default: [
+      "ק ר א ט ו פ ל {Backspace}",
+      "ש ד ג כ ע י ח {Enter}",
+      "ז ס ב ה נ מ צ ת",
+    ],
+  },
+  // Uppercase to match the board and the colours, which key off the uppercased
+  // guess letters.
+  [LANGUAGES.english]: {
+    default: [
+      "Q W E R T Y U I O P",
+      "A S D F G H J K L",
+      "{Enter} Z X C V B N M {Backspace}",
+    ],
+  },
 };
+
+const getLayout = (language) =>
+  isEnglish(language) ? LAYOUTS[LANGUAGES.english] : LAYOUTS[LANGUAGES.hebrew];
 
 const getPressedKeyTheme = (pressedKey) => {
   return pressedKey
@@ -23,7 +39,7 @@ const getPressedKeyTheme = (pressedKey) => {
     : [];
 };
 
-export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
+export function MyKeyBoard({ handleKeyDown, buttonTheme, language }) {
   const [pressedKey, setPressedKey] = useState("");
 
   const onKeyPress = (button) => {
@@ -41,7 +57,7 @@ export function MyKeyBoard({ handleKeyDown, buttonTheme }) {
   return (
     <Keyboard
       onKeyPress={onKeyPress}
-      layout={layout}
+      layout={getLayout(language)}
       theme={"hg-theme-default hg-layout-default myTheme"}
       buttonTheme={[...buttonTheme, ...pressedKeyTheme]}
       display={{

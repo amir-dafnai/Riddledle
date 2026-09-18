@@ -13,4 +13,12 @@ export const GAMESTATUS = {
 };
 export const AnimationDelay = 80;
 
-export const NumberOfGuesses = 4
+export const NumberOfGuesses = 4;
+
+// A riddle's language, as sent by the server on every riddle. Riddles saved
+// before the server knew about languages have none, so Hebrew is the default
+// everywhere this is read.
+export const LANGUAGES = {
+  hebrew: "he",
+  english: "en",
+};

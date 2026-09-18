@@ -1,4 +1,5 @@
 import { AnimationDelay, NumberOfGuesses } from "./Consts";
+import { isEnglish } from "./language";
 
 export function getColors(solution, currAnswer) {
   let colors = Array(solution.length).fill("gray");
@@ -23,15 +24,34 @@ export function getColors(solution, currAnswer) {
   return colors;
 }
 
-export function getNextSquare(currAnswer) {
+// The squares are laid out left-to-right for both languages, so a Hebrew answer
+// is typed into them from the last index backwards and an English one from the
+// first index forwards.
+export function getNextSquare(currAnswer, language) {
+  if (isEnglish(language)) {
+    for (let i = 0; i < currAnswer.length; i++) {
+      if (currAnswer[i] === "") return i;
+    }
+    return null;
+  }
   for (let i = currAnswer.length - 1; i >= 0; i--) {
     if (currAnswer[i] === "") return i;
   }
   return null;
 }
 
-export function getPrevSquare(currAnswer, solution) {
-  let nextSquare = getNextSquare(currAnswer, solution);
+// The square backspace should clear: the last one that was filled in.
+export function getPrevSquare(currAnswer, solution, language) {
+  let nextSquare = getNextSquare(currAnswer, language);
+  if (isEnglish(language)) {
+    // Every square is full, so the last one typed is the rightmost.
+    if (nextSquare == null) return currAnswer.length - 1;
+    // Nothing has been typed yet.
+    if (nextSquare === 0) return 0;
+    nextSquare--;
+    if (solution[nextSquare] === " ") return nextSquare - 1;
+    return nextSquare;
+  }
   if (nextSquare == null) return 0;
   if (nextSquare === currAnswer.length - 1) return currAnswer.length - 1;
   nextSquare++;
@@ -82,7 +102,10 @@ export function arraysAreEqual(arr1, arr2) {
   );
 }
 
-export const getLastLetterIndices = (solution) => {
+// The squares that end a word, where Hebrew takes a final-letter form. English
+// has no such forms, so no square is ever a "last letter".
+export const getLastLetterIndices = (solution, language) => {
+  if (isEnglish(language)) return [];
   const lastLetterIndices = [];
   for (let i = solution.length; i >= 0; i--) {
     if (i === 0 || solution[i - 1] === " ") lastLetterIndices.push(i);
@@ -122,7 +145,8 @@ export const getUrl = () => {
   }
   return process.env.REACT_APP_URL;
 };
-export const isValidLetter = (value, isLastLetter) => {
+export const isValidLetter = (value, isLastLetter, language) => {
+  if (isEnglish(language)) return /^[a-zA-Z]$/.test(value);
   return (
     "אבגדהוזחטיכלמנסעפצקרשת".indexOf(value) !== -1 ||
     ("םןףךץ".indexOf(value) !== -1 && isLastLetter)

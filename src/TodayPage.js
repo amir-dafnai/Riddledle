@@ -12,6 +12,7 @@ import { CreditModal } from "./UserCreditModal";
 import { WelcomeModal } from "./WelcomeModal";
 import { ToastContainer } from "react-toastify";
 import { UseLogin, UseUserDetails } from "./Common";
+import { normalizeRiddleGroup } from "./language";
 import { useParams } from "react-router-dom";
 
 const riddlesAreEqual = (r1, r2) => {
@@ -20,6 +21,12 @@ const riddlesAreEqual = (r1, r2) => {
   const r2Definitions = r2.group.map((riddle) => riddle.definition);
   return arraysAreEqual(r1Definitions, r2Definitions);
 };
+
+// Local development escape hatch: lets a guest start a game without going
+// through Google OAuth, which is not set up for localhost. Only ever true when
+// the dev server is started with REACT_APP_ALLOW_GUEST_PLAY=true — a production
+// build never sets it, so the login gate is unchanged for real players.
+const allowGuestPlay = process.env.REACT_APP_ALLOW_GUEST_PLAY === "true";
 
 const TodayPage = () => {
   const { riddleIds } = useParams(); 
@@ -46,13 +53,13 @@ const TodayPage = () => {
       const response = await fetch(url);
       if (!response.ok) return;
       const data = await response.json();
-      if (riddleGroup && riddlesAreEqual(riddleGroup, data.riddle_group))
-        return;
-      data.riddle_group.group[0].endTime = null;
+      const newRiddleGroup = normalizeRiddleGroup(data.riddle_group);
+      if (riddleGroup && riddlesAreEqual(riddleGroup, newRiddleGroup)) return;
+      newRiddleGroup.group[0].endTime = null;
       storeProgress({});
-      setRiddle(data.riddle_group.group[0]);
+      setRiddle(newRiddleGroup.group[0]);
       setViewStatus(VIEWS.welcome); // show modal on new riddle
-      setRiddleGroup(data.riddle_group);
+      setRiddleGroup(newRiddleGroup);
     };
     fetchData();
   }, [riddleGroup, riddleIds]);
@@ -97,7 +104,7 @@ const TodayPage = () => {
           }}
           login={login}
           onHowToPLay={() => setViewStatus(VIEWS.howToPLayWelcome)}
-          isLoggedIn={userDetails.loggedIn}
+          isLoggedIn={userDetails.loggedIn || allowGuestPlay}
           isMultiRiddle={isMultiRiddle}
         />
       )}

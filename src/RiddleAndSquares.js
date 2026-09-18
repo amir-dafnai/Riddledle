@@ -1,5 +1,6 @@
 import { getStringLengths } from "./appUtils";
 import { GAMESTATUS } from "./Consts";
+import { getDirection, getLanguage, isEnglish } from "./language";
 import { Riddle } from "./Riddle";
 import "./RiddleAndSquares.css";
 
@@ -13,15 +14,26 @@ export const RiddleAndSquares = ({
   handleKeyDown,
   isMultiRiddle,
 }) => {
-  const solutionToShow = "פתרון: " + [...riddle.solution].reverse().join("");
+  const language = getLanguage(riddle);
+  const direction = getDirection(language);
+  // The solution arrives in display order, which reads backwards in Hebrew.
+  const solutionText = isEnglish(language)
+    ? riddle.solution.join("")
+    : [...riddle.solution].reverse().join("");
+  const solutionToShow = isEnglish(language)
+    ? "Solution: " + solutionText
+    : "פתרון: " + solutionText;
   return (
     <div>
       <div data-nosnippet>
-        <h1 className="rtl-form unselectable definition">
+        <h1
+          dir={direction}
+          className={`${direction}-form unselectable definition`}
+        >
           {" " + riddle.definition} {getStringLengths(riddle.solution)}
         </h1>
       </div>
-      <div dir="rtl" className="solutionText unselectable unclickable">
+      <div dir={direction} className="solutionText unselectable unclickable">
         {isMultiRiddle &&
           gameEnded &&
           gameStatus === GAMESTATUS.lose &&
